@@ -1,0 +1,3027 @@
+{
+    "Model": {
+        "Name": "test_shortest_path",
+        "Variables": [
+            {
+                "Name": "ABL1",
+                "Id": 1,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "ATR",
+                "Id": 2,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CASP9",
+                "Id": 3,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CDKN1B",
+                "Id": 4,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "EGFR",
+                "Id": 5,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "MDM2",
+                "Id": 6,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "PDGFRB",
+                "Id": 7,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "RB1",
+                "Id": 8,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "AKT1",
+                "Id": 9,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "BAD",
+                "Id": 10,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "BAX",
+                "Id": 11,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "BCL2L11",
+                "Id": 12,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-avg(var(9),var(79))"
+            },
+            {
+                "Name": "CDK2",
+                "Id": 13,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CDKN1A",
+                "Id": 14,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CHEK1",
+                "Id": 15,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CHUK",
+                "Id": 16,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "GSK3A",
+                "Id": 17,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(9)"
+            },
+            {
+                "Name": "TOPBP1",
+                "Id": 18,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "XIAP",
+                "Id": 19,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "APAF1",
+                "Id": 20,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(26)"
+            },
+            {
+                "Name": "AR",
+                "Id": 21,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "ESR1",
+                "Id": 22,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CHEK2",
+                "Id": 23,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "AURKB",
+                "Id": 24,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "BIRC5",
+                "Id": 25,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "BCL2L1",
+                "Id": 26,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-avg(var(10),var(12),var(34),var(33))"
+            },
+            {
+                "Name": "BCL2L2",
+                "Id": 27,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-avg(var(10),var(12),var(34))"
+            },
+            {
+                "Name": "BAK1",
+                "Id": 28,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CYCS",
+                "Id": 29,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "BBC3",
+                "Id": 30,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "MCL1",
+                "Id": 31,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "BCL2",
+                "Id": 32,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(35)"
+            },
+            {
+                "Name": "BIK",
+                "Id": 33,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(27)"
+            },
+            {
+                "Name": "BID",
+                "Id": 34,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CASP3",
+                "Id": 35,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "BRAF",
+                "Id": 36,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "MAP2K1",
+                "Id": 37,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "BRCA1",
+                "Id": 38,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "FANCD2",
+                "Id": 39,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CCNA1",
+                "Id": 40,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "E2F1",
+                "Id": 41,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CCND1",
+                "Id": 42,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CDK4",
+                "Id": 43,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CCND3",
+                "Id": 44,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(4)"
+            },
+            {
+                "Name": "CDK6",
+                "Id": 45,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CDC25A",
+                "Id": 46,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CDK1",
+                "Id": 47,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CCNB1",
+                "Id": 48,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CSNK2A1",
+                "Id": 49,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "TP53",
+                "Id": 50,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "PPP1CA",
+                "Id": 51,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(13)"
+            },
+            {
+                "Name": "FOXM1",
+                "Id": 52,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CDKN2A_arf",
+                "Id": 53,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(83)"
+            },
+            {
+                "Name": "CDKN2A_p16",
+                "Id": 54,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "CDKN2B",
+                "Id": 55,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "E2F6",
+                "Id": 56,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(15)"
+            },
+            {
+                "Name": "WEE1",
+                "Id": 57,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "PIK3R1",
+                "Id": 58,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "PPP2CA",
+                "Id": 59,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "PTK2",
+                "Id": 60,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "RASA1",
+                "Id": 61,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "SHC1",
+                "Id": 62,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "EIF2AK2",
+                "Id": 63,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "ERBB2",
+                "Id": 64,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "PIK3CA",
+                "Id": 65,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "BRCA2",
+                "Id": 66,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "GRB2",
+                "Id": 67,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "PAK1",
+                "Id": 68,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "GSK3B",
+                "Id": 69,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "HRAS",
+                "Id": 70,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(61)"
+            },
+            {
+                "Name": "RAF1",
+                "Id": 71,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "TIAM1",
+                "Id": 72,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "IGF1R",
+                "Id": 73,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "IRS1",
+                "Id": 74,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "JAK2",
+                "Id": 75,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "KRAS",
+                "Id": 76,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "MAP3K1",
+                "Id": 77,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "MAPK1",
+                "Id": 78,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "MAPK3",
+                "Id": 79,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "MAP3K5",
+                "Id": 80,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(71)"
+            },
+            {
+                "Name": "MAPKAPK2",
+                "Id": 81,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "PLK1",
+                "Id": 82,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "MYC",
+                "Id": 83,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "SMAD3",
+                "Id": 84,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "SRC",
+                "Id": 85,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "RPS6KB1",
+                "Id": 86,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "PTEN",
+                "Id": 87,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            },
+            {
+                "Name": "RAC1",
+                "Id": 88,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": ""
+            }
+        ],
+        "Relationships": [
+            {
+                "Id": 72,
+                "FromVariable": 23,
+                "ToVariable": 50,
+                "Type": "Activator"
+            },
+            {
+                "Id": 5,
+                "FromVariable": 1,
+                "ToVariable": 6,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 76,
+                "FromVariable": 26,
+                "ToVariable": 10,
+                "Type": "Activator"
+            },
+            {
+                "Id": 178,
+                "FromVariable": 70,
+                "ToVariable": 72,
+                "Type": "Activator"
+            },
+            {
+                "Id": 182,
+                "FromVariable": 73,
+                "ToVariable": 74,
+                "Type": "Activator"
+            },
+            {
+                "Id": 113,
+                "FromVariable": 44,
+                "ToVariable": 45,
+                "Type": "Activator"
+            },
+            {
+                "Id": 39,
+                "FromVariable": 12,
+                "ToVariable": 28,
+                "Type": "Activator"
+            },
+            {
+                "Id": 26,
+                "FromVariable": 9,
+                "ToVariable": 12,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 102,
+                "FromVariable": 38,
+                "ToVariable": 1,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 153,
+                "FromVariable": 57,
+                "ToVariable": 13,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 116,
+                "FromVariable": 45,
+                "ToVariable": 8,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 10,
+                "FromVariable": 3,
+                "ToVariable": 35,
+                "Type": "Activator"
+            },
+            {
+                "Id": 142,
+                "FromVariable": 50,
+                "ToVariable": 60,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 47,
+                "FromVariable": 13,
+                "ToVariable": 8,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 80,
+                "FromVariable": 27,
+                "ToVariable": 11,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 143,
+                "FromVariable": 51,
+                "ToVariable": 3,
+                "Type": "Activator"
+            },
+            {
+                "Id": 176,
+                "FromVariable": 70,
+                "ToVariable": 65,
+                "Type": "Activator"
+            },
+            {
+                "Id": 1,
+                "FromVariable": 1,
+                "ToVariable": 2,
+                "Type": "Activator"
+            },
+            {
+                "Id": 125,
+                "FromVariable": 47,
+                "ToVariable": 46,
+                "Type": "Activator"
+            },
+            {
+                "Id": 215,
+                "FromVariable": 88,
+                "ToVariable": 68,
+                "Type": "Activator"
+            },
+            {
+                "Id": 127,
+                "FromVariable": 47,
+                "ToVariable": 15,
+                "Type": "Activator"
+            },
+            {
+                "Id": 170,
+                "FromVariable": 67,
+                "ToVariable": 68,
+                "Type": "Activator"
+            },
+            {
+                "Id": 214,
+                "FromVariable": 88,
+                "ToVariable": 9,
+                "Type": "Activator"
+            },
+            {
+                "Id": 118,
+                "FromVariable": 46,
+                "ToVariable": 43,
+                "Type": "Activator"
+            },
+            {
+                "Id": 41,
+                "FromVariable": 12,
+                "ToVariable": 27,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 131,
+                "FromVariable": 47,
+                "ToVariable": 37,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 206,
+                "FromVariable": 82,
+                "ToVariable": 57,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 115,
+                "FromVariable": 45,
+                "ToVariable": 4,
+                "Type": "Activator"
+            },
+            {
+                "Id": 95,
+                "FromVariable": 35,
+                "ToVariable": 14,
+                "Type": "Activator"
+            },
+            {
+                "Id": 20,
+                "FromVariable": 6,
+                "ToVariable": 50,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 57,
+                "FromVariable": 15,
+                "ToVariable": 57,
+                "Type": "Activator"
+            },
+            {
+                "Id": 9,
+                "FromVariable": 2,
+                "ToVariable": 23,
+                "Type": "Activator"
+            },
+            {
+                "Id": 40,
+                "FromVariable": 12,
+                "ToVariable": 26,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 110,
+                "FromVariable": 43,
+                "ToVariable": 38,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 171,
+                "FromVariable": 68,
+                "ToVariable": 37,
+                "Type": "Activator"
+            },
+            {
+                "Id": 70,
+                "FromVariable": 23,
+                "ToVariable": 52,
+                "Type": "Activator"
+            },
+            {
+                "Id": 138,
+                "FromVariable": 50,
+                "ToVariable": 30,
+                "Type": "Activator"
+            },
+            {
+                "Id": 6,
+                "FromVariable": 1,
+                "ToVariable": 7,
+                "Type": "Activator"
+            },
+            {
+                "Id": 69,
+                "FromVariable": 23,
+                "ToVariable": 41,
+                "Type": "Activator"
+            },
+            {
+                "Id": 106,
+                "FromVariable": 41,
+                "ToVariable": 38,
+                "Type": "Activator"
+            },
+            {
+                "Id": 122,
+                "FromVariable": 47,
+                "ToVariable": 38,
+                "Type": "Activator"
+            },
+            {
+                "Id": 43,
+                "FromVariable": 13,
+                "ToVariable": 15,
+                "Type": "Activator"
+            },
+            {
+                "Id": 188,
+                "FromVariable": 76,
+                "ToVariable": 77,
+                "Type": "Activator"
+            },
+            {
+                "Id": 77,
+                "FromVariable": 26,
+                "ToVariable": 28,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 3,
+                "FromVariable": 1,
+                "ToVariable": 4,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 100,
+                "FromVariable": 37,
+                "ToVariable": 78,
+                "Type": "Activator"
+            },
+            {
+                "Id": 81,
+                "FromVariable": 27,
+                "ToVariable": 33,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 162,
+                "FromVariable": 61,
+                "ToVariable": 70,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 93,
+                "FromVariable": 35,
+                "ToVariable": 9,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 192,
+                "FromVariable": 78,
+                "ToVariable": 14,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 58,
+                "FromVariable": 16,
+                "ToVariable": 42,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 173,
+                "FromVariable": 69,
+                "ToVariable": 11,
+                "Type": "Activator"
+            },
+            {
+                "Id": 141,
+                "FromVariable": 50,
+                "ToVariable": 87,
+                "Type": "Activator"
+            },
+            {
+                "Id": 109,
+                "FromVariable": 42,
+                "ToVariable": 43,
+                "Type": "Activator"
+            },
+            {
+                "Id": 17,
+                "FromVariable": 5,
+                "ToVariable": 62,
+                "Type": "Activator"
+            },
+            {
+                "Id": 37,
+                "FromVariable": 10,
+                "ToVariable": 27,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 64,
+                "FromVariable": 21,
+                "ToVariable": 22,
+                "Type": "Activator"
+            },
+            {
+                "Id": 16,
+                "FromVariable": 5,
+                "ToVariable": 61,
+                "Type": "Activator"
+            },
+            {
+                "Id": 51,
+                "FromVariable": 14,
+                "ToVariable": 43,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 108,
+                "FromVariable": 41,
+                "ToVariable": 50,
+                "Type": "Activator"
+            },
+            {
+                "Id": 126,
+                "FromVariable": 47,
+                "ToVariable": 4,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 52,
+                "FromVariable": 15,
+                "ToVariable": 24,
+                "Type": "Activator"
+            },
+            {
+                "Id": 86,
+                "FromVariable": 31,
+                "ToVariable": 28,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 124,
+                "FromVariable": 47,
+                "ToVariable": 48,
+                "Type": "Activator"
+            },
+            {
+                "Id": 49,
+                "FromVariable": 14,
+                "ToVariable": 48,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 149,
+                "FromVariable": 54,
+                "ToVariable": 6,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 154,
+                "FromVariable": 58,
+                "ToVariable": 9,
+                "Type": "Activator"
+            },
+            {
+                "Id": 36,
+                "FromVariable": 10,
+                "ToVariable": 26,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 204,
+                "FromVariable": 81,
+                "ToVariable": 82,
+                "Type": "Activator"
+            },
+            {
+                "Id": 174,
+                "FromVariable": 69,
+                "ToVariable": 42,
+                "Type": "Activator"
+            },
+            {
+                "Id": 183,
+                "FromVariable": 74,
+                "ToVariable": 9,
+                "Type": "Activator"
+            },
+            {
+                "Id": 209,
+                "FromVariable": 83,
+                "ToVariable": 84,
+                "Type": "Activator"
+            },
+            {
+                "Id": 193,
+                "FromVariable": 78,
+                "ToVariable": 5,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 187,
+                "FromVariable": 76,
+                "ToVariable": 36,
+                "Type": "Activator"
+            },
+            {
+                "Id": 213,
+                "FromVariable": 86,
+                "ToVariable": 74,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 121,
+                "FromVariable": 47,
+                "ToVariable": 25,
+                "Type": "Activator"
+            },
+            {
+                "Id": 144,
+                "FromVariable": 52,
+                "ToVariable": 47,
+                "Type": "Activator"
+            },
+            {
+                "Id": 60,
+                "FromVariable": 18,
+                "ToVariable": 41,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 146,
+                "FromVariable": 53,
+                "ToVariable": 6,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 90,
+                "FromVariable": 33,
+                "ToVariable": 26,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 167,
+                "FromVariable": 64,
+                "ToVariable": 65,
+                "Type": "Activator"
+            },
+            {
+                "Id": 29,
+                "FromVariable": 9,
+                "ToVariable": 14,
+                "Type": "Activator"
+            },
+            {
+                "Id": 163,
+                "FromVariable": 62,
+                "ToVariable": 65,
+                "Type": "Activator"
+            },
+            {
+                "Id": 185,
+                "FromVariable": 74,
+                "ToVariable": 75,
+                "Type": "Activator"
+            },
+            {
+                "Id": 78,
+                "FromVariable": 26,
+                "ToVariable": 11,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 24,
+                "FromVariable": 9,
+                "ToVariable": 10,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 175,
+                "FromVariable": 70,
+                "ToVariable": 36,
+                "Type": "Activator"
+            },
+            {
+                "Id": 71,
+                "FromVariable": 23,
+                "ToVariable": 8,
+                "Type": "Activator"
+            },
+            {
+                "Id": 208,
+                "FromVariable": 83,
+                "ToVariable": 54,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 159,
+                "FromVariable": 59,
+                "ToVariable": 50,
+                "Type": "Activator"
+            },
+            {
+                "Id": 63,
+                "FromVariable": 21,
+                "ToVariable": 5,
+                "Type": "Activator"
+            },
+            {
+                "Id": 56,
+                "FromVariable": 15,
+                "ToVariable": 50,
+                "Type": "Activator"
+            },
+            {
+                "Id": 194,
+                "FromVariable": 78,
+                "ToVariable": 63,
+                "Type": "Activator"
+            },
+            {
+                "Id": 114,
+                "FromVariable": 45,
+                "ToVariable": 14,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 75,
+                "FromVariable": 26,
+                "ToVariable": 20,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 73,
+                "FromVariable": 24,
+                "ToVariable": 25,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 96,
+                "FromVariable": 35,
+                "ToVariable": 8,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 59,
+                "FromVariable": 17,
+                "ToVariable": 31,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 150,
+                "FromVariable": 55,
+                "ToVariable": 43,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 8,
+                "FromVariable": 2,
+                "ToVariable": 15,
+                "Type": "Activator"
+            },
+            {
+                "Id": 212,
+                "FromVariable": 85,
+                "ToVariable": 9,
+                "Type": "Activator"
+            },
+            {
+                "Id": 18,
+                "FromVariable": 6,
+                "ToVariable": 21,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 180,
+                "FromVariable": 71,
+                "ToVariable": 80,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 181,
+                "FromVariable": 72,
+                "ToVariable": 88,
+                "Type": "Activator"
+            },
+            {
+                "Id": 147,
+                "FromVariable": 54,
+                "ToVariable": 43,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 87,
+                "FromVariable": 31,
+                "ToVariable": 11,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 23,
+                "FromVariable": 8,
+                "ToVariable": 41,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 94,
+                "FromVariable": 35,
+                "ToVariable": 32,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 184,
+                "FromVariable": 74,
+                "ToVariable": 67,
+                "Type": "Activator"
+            },
+            {
+                "Id": 158,
+                "FromVariable": 59,
+                "ToVariable": 71,
+                "Type": "Activator"
+            },
+            {
+                "Id": 68,
+                "FromVariable": 23,
+                "ToVariable": 46,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 139,
+                "FromVariable": 50,
+                "ToVariable": 34,
+                "Type": "Activator"
+            },
+            {
+                "Id": 32,
+                "FromVariable": 9,
+                "ToVariable": 17,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 203,
+                "FromVariable": 81,
+                "ToVariable": 6,
+                "Type": "Activator"
+            },
+            {
+                "Id": 198,
+                "FromVariable": 79,
+                "ToVariable": 74,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 140,
+                "FromVariable": 50,
+                "ToVariable": 14,
+                "Type": "Activator"
+            },
+            {
+                "Id": 134,
+                "FromVariable": 47,
+                "ToVariable": 50,
+                "Type": "Activator"
+            },
+            {
+                "Id": 161,
+                "FromVariable": 60,
+                "ToVariable": 88,
+                "Type": "Activator"
+            },
+            {
+                "Id": 166,
+                "FromVariable": 64,
+                "ToVariable": 5,
+                "Type": "Activator"
+            },
+            {
+                "Id": 189,
+                "FromVariable": 76,
+                "ToVariable": 71,
+                "Type": "Activator"
+            },
+            {
+                "Id": 22,
+                "FromVariable": 8,
+                "ToVariable": 1,
+                "Type": "Activator"
+            },
+            {
+                "Id": 117,
+                "FromVariable": 46,
+                "ToVariable": 13,
+                "Type": "Activator"
+            },
+            {
+                "Id": 30,
+                "FromVariable": 9,
+                "ToVariable": 15,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 205,
+                "FromVariable": 82,
+                "ToVariable": 23,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 211,
+                "FromVariable": 84,
+                "ToVariable": 22,
+                "Type": "Activator"
+            },
+            {
+                "Id": 107,
+                "FromVariable": 41,
+                "ToVariable": 54,
+                "Type": "Activator"
+            },
+            {
+                "Id": 177,
+                "FromVariable": 70,
+                "ToVariable": 71,
+                "Type": "Activator"
+            },
+            {
+                "Id": 156,
+                "FromVariable": 59,
+                "ToVariable": 23,
+                "Type": "Activator"
+            },
+            {
+                "Id": 201,
+                "FromVariable": 79,
+                "ToVariable": 31,
+                "Type": "Activator"
+            },
+            {
+                "Id": 67,
+                "FromVariable": 23,
+                "ToVariable": 38,
+                "Type": "Activator"
+            },
+            {
+                "Id": 92,
+                "FromVariable": 34,
+                "ToVariable": 27,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 191,
+                "FromVariable": 78,
+                "ToVariable": 13,
+                "Type": "Activator"
+            },
+            {
+                "Id": 120,
+                "FromVariable": 47,
+                "ToVariable": 10,
+                "Type": "Activator"
+            },
+            {
+                "Id": 148,
+                "FromVariable": 54,
+                "ToVariable": 45,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 4,
+                "FromVariable": 1,
+                "ToVariable": 5,
+                "Type": "Activator"
+            },
+            {
+                "Id": 83,
+                "FromVariable": 28,
+                "ToVariable": 29,
+                "Type": "Activator"
+            },
+            {
+                "Id": 48,
+                "FromVariable": 13,
+                "ToVariable": 50,
+                "Type": "Activator"
+            },
+            {
+                "Id": 38,
+                "FromVariable": 11,
+                "ToVariable": 29,
+                "Type": "Activator"
+            },
+            {
+                "Id": 82,
+                "FromVariable": 28,
+                "ToVariable": 11,
+                "Type": "Activator"
+            },
+            {
+                "Id": 101,
+                "FromVariable": 37,
+                "ToVariable": 79,
+                "Type": "Activator"
+            },
+            {
+                "Id": 111,
+                "FromVariable": 43,
+                "ToVariable": 52,
+                "Type": "Activator"
+            },
+            {
+                "Id": 97,
+                "FromVariable": 36,
+                "ToVariable": 37,
+                "Type": "Activator"
+            },
+            {
+                "Id": 103,
+                "FromVariable": 38,
+                "ToVariable": 39,
+                "Type": "Activator"
+            },
+            {
+                "Id": 91,
+                "FromVariable": 34,
+                "ToVariable": 26,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 45,
+                "FromVariable": 13,
+                "ToVariable": 22,
+                "Type": "Activator"
+            },
+            {
+                "Id": 135,
+                "FromVariable": 49,
+                "ToVariable": 9,
+                "Type": "Activator"
+            },
+            {
+                "Id": 151,
+                "FromVariable": 56,
+                "ToVariable": 41,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 13,
+                "FromVariable": 5,
+                "ToVariable": 58,
+                "Type": "Activator"
+            },
+            {
+                "Id": 169,
+                "FromVariable": 65,
+                "ToVariable": 86,
+                "Type": "Activator"
+            },
+            {
+                "Id": 129,
+                "FromVariable": 47,
+                "ToVariable": 41,
+                "Type": "Activator"
+            },
+            {
+                "Id": 165,
+                "FromVariable": 64,
+                "ToVariable": 47,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 190,
+                "FromVariable": 77,
+                "ToVariable": 78,
+                "Type": "Activator"
+            },
+            {
+                "Id": 195,
+                "FromVariable": 78,
+                "ToVariable": 74,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 42,
+                "FromVariable": 13,
+                "ToVariable": 14,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 130,
+                "FromVariable": 47,
+                "ToVariable": 5,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 27,
+                "FromVariable": 9,
+                "ToVariable": 3,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 98,
+                "FromVariable": 37,
+                "ToVariable": 3,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 136,
+                "FromVariable": 50,
+                "ToVariable": 28,
+                "Type": "Activator"
+            },
+            {
+                "Id": 61,
+                "FromVariable": 19,
+                "ToVariable": 35,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 168,
+                "FromVariable": 64,
+                "ToVariable": 58,
+                "Type": "Activator"
+            },
+            {
+                "Id": 88,
+                "FromVariable": 32,
+                "ToVariable": 28,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 199,
+                "FromVariable": 79,
+                "ToVariable": 75,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 196,
+                "FromVariable": 78,
+                "ToVariable": 81,
+                "Type": "Activator"
+            },
+            {
+                "Id": 28,
+                "FromVariable": 9,
+                "ToVariable": 13,
+                "Type": "Activator"
+            },
+            {
+                "Id": 119,
+                "FromVariable": 47,
+                "ToVariable": 1,
+                "Type": "Activator"
+            },
+            {
+                "Id": 46,
+                "FromVariable": 13,
+                "ToVariable": 51,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 11,
+                "FromVariable": 4,
+                "ToVariable": 44,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 66,
+                "FromVariable": 22,
+                "ToVariable": 58,
+                "Type": "Activator"
+            },
+            {
+                "Id": 105,
+                "FromVariable": 40,
+                "ToVariable": 41,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 179,
+                "FromVariable": 71,
+                "ToVariable": 37,
+                "Type": "Activator"
+            },
+            {
+                "Id": 25,
+                "FromVariable": 9,
+                "ToVariable": 11,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 99,
+                "FromVariable": 37,
+                "ToVariable": 69,
+                "Type": "Activator"
+            },
+            {
+                "Id": 44,
+                "FromVariable": 13,
+                "ToVariable": 41,
+                "Type": "Activator"
+            },
+            {
+                "Id": 14,
+                "FromVariable": 5,
+                "ToVariable": 59,
+                "Type": "Activator"
+            },
+            {
+                "Id": 55,
+                "FromVariable": 15,
+                "ToVariable": 8,
+                "Type": "Activator"
+            },
+            {
+                "Id": 12,
+                "FromVariable": 5,
+                "ToVariable": 37,
+                "Type": "Activator"
+            },
+            {
+                "Id": 33,
+                "FromVariable": 9,
+                "ToVariable": 6,
+                "Type": "Activator"
+            },
+            {
+                "Id": 79,
+                "FromVariable": 27,
+                "ToVariable": 28,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 200,
+                "FromVariable": 79,
+                "ToVariable": 81,
+                "Type": "Activator"
+            },
+            {
+                "Id": 7,
+                "FromVariable": 1,
+                "ToVariable": 8,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 31,
+                "FromVariable": 9,
+                "ToVariable": 16,
+                "Type": "Activator"
+            },
+            {
+                "Id": 62,
+                "FromVariable": 20,
+                "ToVariable": 3,
+                "Type": "Activator"
+            },
+            {
+                "Id": 85,
+                "FromVariable": 30,
+                "ToVariable": 31,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 202,
+                "FromVariable": 80,
+                "ToVariable": 14,
+                "Type": "Activator"
+            },
+            {
+                "Id": 2,
+                "FromVariable": 1,
+                "ToVariable": 3,
+                "Type": "Activator"
+            },
+            {
+                "Id": 15,
+                "FromVariable": 5,
+                "ToVariable": 60,
+                "Type": "Activator"
+            },
+            {
+                "Id": 152,
+                "FromVariable": 57,
+                "ToVariable": 47,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 50,
+                "FromVariable": 14,
+                "ToVariable": 47,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 84,
+                "FromVariable": 29,
+                "ToVariable": 3,
+                "Type": "Activator"
+            },
+            {
+                "Id": 210,
+                "FromVariable": 84,
+                "ToVariable": 21,
+                "Type": "Activator"
+            },
+            {
+                "Id": 172,
+                "FromVariable": 68,
+                "ToVariable": 82,
+                "Type": "Activator"
+            },
+            {
+                "Id": 128,
+                "FromVariable": 47,
+                "ToVariable": 49,
+                "Type": "Activator"
+            },
+            {
+                "Id": 132,
+                "FromVariable": 47,
+                "ToVariable": 31,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 112,
+                "FromVariable": 43,
+                "ToVariable": 8,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 186,
+                "FromVariable": 75,
+                "ToVariable": 59,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 207,
+                "FromVariable": 83,
+                "ToVariable": 53,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 21,
+                "FromVariable": 7,
+                "ToVariable": 85,
+                "Type": "Activator"
+            },
+            {
+                "Id": 53,
+                "FromVariable": 15,
+                "ToVariable": 46,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 155,
+                "FromVariable": 59,
+                "ToVariable": 15,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 104,
+                "FromVariable": 39,
+                "ToVariable": 66,
+                "Type": "Activator"
+            },
+            {
+                "Id": 74,
+                "FromVariable": 25,
+                "ToVariable": 35,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 65,
+                "FromVariable": 22,
+                "ToVariable": 42,
+                "Type": "Activator"
+            },
+            {
+                "Id": 35,
+                "FromVariable": 9,
+                "ToVariable": 19,
+                "Type": "Activator"
+            },
+            {
+                "Id": 137,
+                "FromVariable": 50,
+                "ToVariable": 11,
+                "Type": "Activator"
+            },
+            {
+                "Id": 133,
+                "FromVariable": 47,
+                "ToVariable": 8,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 34,
+                "FromVariable": 9,
+                "ToVariable": 18,
+                "Type": "Activator"
+            },
+            {
+                "Id": 157,
+                "FromVariable": 59,
+                "ToVariable": 6,
+                "Type": "Activator"
+            },
+            {
+                "Id": 197,
+                "FromVariable": 79,
+                "ToVariable": 12,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 54,
+                "FromVariable": 15,
+                "ToVariable": 56,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 89,
+                "FromVariable": 32,
+                "ToVariable": 11,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 19,
+                "FromVariable": 6,
+                "ToVariable": 73,
+                "Type": "Activator"
+            },
+            {
+                "Id": 123,
+                "FromVariable": 47,
+                "ToVariable": 3,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 145,
+                "FromVariable": 53,
+                "ToVariable": 45,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 164,
+                "FromVariable": 63,
+                "ToVariable": 47,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 160,
+                "FromVariable": 60,
+                "ToVariable": 87,
+                "Type": "Inhibitor"
+            }
+        ]
+    },
+    "Layout": {
+        "Variables": [
+            {
+                "Id": 1,
+                "Name": "ABL1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -123.9123455696458,
+                "PositionY": -16.93528838852768,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 2,
+                "Name": "ATR",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -272.6649511307736,
+                "PositionY": 79.63110206961278,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 3,
+                "Name": "CASP9",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 36.90530414532968,
+                "PositionY": 118.33837951612401,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 4,
+                "Name": "CDKN1B",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -299.0012248328587,
+                "PositionY": -60.581501052012385,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 5,
+                "Name": "EGFR",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 30.238686984113887,
+                "PositionY": -130.39959608271087,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 6,
+                "Name": "MDM2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 13.671775246342207,
+                "PositionY": -40.8810781210128,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Orange"
+            },
+            {
+                "Id": 7,
+                "Name": "PDGFRB",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -260.88939051162725,
+                "PositionY": 189.08441870317233,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 8,
+                "Name": "RB1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -152.34423140315153,
+                "PositionY": 13.13965799073776,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 9,
+                "Name": "AKT1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 37.5766753163146,
+                "PositionY": 74.9141545923871,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Orange"
+            },
+            {
+                "Id": 10,
+                "Name": "BAD",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 138.90613842776077,
+                "PositionY": 161.86097994212082,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 11,
+                "Name": "BAX",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 100.2276291050677,
+                "PositionY": 148.8563129691003,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 12,
+                "Name": "BCL2L11",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 238.60097810575854,
+                "PositionY": 171.4068496240842,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 13,
+                "Name": "CDK2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -48.907420989800556,
+                "PositionY": 49.29036002634651,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 14,
+                "Name": "CDKN1A",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -59.88576927147717,
+                "PositionY": -35.67564232342965,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 15,
+                "Name": "CHEK1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -92.78997264070688,
+                "PositionY": 93.7589199782031,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Orange"
+            },
+            {
+                "Id": 16,
+                "Name": "CHUK",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -126.74891220003046,
+                "PositionY": -179.29541382719967,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 17,
+                "Name": "GSK3A",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 273.1175269151826,
+                "PositionY": 169.30978874597545,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 18,
+                "Name": "TOPBP1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -135.2792895342953,
+                "PositionY": 172.1896997408294,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 19,
+                "Name": "XIAP",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 21.43023934238078,
+                "PositionY": 226.31730179231943,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 20,
+                "Name": "APAF1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 100.69108885919829,
+                "PositionY": 354.8196312960307,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 21,
+                "Name": "AR",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 2.4379055653615223,
+                "PositionY": -214.56232280063526,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 22,
+                "Name": "ESR1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -49.6402996251687,
+                "PositionY": -172.37565738837617,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 23,
+                "Name": "CHEK2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -90.43232225049748,
+                "PositionY": 29.44027350358794,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Orange"
+            },
+            {
+                "Id": 24,
+                "Name": "AURKB",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -200.39127222341003,
+                "PositionY": 238.46397189017745,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 25,
+                "Name": "BIRC5",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -178.9439072661526,
+                "PositionY": 161.069930296461,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 26,
+                "Name": "BCL2L1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 163.45413772387818,
+                "PositionY": 264.2881292543513,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 27,
+                "Name": "BCL2L2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 205.02233923547047,
+                "PositionY": 244.43584195137876,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 28,
+                "Name": "BAK1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 102.96733573416792,
+                "PositionY": 219.9910287480845,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 29,
+                "Name": "CYCS",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 105.97269458294763,
+                "PositionY": 274.1830382792847,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 30,
+                "Name": "BBC3",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -13.134910068362338,
+                "PositionY": 266.1821527055527,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 31,
+                "Name": "MCL1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 159.32961770487742,
+                "PositionY": 133.68030569089552,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 32,
+                "Name": "BCL2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 17.884651902201192,
+                "PositionY": 363.3568614940408,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 33,
+                "Name": "BIK",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 256.7587360212303,
+                "PositionY": 348.127505588988,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 34,
+                "Name": "BID",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 43.87672425603629,
+                "PositionY": 273.5539854635091,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 35,
+                "Name": "CASP3",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -41.27257919120264,
+                "PositionY": 150.31740687719844,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 36,
+                "Name": "BRAF",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 267.39058146146687,
+                "PositionY": -214.04285776572172,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 37,
+                "Name": "MAP2K1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 125.46708070334401,
+                "PositionY": -84.31944342201248,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Orange"
+            },
+            {
+                "Id": 38,
+                "Name": "BRCA1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -206.16701614211493,
+                "PositionY": -43.06200848490375,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 39,
+                "Name": "FANCD2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -308.2685746740403,
+                "PositionY": -135.54349742116844,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 40,
+                "Name": "CCNA1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -278.9988613348296,
+                "PositionY": 136.855786620506,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 41,
+                "Name": "E2F1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -146.44877745742278,
+                "PositionY": 65.89042375878942,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 42,
+                "Name": "CCND1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -123.30084102470195,
+                "PositionY": -245.07213068957512,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 43,
+                "Name": "CDK4",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -192.29557869793805,
+                "PositionY": -82.38898299703641,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 44,
+                "Name": "CCND3",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -367.252635544662,
+                "PositionY": -114.00821291220092,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 45,
+                "Name": "CDK6",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -257.1321174659041,
+                "PositionY": -112.36342658790785,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 46,
+                "Name": "CDC25A",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -190.06454051880084,
+                "PositionY": 40.45486647988034,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 47,
+                "Name": "CDK1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -52.489572837469275,
+                "PositionY": 17.842689257100904,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 48,
+                "Name": "CCNB1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -120.68295349702967,
+                "PositionY": -92.39530451812303,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Purple"
+            },
+            {
+                "Id": 49,
+                "Name": "CSNK2A1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -68.53972207356873,
+                "PositionY": 174.94526937767776,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 50,
+                "Name": "TP53",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -5.76064385046707,
+                "PositionY": 99.09684024338173,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 51,
+                "Name": "PPP1CA",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -66.76162937040024,
+                "PositionY": 270.6519446533248,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 52,
+                "Name": "FOXM1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -128.91391292773102,
+                "PositionY": -54.316444830444524,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 53,
+                "Name": "CDKN2A_arf",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -117.68165189280762,
+                "PositionY": -142.313751369405,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 54,
+                "Name": "CDKN2A_p16",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -174.67319763886974,
+                "PositionY": -123.33089801768315,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 55,
+                "Name": "CDKN2B",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -359.6215496596103,
+                "PositionY": -12.41266965583189,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 56,
+                "Name": "E2F6",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -230.36840966798752,
+                "PositionY": 135.29719652240166,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 57,
+                "Name": "WEE1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -11.291970050440794,
+                "PositionY": -5.731032434328069,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Orange"
+            },
+            {
+                "Id": 58,
+                "Name": "PIK3R1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 86.11178646987308,
+                "PositionY": -34.48184253044004,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 59,
+                "Name": "PPP2CA",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 53.108099013175114,
+                "PositionY": -3.3269129381910476,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 60,
+                "Name": "PTK2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 112.09701433593085,
+                "PositionY": 44.32252366317324,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 61,
+                "Name": "RASA1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 69.93257398024015,
+                "PositionY": -332.57416361831133,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 62,
+                "Name": "SHC1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 98.30762009718819,
+                "PositionY": -331.4616112161802,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 63,
+                "Name": "EIF2AK2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -59.71079125884927,
+                "PositionY": -108.791206658315,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 64,
+                "Name": "ERBB2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 28.045972209590058,
+                "PositionY": -72.54811945709302,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 65,
+                "Name": "PIK3CA",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 232.48932140310288,
+                "PositionY": -267.21388939472934,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 66,
+                "Name": "BRCA2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -400.0,
+                "PositionY": -202.7008698114248,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 67,
+                "Name": "GRB2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 353.37175777107586,
+                "PositionY": -63.35860997993851,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 68,
+                "Name": "PAK1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 235.78031250325165,
+                "PositionY": -90.96371282745122,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 69,
+                "Name": "GSK3B",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 54.51243318048291,
+                "PositionY": -222.43349241248978,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 70,
+                "Name": "HRAS",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 195.3484550878502,
+                "PositionY": -298.8129819241603,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 71,
+                "Name": "RAF1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 126.01814966593756,
+                "PositionY": -217.85546004731148,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 72,
+                "Name": "TIAM1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 293.9598510696504,
+                "PositionY": -161.34056768610745,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 73,
+                "Name": "IGF1R",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 193.8257643982554,
+                "PositionY": 56.362734548644625,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 74,
+                "Name": "IRS1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 187.03069645295096,
+                "PositionY": -20.31294407156744,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 75,
+                "Name": "JAK2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 251.1605429573274,
+                "PositionY": -23.462776184761672,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 76,
+                "Name": "KRAS",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 184.87739666296113,
+                "PositionY": -247.7051594813613,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 77,
+                "Name": "MAP3K1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 95.31526178540253,
+                "PositionY": -183.71275785161637,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 78,
+                "Name": "MAPK1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 67.55750920061145,
+                "PositionY": -87.67107550113688,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 79,
+                "Name": "MAPK3",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 238.97130770350614,
+                "PositionY": 35.039538694625385,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 80,
+                "Name": "MAP3K5",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -52.54797229815683,
+                "PositionY": -268.3526488982297,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 81,
+                "Name": "MAPKAPK2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 188.47727204108892,
+                "PositionY": -112.32701992241645,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 82,
+                "Name": "PLK1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 71.58295038795647,
+                "PositionY": -117.46906266035435,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 83,
+                "Name": "MYC",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -161.91775511243225,
+                "PositionY": -249.45451562839798,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 84,
+                "Name": "SMAD3",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -47.73618815710555,
+                "PositionY": -292.6002302716399,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 85,
+                "Name": "SRC",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": -121.68306156328843,
+                "PositionY": 248.1059058350414,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 86,
+                "Name": "RPS6KB1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 305.6170468046924,
+                "PositionY": -139.63263367964197,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 87,
+                "Name": "PTEN",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 57.0548445050056,
+                "PositionY": 144.8163210732825,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": "",
+                "Fill": "BMA_Green"
+            },
+            {
+                "Id": 88,
+                "Name": "RAC1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 174.06693640025213,
+                "PositionY": 2.881396285130763,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            }
+        ],
+        "Containers": [
+            {
+                "Id": 1,
+                "Name": "C0",
+                "Size": 4,
+                "PositionX": -2,
+                "PositionY": -2
+            }
+        ],
+        "AnnotatedGridCells": [],
+        "Description": ""
+    },
+    "ltl": {
+        "states": [],
+        "operations": []
+    }
+}

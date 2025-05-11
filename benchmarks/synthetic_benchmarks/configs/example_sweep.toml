@@ -1,0 +1,35 @@
+# sweeps/configs/specification_size_sweep.toml
+name = "example_sweep"
+description = "Example sweep investigating impact of specification size by scaling specifications"
+output_dir_suffix = "example_sweep"
+default_seeds = [42, 43, 44]
+
+# These parameters will be applied to all parameter sets
+[base_params]
+graph_generation.generate_specifications = "true"
+training.model_save_dir = "models"  
+
+
+# Each parameter set represents a different configuration to test
+[[parameter_sets]]
+specification_generation.n_specifications = 15
+
+[[parameter_sets]]
+specification_generation.n_specifications = 30
+
+[[parameter_sets]]
+specification_generation.n_specifications = 60
+
+[[parameter_sets]]
+specification_generation.n_specifications = 120
+
+[[parameter_sets]]
+specification_generation.n_specifications = 240
+
+[[plotting_configs]]
+x_axis_metric = "override_specification_generation.n_specifications"
+y_axis_metrics = ["test_nonbinary_f1", "test_nonbinary_qwk", "test_nonbinary_mcc"]
+neat_x_axis_label = "Specification Size"
+figsize = [10, 10]
+y_min = 0
+y_max = 1

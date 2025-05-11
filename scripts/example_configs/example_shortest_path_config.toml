@@ -1,0 +1,46 @@
+[DEFAULT]
+pipe_dir = "scripts"
+data_dir = "example_data"
+shortest_path_data_dir = "shortest_path"
+simulation_data_dir = "simulation"
+results_dir = "results"
+
+[shortest_path_settings]
+# Threshold for within mutation or within phenotype genes: max n_genes in mut-mut paths or pheno-pheno paths (incl. mut/pheno genes at both ends)
+thre = 3
+# Cut-off: # if tuple, e.g. ('curation_effort', 15), then only include interactions with >= 15 curation_effort
+cut_off = false
+# use reciprocal n_ref as edge weight in Dijkstra's algorithm
+weighted_edge = "reciprocal_n_references"
+# use consensus sign if an interaction is both activation AND inhibition
+consensus_sign = true
+# link mutations to DEGs to phenotypes
+to_combine = "mut_deg_pheno"
+# if source name, e.g. 'SIGNOR', then only use interactions in the source database (note, if you want to have a value
+# here uncomment and add it, otherwise has to be commented out in order for configparser to fallback to `None` value)
+# filter_source_prime='SIGNOR'
+# if list, e.g. ['HPRD', 'SPIKE'], then only use interactions in at least one of the databases (note, if you want to have a value
+# here uncomment and add it, otherwise has to be commented out in order for configparser to fallback to `None` value)
+# filter_source = ['HPRD', 'SPIKE']
+# replace proteins with the same gene names
+replace_gene = { Q8N726 = "CDKN2A_arf", P42771 = "CDKN2A_p16", E9PAV3 = "NACA_E9PAV3", Q13765 = "NACA_Q13765" } # CDKN2A # NACA (not relevant)
+# replace ERBB1 with EGFR as Omnipath only has EGFR
+gene_replace_dict = { gene_name = { ERBB1 = "EGFR" } }
+
+[shortest_path_input]
+gene_node_table_file = "gene_node_table.csv"
+
+[shortest_path_output]
+shortest_path_out_file_name = "test_shortest_path"
+
+[simulation_settings]
+time_step = 50
+max_time_step = 1000
+bma_console = "C:\\PROGRA~2\\BMA\\BioCheckConsole.exe"
+
+[simulation_input]
+input_file = "test_shortest_path.json"
+spec_file = "test_spec.csv"
+
+[simulation_output]
+output_file = "test_bma_output.csv"

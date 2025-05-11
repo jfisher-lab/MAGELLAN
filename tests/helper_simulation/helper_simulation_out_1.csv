@@ -1,0 +1,5 @@
+,expectation,mean,diff,experiment
+MAPK1,2.0,1.0,-1.0,a
+MAPK3,2.0,1.0,-1.0,a
+BRAF,2.0,0.0,-2.0,b
+MAP2K1,2.0,0.0,-2.0,b

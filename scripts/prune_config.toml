@@ -1,0 +1,52 @@
+[paths]
+root_path = "benchmarks/bio_benchmarks"
+data_dir = "data/BRCA/"
+model_version = "v2_20250226"
+# model_version = "v1_20250128"
+model_path = "json/kegg_shortest_path_with_phenotype.json"
+# spec_version = "v1_20250128"
+spec_version = "v2_20250226"
+spec_path = "spec/literature_curated_specification.csv"
+# spec_path = "spec/combined_specification.csv"
+
+
+
+[model_params]
+min_range = 0
+max_range = 2  # default
+filter_spec = true  # default (filter specification based on nodes in json)
+learning_rate = 0.005
+n_iter = 200
+edge_weight_init = 0.5  
+max_update = true
+round_val = false
+use_ordered_dict = true
+check_paths = false
+allow_sign_flip = false
+tf_method = "sum"
+
+[training]
+
+epochs = 10000  # default
+use_hybrid_loss = true
+hybrid_loss_alpha = 1  # 0.7 is the default, lower is more bce, higher is more mse
+category_curriculum = false
+phenotype_nodes_first = false
+early_stopping_enabled = true
+early_stopping_patience = 20
+use_class_weights = false
+class_weight_method = "inverse_freq"  # or "balanced" or "inverse_freq"
+use_warmup = true
+warmup_steps = 10
+warmup_initial_lr_factor = 0.1  # Initial learning rate factor
+use_node_class_weights = true
+seed = 42
+# boundary_penalty_alpha = 1.5
+include_extreme_values_stage = false
+# extreme_values_weight = 1.0
+# node_class_weights_extreme_boost = 1.0
+# grad_clip_max_norm = 1.0
+test_size = 0.0
+[debug]
+mask_debug = false  # Set to true to see masked edges
+

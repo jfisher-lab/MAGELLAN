@@ -1,0 +1,67 @@
+# Graph Generation Parameters
+[graph_generation]
+generate_base_graph = false
+grow_base_graph = false
+base_graph_import = "benchmarks/bio_benchmarks/data/example/example_1/example_network_bio_untrained.json"
+generate_specifications = false
+spec_file = "benchmarks/bio_benchmarks/data/example/example_1/example_bio_spec.csv"
+filter_spec = true
+n_nodes = 100
+forward_edge_probability = 0.05
+backward_edge_probability = 0.025
+skip_layer_probability = 0.025
+n_spurious_edges = 0
+inhibition_fraction = 0.3
+min_edge_weight = 0.1
+max_edge_weight = 1.0
+out_dir = "benchmarks/synthetic_benchmarks/results/example_benchmark_config"
+
+
+[specification_generation]
+n_specifications = 30
+terminal_node_bias = 100.0
+noise_fraction = 0.0
+noise_std = 1.0
+min_spec_inputs = 2
+max_spec_inputs = 8
+min_spec_outputs = 1
+max_spec_outputs = 4
+class_imbalance = 0.0
+
+
+[training]
+epochs = 1000
+learning_rate = 0.005
+max_range = 2
+device = "cpu"
+edge_weight_init = 0.5
+n_iter = 50
+max_update = true
+round_val = false
+allow_sign_flip = false
+category_curriculum = false
+early_stopping_enabled = true
+early_stopping_patience = 120
+warmup_steps = 100
+warmup_initial_lr_factor = 0.1
+use_hybrid_loss = true
+hybrid_loss_alpha = 1.0
+use_class_weights = false
+use_node_class_weights = true
+class_weight_method = "inverse_freq"
+tf_method = "sum"
+test_size = 0.1
+l1_lambda = 0.0
+l2_lambda = 0.0
+weight_decay = 0.0001
+model_save_dir = "benchmarks/synthetic_benchmarks/results/example_benchmark_config"
+
+[simulation]
+max_simulation_steps = 100
+step_size = 1.0
+seed = 42
+
+[evaluation]
+save_confusion_plots = false
+save_binary_metrics_csv = false
+weight_threshold = 0.01

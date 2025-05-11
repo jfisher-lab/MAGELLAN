@@ -1,0 +1,8 @@
+cell_line,tissue,paper_title,source,experiment_overview,experiment_particular,gene,perturbation,expectation_bma,Notes,notes,subject
+x,NA,a,a,a,a,ERBB2,2,NA,NA,NA,test
+x,NA,a,a,a,a,MAPK1,NA,2,NA,NA,test
+x,NA,a,a,a,a,MAPK3,NA,2,NA,NA,test
+y,NA,b,b,b,b,EGFR,2,NA,NA,NA,test
+y,NA,b,b,b,b,GRB2,1,NA,NA,NA,test
+y,NA,b,b,b,b,BRAF,NA,2,NA,NA,test
+y,NA,b,b,b,b,MAP2K1,NA,2,NA,NA,test

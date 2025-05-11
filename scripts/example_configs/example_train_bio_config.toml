@@ -1,0 +1,45 @@
+[paths]
+root_path = "benchmarks/bio_benchmarks"
+data_dir = "data/example/"
+model_version = "example_1"
+model_path = "json/example_network_bio_untrained.json"
+spec_version = "example_1"
+spec_path = "spec/example_bio_spec.csv"
+
+
+
+[model_params]
+min_range = 0
+max_range = 2  # default
+filter_spec = true  # default (filter specification based on nodes in json)
+learning_rate = 0.005
+n_iter = 200
+edge_weight_init = 0.5  
+max_update = true
+round_val = false
+use_ordered_dict = true
+check_paths = false
+allow_sign_flip = false
+tf_method = "sum"
+
+[training]
+
+epochs = 10000  # default
+use_hybrid_loss = true
+hybrid_loss_alpha = 1  
+category_curriculum = false
+phenotype_nodes_first = false
+early_stopping_enabled = true
+early_stopping_patience = 20
+use_class_weights = false
+class_weight_method = "inverse_freq"  # "balanced" or "inverse_freq"
+use_warmup = true
+warmup_steps = 10
+warmup_initial_lr_factor = 0.1  # Initial learning rate factor
+use_node_class_weights = true
+seed = 42
+include_extreme_values_stage = false
+test_size = 0.0
+[debug]
+mask_debug = false  # Set to true to see masked edges
+
