@@ -4,7 +4,7 @@ Matthew A. Clarke*, Charlie George Barker*, Yuxin Sun*, Theodoros I. Roumeliotis
 
 (* indicates equal contribution)
 
-This repository contains the code for the MAGELLAN project, which is a tool for automatically generating interpretable computational models for biological reasoning. For more details, please see the [paper](https://www.biorxiv.org/).
+This repository contains the code for the MAGELLAN project, which is a tool for automatically generating interpretable computational models for biological reasoning. For more details, please see the [paper](https://www.biorxiv.org/content/10.1101/2025.05.16.653408v1).
 
 ![MAGELLAN Overview](misc/Overview.png)
 **MAGELLAN Overview:** MAGELLAN allows the generation of a computational model from pathway databases, and the fitting of these models to a user-specified specification, resulting in a transparent and interpretable model. This model can then be further edited and interrogated using the *BioModelAnalyzer* [GUI](https://biomodelanalyzer.org/) and [command line tools](https://biomodelanalyzer.org/).
@@ -76,9 +76,12 @@ Please cite the following paper when using MAGELLAN:
 
 ```bibtex
 @article{clarke2025magellan,
-  title={MAGELLAN: Automated Generation of Interpretable Computational  Models for Biological Reasoning},
-  author={Clarke, Matthew A and Barker, Charlie George and Sun, Yuxin and Roumeliotis, Theodoros I and Choudhary, Jyoti S and Fisher, Jasmin},
-  journal={bioRxiv},
-  year={2025},
+	author = {Clarke, Matthew A. and Barker, Charlie George and Sun, Yuxin and Roumeliotis, Theodoros I. and Choudhary, Jyoti S. and Fisher, Jasmin},
+	title = {MAGELLAN: Automated Generation of Interpretable Computational Models for Biological Reasoning},
+	year = {2025},
+	doi = {10.1101/2025.05.16.653408},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/early/2025/05/19/2025.05.16.653408},
+	journal = {bioRxiv}
 }
 ```
