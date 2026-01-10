@@ -9,7 +9,9 @@ from magellan.simulation import run_simulation
 
 # Load configuration from TOML file
 local_path = Path(__file__).parent.parent
-config_path = os.path.join(local_path, "scripts", "example_configs", "example_shortest_path_config.toml")
+config_path = os.path.join(
+    local_path, "scripts", "example_configs", "example_shortest_path_config.toml"
+)
 
 # Use argparse to get config path from command line
 parser = argparse.ArgumentParser(description="Run BMA simulation.")

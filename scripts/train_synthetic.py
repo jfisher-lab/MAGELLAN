@@ -173,6 +173,26 @@ if __name__ == "__main__":
     )
     print("=" * 100)
 
+    # Print validation metrics only if they exist
+    if (
+        evaluation_result.val_nonbinary_metrics
+        and evaluation_result.val_binary_metrics
+    ):
+        print("=" * 100)
+        print(
+            f"Val Nonbinary F1: {evaluation_result.val_nonbinary_metrics['f1']:.4f}"
+        )
+        print(
+            f"Val Nonbinary MCC: {evaluation_result.val_nonbinary_metrics['mcc']:.4f}"
+        )
+        print(
+            f"Val Nonbinary Kappa: {evaluation_result.val_nonbinary_metrics['qwk']:.4f}"
+        )
+        print("=" * 100)
+        print(f"Val Binary F1: {evaluation_result.val_binary_metrics['f1']:.4f}")
+        print(f"Val Binary MCC: {evaluation_result.val_binary_metrics['mcc']:.4f}")
+        print(f"Val Binary Kappa: {evaluation_result.val_binary_metrics['qwk']:.4f}")
+
     # Print test metrics only if they exist
     if (
         evaluation_result.test_nonbinary_metrics
@@ -217,6 +237,23 @@ if __name__ == "__main__":
             f"train_nonbinary_{k}": v
             for k, v in evaluation_result.train_nonbinary_metrics.items()
         },
+        # Validation metrics - add only if present
+        **(
+            {
+                f"val_binary_{k}": v
+                for k, v in evaluation_result.val_binary_metrics.items()
+            }
+            if evaluation_result.val_binary_metrics
+            else {}
+        ),
+        **(
+            {
+                f"val_nonbinary_{k}": v
+                for k, v in evaluation_result.val_nonbinary_metrics.items()
+            }
+            if evaluation_result.val_nonbinary_metrics
+            else {}
+        ),
         # Test metrics - add only if present
         **(
             {

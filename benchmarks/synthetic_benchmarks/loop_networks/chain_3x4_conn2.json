@@ -1,0 +1,352 @@
+{
+    "Model": {
+        "Name": "chain_3x4_conn2",
+        "Variables": [
+            {
+                "Name": "chain_c0_0",
+                "Id": 1,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(4)*152/1000"
+            },
+            {
+                "Name": "chain_c0_1",
+                "Id": 2,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(1)*437/1000"
+            },
+            {
+                "Name": "chain_c0_2",
+                "Id": 3,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(2)*758/1000"
+            },
+            {
+                "Name": "chain_c0_3",
+                "Id": 4,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(3)*240/1000"
+            },
+            {
+                "Name": "chain_c1_0",
+                "Id": 5,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(8)*263/1000"
+            },
+            {
+                "Name": "chain_c1_1",
+                "Id": 6,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(5)*641/1000-var(2)*806/1000"
+            },
+            {
+                "Name": "chain_c1_2",
+                "Id": 7,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(6)*118/1000"
+            },
+            {
+                "Name": "chain_c1_3",
+                "Id": 8,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(7)*849/2000-var(3)*633/2000"
+            },
+            {
+                "Name": "chain_c2_0",
+                "Id": 9,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(12)*362/2000+var(8)*969/2000"
+            },
+            {
+                "Name": "chain_c2_1",
+                "Id": 10,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(9)*373/1000"
+            },
+            {
+                "Name": "chain_c2_2",
+                "Id": 11,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(10)*488/2000-var(7)*253/2000"
+            },
+            {
+                "Name": "chain_c2_3",
+                "Id": 12,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(11)*650/1000"
+            }
+        ],
+        "Relationships": [
+            {
+                "Id": 6,
+                "FromVariable": 4,
+                "ToVariable": 1,
+                "Type": "Activator"
+            },
+            {
+                "Id": 1,
+                "FromVariable": 1,
+                "ToVariable": 2,
+                "Type": "Activator"
+            },
+            {
+                "Id": 13,
+                "FromVariable": 9,
+                "ToVariable": 10,
+                "Type": "Activator"
+            },
+            {
+                "Id": 14,
+                "FromVariable": 10,
+                "ToVariable": 11,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 3,
+                "FromVariable": 2,
+                "ToVariable": 6,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 2,
+                "FromVariable": 2,
+                "ToVariable": 3,
+                "Type": "Activator"
+            },
+            {
+                "Id": 5,
+                "FromVariable": 3,
+                "ToVariable": 8,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 8,
+                "FromVariable": 6,
+                "ToVariable": 7,
+                "Type": "Activator"
+            },
+            {
+                "Id": 15,
+                "FromVariable": 11,
+                "ToVariable": 12,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 10,
+                "FromVariable": 7,
+                "ToVariable": 11,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 16,
+                "FromVariable": 12,
+                "ToVariable": 9,
+                "Type": "Activator"
+            },
+            {
+                "Id": 7,
+                "FromVariable": 5,
+                "ToVariable": 6,
+                "Type": "Activator"
+            },
+            {
+                "Id": 12,
+                "FromVariable": 8,
+                "ToVariable": 9,
+                "Type": "Activator"
+            },
+            {
+                "Id": 9,
+                "FromVariable": 7,
+                "ToVariable": 8,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 11,
+                "FromVariable": 8,
+                "ToVariable": 5,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 4,
+                "FromVariable": 3,
+                "ToVariable": 4,
+                "Type": "Inhibitor"
+            }
+        ]
+    },
+    "Layout": {
+        "Variables": [
+            {
+                "Id": 1,
+                "Name": "chain_c0_0",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 426.86,
+                "PositionY": 703.62,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 2,
+                "Name": "chain_c0_1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 308.08,
+                "PositionY": 599.82,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 3,
+                "Name": "chain_c0_2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 391.9,
+                "PositionY": 469.78,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 4,
+                "Name": "chain_c0_3",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 517.0,
+                "PositionY": 575.02,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 5,
+                "Name": "chain_c1_0",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 106.798,
+                "PositionY": 421.66,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 6,
+                "Name": "chain_c1_1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 239.76,
+                "PositionY": 465.96,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 7,
+                "Name": "chain_c1_2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 357.92,
+                "PositionY": 303.16,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 8,
+                "Name": "chain_c1_3",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 246.06,
+                "PositionY": 338.66,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 9,
+                "Name": "chain_c2_0",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 209.16,
+                "PositionY": 176.336,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 10,
+                "Name": "chain_c2_1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 331.44,
+                "PositionY": 36.0,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 11,
+                "Name": "chain_c2_2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 373.1,
+                "PositionY": 143.01,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 12,
+                "Name": "chain_c2_3",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 207.84,
+                "PositionY": 53.58,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            }
+        ],
+        "Containers": [
+            {
+                "Id": 1,
+                "Name": "C0",
+                "Size": 4,
+                "PositionX": -2,
+                "PositionY": -2
+            }
+        ],
+        "AnnotatedGridCells": [],
+        "Description": ""
+    },
+    "ltl": {
+        "states": [],
+        "operations": []
+    }
+}

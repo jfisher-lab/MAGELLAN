@@ -1,0 +1,46 @@
+node,target,citation,notes
+AdhesionMolecules,generic,,
+Akt_LC,generic,,
+AXIN_LC,2-var(Frizzled_LC),Galluzzi et al. Trends Cell Bio (2018),Binding of Wnt ligand to Fzd receptor leads to B-catenin activation via AXIN
+Axl,var(Gas6)*var(TBR_LC),"Collin et al., Curr Opin Hematology (2016)","Axl is induced by TGF signalling, Gas6 is ligand for Axl"
+Axl,var(Gas6)*var(TBR_LC),"Bauer et al., 2012 (JEM)","Axl is induced by TGF signalling, Gas6 is ligand for Axl"
+B-catenin_LC,3-var(AXIN_LC)-var(E-cadherin),"Zhang, Y. & Wang, X. J Hematol Oncol (2020)","Axin in complex with GSK3b, APC and CK1a inhibits B-catenin activity "
+B-catenin_LC,3-var(AXIN_LC)-var(E-cadherin),"Van den Bossche et al., Blood (2012)",E-cadherin binds B-catenin inhibiting it and helping to sequester it at the plasma membrane
+CBF-B,1,,
+CSF1,0,,
+CSF1R,"max(var(IL-34), var(CSF1))","Hamilton, J. A. Nat Rev Immunol (2008)",CSF1R is receptor for both IL-34 and CSF1
+DKK,1,,
+E-cadherin,generic,,
+ERK_LC,var(LAMTOR-p14)*var(MEK_LC),"Nada, S. et al. Embo J (2009)",LAMTOR complex facilitates MEK-ERK interaction
+Frizzled_LC,2*var(WNT)-var(DKK),"Nakamura, T., et al. J Cell Mol Med (2008)","Frizzled is receptor for Wnt, can be inhibited by DKK, but at endogenous levels Wnt signalling still occurs."
+Frizzled_LC,2*var(WNT)-var(DKK),"Becker, M. R., et al., J Invest Dermatol (2011)","Frizzled is receptor for Wnt, can be inhibited by DKK, but at endogenous levels Wnt signalling still occurs."
+Gas6,1,,
+Id2_LC,var(CBF-B)*var(Runx3),"Collin et al., Curr Opin Hematology (2016)",Runx3 dimerise with CBF-B
+IL-18,0,,
+IL-1B,1+var(IL-18),Griffiths et al. Cytokine (2005),"IL-1B consitutively present in epidermis, increased levels trigger LC migration"
+IL-1R,generic,,
+IL-34,1,,
+Irf1,var(TNFR_LC)*var(IL-1R),Griffiths et al. Cytokine (2005),Combination of 2 cytokine signals are needed to induce LC migration
+Irf4,1,,
+LAMTOR-p14,1+var(TBR_LC),"Collin et al., Curr Opin Hematology (2016)",LAMTOR complex responds to TGF signalling
+MEK_LC,1,,
+mTOR_LC,"min(var(LAMTOR-p14),var(Akt_LC))","Collin et al., Curr Opin Hematology (2016)","LAMTOR complex acts as adaptor to aid in mTOR activation, which is also mediated by PI3K phosphorylation"
+mTOR_LC,"min(var(LAMTOR-p14),var(Akt_LC))",Liu et al. Nat Rev Mol Cell Bio (2020),"LAMTOR complex acts as adaptor to aid in mTOR activation, which is also mediated by PI3K phosphorylation"
+mTOR_LC,"min(var(LAMTOR-p14),var(Akt_LC))","Laplante, M. & Sabatini, D. Cell (2012)",Functional AND gate between TSC and LAMTOR dependent mechanisms of mTOR activation
+PI3K_LC,var(Axl)+var(CSF1R)+var(Tyro3)-1,"Stanley et al., CSH Pers Bio (2014)",PI3K acts downstream of RTKs
+PI3K_LC,var(Axl)+var(CSF1R)+var(Tyro3)-1,Lemke et al. Nat Rev Immunology (2008),PI3K acts downstream of RTKs
+Proliferation_LC,var(TCF_LC)*var(ERK_LC)*var(mTOR_LC)/2,,
+Pros1,1,,
+Pu.1,generic,,
+Residency_LC,"floor(avg(var(AdhesionMolecules),var(E-cadherin),var(Id2_LC))) + 1 - ceil(var(Irf4)/2)",,
+Runx3,generic,,
+Smad2_3_LC,generic,,
+Survival_LC,"min(var(ERK_LC),var(mTOR_LC))",,
+TBR_LC,generic,,
+TCF_LC,generic,,
+TGF-B,1,,
+TNF-a,var(IL-1R)-1,Griffiths et al. Cytokine (2005),Production of TNF-a by KCs is induced by high elvels of IL-1B
+TNFR_LC,generic,,
+Tyro3,"max(var(Pros1),var(Gas6))*max(0,1-var(Axl))",Gas6 is a ligand for Axl and Tyro3,"Tyro3 downregulated by Axl, Pros1 and Gas6 are ligands"
+Tyro3,"max(var(Pros1),var(Gas6))*max(0,1-var(Axl))","Bauer et al., JEM (2012)","Tyro3 downregulated by Axl, Pros1 and Gas6 are ligands"
+WNT,1,,

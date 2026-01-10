@@ -1,0 +1,278 @@
+{
+    "Model": {
+        "Name": "ring_10",
+        "Variables": [
+            {
+                "Name": "ring10_0",
+                "Id": 1,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(10)*488/1000"
+            },
+            {
+                "Name": "ring10_1",
+                "Id": 2,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(1)*437/1000"
+            },
+            {
+                "Name": "ring10_2",
+                "Id": 3,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(2)*758/1000"
+            },
+            {
+                "Name": "ring10_3",
+                "Id": 4,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(3)*240/1000"
+            },
+            {
+                "Name": "ring10_4",
+                "Id": 5,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(4)*152/1000"
+            },
+            {
+                "Name": "ring10_5",
+                "Id": 6,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(5)*641/1000"
+            },
+            {
+                "Name": "ring10_6",
+                "Id": 7,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(6)*118/1000"
+            },
+            {
+                "Name": "ring10_7",
+                "Id": 8,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(7)*849/1000"
+            },
+            {
+                "Name": "ring10_8",
+                "Id": 9,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(8)*263/1000"
+            },
+            {
+                "Name": "ring10_9",
+                "Id": 10,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(9)*373/1000"
+            }
+        ],
+        "Relationships": [
+            {
+                "Id": 7,
+                "FromVariable": 7,
+                "ToVariable": 8,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 2,
+                "FromVariable": 2,
+                "ToVariable": 3,
+                "Type": "Activator"
+            },
+            {
+                "Id": 10,
+                "FromVariable": 10,
+                "ToVariable": 1,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 9,
+                "FromVariable": 9,
+                "ToVariable": 10,
+                "Type": "Activator"
+            },
+            {
+                "Id": 5,
+                "FromVariable": 5,
+                "ToVariable": 6,
+                "Type": "Activator"
+            },
+            {
+                "Id": 1,
+                "FromVariable": 1,
+                "ToVariable": 2,
+                "Type": "Activator"
+            },
+            {
+                "Id": 6,
+                "FromVariable": 6,
+                "ToVariable": 7,
+                "Type": "Activator"
+            },
+            {
+                "Id": 8,
+                "FromVariable": 8,
+                "ToVariable": 9,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 4,
+                "FromVariable": 4,
+                "ToVariable": 5,
+                "Type": "Activator"
+            },
+            {
+                "Id": 3,
+                "FromVariable": 3,
+                "ToVariable": 4,
+                "Type": "Inhibitor"
+            }
+        ]
+    },
+    "Layout": {
+        "Variables": [
+            {
+                "Id": 1,
+                "Name": "ring10_0",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 590.92,
+                "PositionY": 222.24,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 2,
+                "Name": "ring10_1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 588.78,
+                "PositionY": 384.86,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 3,
+                "Name": "ring10_2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 491.06,
+                "PositionY": 514.9,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 4,
+                "Name": "ring10_3",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 335.8,
+                "PositionY": 563.4,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 5,
+                "Name": "ring10_4",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 182.074,
+                "PositionY": 510.24,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 6,
+                "Name": "ring10_5",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 88.372,
+                "PositionY": 377.3,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 7,
+                "Name": "ring10_6",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 90.908,
+                "PositionY": 214.64,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 8,
+                "Name": "ring10_7",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 188.89,
+                "PositionY": 84.846,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 9,
+                "Name": "ring10_8",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 344.04,
+                "PositionY": 36.0,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 10,
+                "Name": "ring10_9",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 497.92,
+                "PositionY": 88.782,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            }
+        ],
+        "Containers": [
+            {
+                "Id": 1,
+                "Name": "C0",
+                "Size": 4,
+                "PositionX": -2,
+                "PositionY": -2
+            }
+        ],
+        "AnnotatedGridCells": [],
+        "Description": ""
+    },
+    "ltl": {
+        "states": [],
+        "operations": []
+    }
+}

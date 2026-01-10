@@ -1,0 +1,52 @@
+# sweeps/configs/n_iter_sweep_with_loops.toml
+name = "n_iter_sweep_with_loops_ring_4"
+description = "Investigating impact of training iterations (n_iter) on model performance for networks optimized with loops/cycles"
+output_dir_suffix = "n_iter_sweep_with_loops_ring_4"
+default_seeds = [42, 43, 44]
+
+# These parameters will be applied to all parameter sets
+[base_params]
+graph_generation.generate_specifications = "true"
+graph_generation.grow_base_graph = "false"  # Use pre-generated loop networks
+training.model_save_dir = "models"
+
+# Test different loop network types across n_iter values
+# Ring cycles of length 4
+[[parameter_sets]]
+training.n_iter = 2
+graph_generation.base_graph_import = "benchmarks/synthetic_benchmarks/loop_networks/ring_4.json"
+
+[[parameter_sets]]
+training.n_iter = 5
+graph_generation.base_graph_import = "benchmarks/synthetic_benchmarks/loop_networks/ring_4.json"
+
+# [[parameter_sets]]
+# training.n_iter = 10
+# graph_generation.base_graph_import = "benchmarks/synthetic_benchmarks/loop_networks/ring_4.json"
+
+[[parameter_sets]]
+training.n_iter = 25
+graph_generation.base_graph_import = "benchmarks/synthetic_benchmarks/loop_networks/ring_4.json"
+
+[[parameter_sets]]
+training.n_iter = 50
+graph_generation.base_graph_import = "benchmarks/synthetic_benchmarks/loop_networks/ring_4.json"
+
+
+# Plotting configurations
+[[plotting_configs]]
+x_axis_metric = "override_training.n_iter"
+y_axis_metrics = ["test_nonbinary_f1", "test_nonbinary_qwk", "test_nonbinary_mcc"]
+neat_x_axis_label = "Training Iterations (n_iter)"
+y_min = 0
+y_max = 1
+log_x_axis = true
+
+# Additional plot comparing different loop types across n_iter
+# [[plotting_configs]]
+# x_axis_metric = "override_training.n_iter"
+# y_axis_metrics = ["test_nonbinary_f1", "test_nonbinary_qwk", "test_nonbinary_mcc"]
+# neat_x_axis_label = "Training Iterations (n_iter) - Different Loop Types"
+# y_min = 0
+# y_max = 1
+# log_x_axis = true

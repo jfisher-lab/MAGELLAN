@@ -1,0 +1,99 @@
+Cell Line,Source,Species,Gene,Activity
+melan-a,"Sviderskaya, E. V., et al. (2002)",mouse,p16,0
+melan-a,"Sviderskaya, E. V., et al. (2002)",mouse,ARF,0
+melan-a,Untransformed cell line,mouse,ReplicationStress,0
+melan-a,Untransformed cell line,mouse,MITF,3
+D6-MEL,"Whitwam, T., et al. (2007)",mouse,CDKN2AB,0
+D6-MEL,Untransformed cell line,mouse,ReplicationStress,0
+D6-MEL,Untransformed cell line,mouse,MITF,3
+YUMM1.7,"Meeth, K. et al (2016)",mouse,BRAFV600E,1
+YUMM1.7,"Meeth, K. et al (2016)",mouse,PTEN,0
+YUMM1.7,"Meeth, K. et al (2016)",mouse,CDKN2AB,0
+YUMM1.7,presumed,mouse,MITF,2
+A375,"Wouters, J. et al. (2020)",human,MITF,1
+A375,"Muller, J., et al. (2014)",human,MITF,2
+A375,Byron et al. (2012),human,BRAFV600E,1
+A375,Byron et al. (2012),human,CDKN2AB,0
+A375,Maertens et al. (2013),human,NF1,0
+UACC903,Byron et al. (2012),human,BRAFV600E,1
+UACC903,Byron et al. (2012),human,PTEN,0
+UACC903,Byron et al. (2012),human,CDKN2AB,0
+UACC903,presumed,human,MITF,2
+WM35,Byron et al. (2012),human,BRAFV600E,1
+WM35,Byron et al. (2012),human,CDKN2AB,0
+WM35,presumed,human,MITF,2
+SK-Mel-19,Cellosaurus,human,CDKN2AB,0
+SK-Mel-19,Cellosaurus,human,BRAFV600E,1
+SK-Mel-19,Cellosaurus,human,p53,0
+SK-Mel-19,"Zhuang, D. et al. Oncogene (2008)",human,p53,wild type
+SK-Mel-19,presumed,human,MITF,2
+SK-Mel-2,Cellosaurus,human,NRAS,2
+SK-Mel-2,Cellosaurus,human,p53,0
+SK-Mel-2,"Zhuang, D. et al. Oncogene (2008)",human,p53,wild type
+SK-Mel-2,presumed,human,CDKN2AB,0
+SK-Mel-2,presumed,human,MITF,2
+SK-Mel-28,Cellosaurus,human,BRAFV600E,1
+SK-Mel-28,Cellosaurus,human,PTEN,0
+SK-Mel-28,Cellosaurus,human,CDK4,2
+SK-Mel-28,Cellosaurus,human,RTK,2
+SK-Mel-28,Cellosaurus,human,p53,0
+SK-Mel-28,presumed,human,CDKN2AB,0
+SK-Mel-28,presumed,human,MITF,2
+SK-Mel-103,Cellosaurus,human,NRAS,2
+SK-Mel-103,presumed,human,CDKN2AB,0
+SK-Mel-103,presumed,human,MITF,2
+WM266-4,Cellosaurus,human,BRAFV600E,1
+WM266-4,Cellosaurus,human,PTEN,0
+WM266-4,presumed,human,CDKN2AB,0
+WM266-4,Konieczkowski et al. (2014),human,MITF,2
+UACC-62,Cellosaurus,human,BRAFV600E,1
+UACC-62,Cellosaurus,human,PTEN,0
+UACC-62,presumed,human,CDKN2AB,0
+UACC-62,Konieczkowski et al. (2014),human,MITF,2
+Sk-Mel-5,Konieczkowski et al. (2014),human,MITF,2
+Sk-Mel-5,Cellosaurus,human,BRAFV600E,1
+Sk-Mel-5,Cellosaurus,human,CDKN2AB,0
+WM239,Cellosaurus,human,BRAFV600E,1
+WM239,Cellosaurus,human,PTEN,0
+WM239,presumed,human,CDKN2AB,0
+WM239,Hoek et al. (2006),human,MITF,2
+WM793,Cellosaurus,human,BRAFV600E,1
+WM793,Cellosaurus,human,CDK4,2
+WM793,Cellosaurus,human,PTEN,0
+WM793,Cellosaurus,human,MITF,1
+M395,"Su, Y.Êet al. PNAS (2017)",human,BRAFV600E,1
+M395,presumed,human,CDKN2AB,0
+M395,"Su, Y.Êet al. PNAS (2017)",human,MITF,1
+M249,"Su, Y.Êet al. PNAS (2017)",human,BRAV600E,1
+M249,"Su, Y.Êet al. PNAS (2017)",human,PTEN,0
+M249,"Su, Y.Êet al. PNAS (2017)",human,Akt,2
+M249,"Su, Y.Êet al. PNAS (2017)",human,MITF,2
+M249,presumed,human,CDKN2AB,0
+HMEX1906,"Thakur, M. D., et al. Nature (2013)",human,BRAFV600E,1
+HMEX1906,"Thakur, M. D., et al. Nature (2013)",human,CDKN2AB,0
+HMEX1906,"Thakur, M. D., et al. Nature (2013)",human,MITF,2
+d04,Cellosaurus,human,NRAS,2
+d04,Cellosaurus,human,CDKN2AB,0
+d04,presumed,human,MITF,2
+M229,"Su, Y.Êet al. PNAS (2017)",human,BRAFV600E,1
+M229,"Su, Y.Êet al. PNAS (2017)",human,PTEN,0
+M229,"Su, Y.Êet al. PNAS (2017)",human,Akt,2
+M229,"Su, Y.Êet al. PNAS (2017)",human,MITF,2
+M229,presumed,human,CDKN2AB,0
+M397,"Su, Y.Êet al. PNAS (2017)",human,BRAFV600E,1
+M397,presumed,human,CDKN2AB,0
+M397,"Su, Y.Êet al. PNAS (2017)",human,MITF,2
+MEL624,Cellosaurus,human,BRAFV600E,1
+MEL624,presumed,human,CDKN2AB,0
+MEL624,presumed,human,MITF,2
+MEL624,Cellosaurus,human,p53,0
+Ma-Mel-36,Cellosaurus,human,BRAFV600E,1
+Ma-Mel-36,Cellosaurus,human,JAK1,0
+Ma-Mel-36,presumed,human,MITF,2
+Ma-Mel-36,presumed,human,CDKN2AB,0
+Malme-3M,Cellosaurus,human,BRAFV600E,1
+Malme-3M,presumed,human,MITF,2
+Malme-3M,Cellosaurus,human,CDKN2AB,0
+397mel,Cellosaurus,human,BRAFV600E,1
+397mel,presumed,human,CDKN2AB,0
+397mel,presumed,human,MITF,2

@@ -1,0 +1,195 @@
+node,target,citation,notes
+4EBP1,2-var(mTORC1),"Ma and Blenis, Nature Rev MCB, (2009)",4EBP1 inhibited by mTORC1
+a-MSH,0,NA,NA
+AdhesionMolecules,generic,,
+AIF,var(MOMP)+2*var(PAR),Hussein et al. J Pathology (2003),AIF can be released either through membrane degradation (apoptosis) or by PAR (parthanatos)
+AIF,var(MOMP)+2*var(PAR),"David, K. K., et al., Front Biosci (2009)",AIF can be released either through membrane degradation (apoptosis) or by PAR (parthanatos)
+Akt,"avg(var(PI3K),var(mTORC2))","Sarbassove et al., Science, 2005","Activated by PI3K, and mTORC2. this dual phosphorylation is required for AKT to be activated"
+Akt_LC,generic,,
+APC,1,NA,NA
+Apoptosis,generic,NA,NA
+ARF,"floor(avg(var(cMyc),3*var(Erk))-var(TBX2)) * min(1,var(CDKN2AB))","Sherr, C. J. Nat Rev Cancer (2006)","ARF regulated by Myc, Erk and Tbx2, melanomas frequently lose ARF expression through mutation or loss of expression of CDKN2A gene."
+ARF,"floor(avg(var(cMyc),3*var(Erk))-var(TBX2)) * min(1,var(CDKN2AB))","Bennett, D. C. PC&MR (2008)","ARF regulated by Myc, Erk and Tbx2, melanomas frequently lose ARF expression through mutation or loss of expression of CDKN2A gene."
+AXIN,2-var(Frizzled),"Galluzzi, L., et al. Trends in Cell Biology (2018)",AXIN inhibited by WNT signalling through Frizzled
+AXIN_LC,2-var(Frizzled_LC),Galluzzi et al. Trends Cell Bio (2018),Binding of Wnt ligand to Fzd receptor leads to B-catenin activation via AXIN
+Axl,var(Gas6)*var(TBR_LC),"Collin et al., Curr Opin Hematology (2016)","Axl is induced by TGF signalling, Gas6 is ligand for Axl"
+Axl,var(Gas6)*var(TBR_LC),"Bauer et al., 2012 (JEM)","Axl is induced by TGF signalling, Gas6 is ligand for Axl"
+B-catenin,"1+max(1,var(PKA))-(avg(var(APC),var(GSK3b),var(AXIN))+var(ROR2))","Galluzzi, L., et al., Trends Cell Biol (2018)","B-catenin targeted for destuction by B-catenin destruction complex (APC, AXIN and GSk3b), also stimulated by PKA and inhibited by non-canonical Wnt singalling through ROR2"
+B-catenin,"1+max(1,var(PKA))-(avg(var(APC),var(GSK3b),var(AXIN))+var(ROR2))","O’Connell, M. P.,  et al. Cancer Discovery (2013)","B-catenin targeted for destuction by B-catenin destruction complex (APC, AXIN and GSk3b), also stimulated by PKA and inhibited by non-canonical Wnt singalling through ROR2"
+B-catenin,"1+max(1,var(PKA))-(avg(var(APC),var(GSK3b),var(AXIN))+var(ROR2))","Kaur, A., et al. BJC (2016)","B-catenin targeted for destuction by B-catenin destruction complex (APC, AXIN and GSk3b), also stimulated by PKA and inhibited by non-canonical Wnt singalling through ROR2"
+B-catenin_LC,3-var(AXIN_LC)-var(E-cadherin),"Zhang, Y. & Wang, X. J Hematol Oncol (2020)","Axin in complex with GSK3b, APC and CK1a inhibits B-catenin activity "
+B-catenin_LC,3-var(AXIN_LC)-var(E-cadherin),"Van den Bossche et al., Blood (2012)",E-cadherin binds B-catenin inhibiting it and helping to sequester it at the plasma membrane
+BAD,3-(var(Akt)+var(p90RSK)),"Madhunapantula, S. V., et al., Cancer Biol Ther (2011)",BAD is inhibited by pro-survival signalling through Akt and p90RSK
+BAD,3-(var(Akt)+var(p90RSK)),"Eisinger-Mathason et al., Steroids, (2010)",BAD is inhibited by pro-survival signalling through Akt and p90RSK
+BaxBak,generic,NA,NA
+Bcl-2,"1+max(0,(3*var(MITF)/2)-1) - ceil(avg(var(BAD),var(BIM),var(PUMA)))","Hartman, M. L., & Czyz, M. J Inv Dermatology (2015)","MITF varies between 0 and 3 and so adjustment is required, some MITF-independent expression requried, otherwise generic."
+Bcl-2,"1+max(0,(3*var(MITF)/2)-1) - ceil(avg(var(BAD),var(BIM),var(PUMA)))","Chen et al., Molecular Cell, (2005)","MITF varies between 0 and 3 and so adjustment is required, some MITF-independent expression requried, otherwise generic."
+BCL2A1,"min(1, 3*var(MITF)/2)","Haq, R. et al. PNAS (2013)",MITF required for expression of BCL2A1
+BIM,3-(var(Akt)+3*var(Erk)),"Madhunapantula, S. V., et al., Cancer Biol Ther (2011)",BIM is inhibited by pro-survival signalling through Akt and Erk
+BIM,3-(var(Akt)+3*var(Erk)),"Luciano et al., Oncogene, (2003)",BIM is inhibited by pro-survival signalling through Akt and Erk
+BRAF,"max(max(2*max(0,(var(PKC)/3)-1),max(2*var(HRAS)/3,2*var(NRAS)/3)),var(BRAFV600E)*(1+var(BRAFamplification)/3)/3 - 2*var(BRAFi)/3)","Burotto, M. et al. Cancer (2014)",BRAF can be activated by HRAS or NRAS or by very high level of PKC activity.
+BRAF,"max(max(2*max(0,(var(PKC)/3)-1),max(2*var(HRAS)/3,2*var(NRAS)/3)),var(BRAFV600E)*(1+var(BRAFamplification)/3)/3 - 2*var(BRAFi)/3)","Ueda, Y., et al., JBC  (1996)",BRAF can be activated by HRAS or NRAS or by very high level of PKC activity.
+BRAF,"max(max(2*max(0,(var(PKC)/3)-1),max(2*var(HRAS)/3,2*var(NRAS)/3)),var(BRAFV600E)*(1+var(BRAFamplification)/3)/3 - 2*var(BRAFi)/3)","Luebker, S. A. & Koepsell, S. A. Frontiers Oncol (2019)","BRAFV600E mutation activates it and amplification of the mutant gene can enhance activity, inhibitors like vemurafenib specifically inhibit the mutant allele"
+BRAFamplification,0,NA,NA
+BRAFi,0,NA,NA
+BRAFV600E,0,NA,NA
+cAMP,generic,NA,NA
+Caspase-3,"var(MOMP) - floor(avg(var(ML-IAP),var(IAP)))","Hussein, M. R., et al., J Pathology (2003)",Caspase-dependent apoptosis can be initiated via intrinsic pathway and is inhibited by IAPs.
+CBF-B,1,,
+CDK4,"2 - avg(var(p16),var(p15))","Kim and Sharpless, Cell, (2006)",CDK4 inhibited by p16 and p15
+CDK4,"2 - avg(var(p16),var(p15))",Sharpless & Sherr Nat Revs Cancer (2015),CDK4 inhibited by p16 and p15
+CDKN2AB,1,NA,NA
+CellCellContact,1,NA,NA
+cJUN,"2+avg(var(CREB),var(JNK),var(p38)) - 2*max(0,3*var(MITF)/2-1)","Kappelmann, M., et al EJCB (2014)","cJUN activity promoted by p38, JNK phosphorylation and CREB, activity is mutually exclusive with MITF. MITF varies between 0 and 3 and so adjustment is required."
+cJUN,"2+avg(var(CREB),var(JNK),var(p38)) - 2*max(0,3*var(MITF)/2-1)","Riesenberg, S., et al. Nat Comms (2015)","cJUN activity promoted by p38, JNK phosphorylation and CREB, activity is mutually exclusive with MITF. MITF varies between 0 and 3 and so adjustment is required."
+cJUN,"2+avg(var(CREB),var(JNK),var(p38)) - 2*max(0,3*var(MITF)/2-1)","Zhang, H., et al. Exp Hematology Oncol (2020)","cJUN activity promoted by p38, JNK phosphorylation and CREB, activity is mutually exclusive with MITF. MITF varies between 0 and 3 and so adjustment is required."
+cMyc,"2*avg(var(TCF),max(0,var(Erk)*3-(var(GSK3b)-1))) - avg(var(p53),max(0,var(Smad2_3)-1))","Shaul and Seger, BBA, (2007)",Myc activated by Erk in Ras-dependent manner and it is inhibited by GSK3B in ERK-dependent way. TCF promotes expression of Myc. Myc is inhibited by p53. Myc is downregulated by high levels of TGF signalling through Smad2/3.
+cMyc,"2*avg(var(TCF),max(0,var(Erk)*3-(var(GSK3b)-1))) - avg(var(p53),max(0,var(Smad2_3)-1))","He, T.-C., et al., Science (1998)",Myc activated by Erk in Ras-dependent manner and it is inhibited by GSK3B in ERK-dependent way. TCF promotes expression of Myc. Myc is inhibited by p53. Myc is downregulated by high levels of TGF signalling through Smad2/3.
+cMyc,"2*avg(var(TCF),max(0,var(Erk)*3-(var(GSK3b)-1))) - avg(var(p53),max(0,var(Smad2_3)-1))","Ho et al., Mol Cell Bio, (2005)",Myc activated by Erk in Ras-dependent manner and it is inhibited by GSK3B in ERK-dependent way. TCF promotes expression of Myc. Myc is inhibited by p53. Myc is downregulated by high levels of TGF signalling through Smad2/3.
+cMyc,"2*avg(var(TCF),max(0,var(Erk)*3-(var(GSK3b)-1))) - avg(var(p53),max(0,var(Smad2_3)-1))","Warner, B.J. et al. Mol and Cell Bio (1999)",Myc activated by Erk in Ras-dependent manner and it is inhibited by GSK3B in ERK-dependent way. TCF promotes expression of Myc. Myc is inhibited by p53. Myc is downregulated by high levels of TGF signalling through Smad2/3.
+CRAF,"max(2*max(0,(var(PKC)/3)-1),max(2*var(HRAS)/3,2*var(NRAS)/3))","Burotto, M. et al. Cancer (2014)",CRAF can be activated by HRAS or NRAS or by very high level of PKC activity
+CRAF,"max(2*max(0,(var(PKC)/3)-1),max(2*var(HRAS)/3,2*var(NRAS)/3))","Ueda, Y., et al., JBC  (1996)",CRAF can be activated by HRAS or NRAS or by very high level of PKC activity
+CREB,"max(var(PKA),max(max(0,3*var(Erk)-2), max(0,var(S6K)-1)))","Johannessen, M. & Moens, U. Front Biosci (2007)","CREB integrates signals from PKA, ERK and S6K"
+CSF1,0,,
+CSF1R,"max(var(IL-34), var(CSF1))","Hamilton, J. A. Nat Rev Immunol (2008)",CSF1R is receptor for both IL-34 and CSF1
+CycD,"2*avg(var(cMyc),var(p90RSK),2*var(cJUN))  - avg(var(GSK3b),var(4EBP1))","Gartel, A. L. & Shchors, K. Exp Cell Res (2003)","Cyclin D expression is activated by p90RSK, cJUN and cMyc and it is inhibited by 4EBP1 and GSK3B. cMyc and cJun have strong effect"
+CycD,"2*avg(var(cMyc),var(p90RSK),2*var(cJUN))  - avg(var(GSK3b),var(4EBP1))","Eisinger-Mathason et al., Steroids, (2010)","Cyclin D expression is activated by p90RSK, cJUN and cMyc and it is inhibited by 4EBP1 and GSK3B. cMyc and cJun have strong effect"
+CycD,"2*avg(var(cMyc),var(p90RSK),2*var(cJUN))  - avg(var(GSK3b),var(4EBP1))","Lopez-Bergami, P., et al. (2007)","Cyclin D expression is activated by p90RSK, cJUN and cMyc and it is inhibited by 4EBP1 and GSK3B. cMyc and cJun have strong effect"
+CycD,"2*avg(var(cMyc),var(p90RSK),2*var(cJUN))  - avg(var(GSK3b),var(4EBP1))","Rana and John, Nat Rev Mol Cell Biol, (2008)","Cyclin D expression is activated by p90RSK, cJUN and cMyc and it is inhibited by 4EBP1 and GSK3B. cMyc and cJun have strong effect"
+CycD,"2*avg(var(cMyc),var(p90RSK),2*var(cJUN))  - avg(var(GSK3b),var(4EBP1))","Averous et al., Oncogene, (2008)","Cyclin D expression is activated by p90RSK, cJUN and cMyc and it is inhibited by 4EBP1 and GSK3B. cMyc and cJun have strong effect"
+CycD_CDK4,"var(CycD)*var(CDK4)/4 - avg(var(p21),var(p27))","Morgan, Nature, (1995)","CycD and CDK4 form complex, p21 and p27 inhibit formation of this complex."
+CycD_CDK4,"var(CycD)*var(CDK4)/4 - avg(var(p21),var(p27))","Harper et al., Cell, (1993)","CycD and CDK4 form complex, p21 and p27 inhibit formation of this complex."
+CycD_CDK4,"var(CycD)*var(CDK4)/4 - avg(var(p21),var(p27))","Wander et al., Clin Cancer Res, (2010)","CycD and CDK4 form complex, p21 and p27 inhibit formation of this complex."
+DKK,1,NA,NA
+DKK,1,,
+E-cadherin,generic,,
+E2F,4 - (var(pRB)+var(ARF)/2),"Ha, L., et al., PNAS (2007)",E2F can be inhibited by pRB and ARF
+E2F,4 - (var(pRB)+var(ARF)/2),"Weinberg, et al., Cell, (1995)",E2F can be inhibited by pRB and ARF
+Erk,var(MEK)-2*var(ERKi)/3,"Shaul and Seger, BBA, (2007)",Erk activated by MEK and can be inhibited by targeted inhibitors like Ulixertinib
+Erk,var(MEK)-2*var(ERKi)/3,"Arozarena, I. & Wellbrock, C. Ann Transl Medicine (2017)",Erk activated by MEK and can be inhibited by targeted inhibitors like Ulixertinib
+ERK_LC,var(LAMTOR-p14)*var(MEK_LC),"Nada, S. et al. Embo J (2009)",LAMTOR complex facilitates MEK-ERK interaction
+ERKi,0,NA,NA
+FAK,generic,NA,NA
+FRA1,ceil(var(Erk)-1),"Hong, A. et al. Cancer Discov (2017)",High levels of ERK induce p21 arrest via Fra1 and JUNB
+Frizzled,2*var(WNT)-var(DKK),"Nakamura, T., et al. J Cell Mol Med (2008)","Frizzled is receptor for Wnt, can be inhibited by DKK, but at endogenous levels Wnt signalling still occurs."
+Frizzled,2*var(WNT)-var(DKK),"Spranger, S., et ak., Nature (2015)","Frizzled is receptor for Wnt, can be inhibited by DKK, but at endogenous levels Wnt signalling still occurs."
+Frizzled_LC,2*var(WNT)-var(DKK),"Nakamura, T., et al. J Cell Mol Med (2008)","Frizzled is receptor for Wnt, can be inhibited by DKK, but at endogenous levels Wnt signalling still occurs."
+Frizzled_LC,2*var(WNT)-var(DKK),"Becker, M. R., et al., J Invest Dermatol (2011)","Frizzled is receptor for Wnt, can be inhibited by DKK, but at endogenous levels Wnt signalling still occurs."
+Gas6,1,,
+GF,1,NA,NA
+GF-RTK,var(GF)*var(RTK),"Easty, D. J., et al., PC &MR (2011)","Generic RTK, requires both RTK and GF to be active"
+GSK3b,"2 - max(0, var(PKA)+3*var(Erk)*var(p90RSK) + 2*var(Akt)-3)","Manning and Toker, Cell, (2017)",GSK3b inhibited by Akt and PKA and through sequential phosphorylation by ERK and RSK
+GSK3b,"2 - max(0, var(PKA)+3*var(Erk)*var(p90RSK) + 2*var(Akt)-3)","Ding et al., Mol Cell, (2005)",GSK3b inhibited by Akt and PKA and through sequential phosphorylation by ERK and RSK
+GSK3b,"2 - max(0, var(PKA)+3*var(Erk)*var(p90RSK) + 2*var(Akt)-3)","Anjum and Blenis, Nat Rev Mol Cell Biol, (2008)",GSK3b inhibited by Akt and PKA and through sequential phosphorylation by ERK and RSK
+GSK3b,"2 - max(0, var(PKA)+3*var(Erk)*var(p90RSK) + 2*var(Akt)-3)","Zhang et al., Mol Cell Biol., (2005)",GSK3b inhibited by Akt and PKA and through sequential phosphorylation by ERK and RSK
+HRAS,"floor(var(GF-RTK)*var(FAK)/4) + max(0,1-var(NF1)/2)","Schaller, M. D. BBA - Mol Cell Res (2001)","HRAS can be activated by GF stimulation through RTKs, in a way that depends on cell-cell contact mediated by FAK. Also constitutive activity inhibited by NF1."
+HRAS,"floor(var(GF-RTK)*var(FAK)/4) + max(0,1-var(NF1)/2)","Gentile, A., et al. Cancer and Metastasis Reviews (2008)","HRAS can be activated by GF stimulation through RTKs, in a way that depends on cell-cell contact mediated by FAK. Also constitutive activity inhibited by NF1."
+HRAS,"floor(var(GF-RTK)*var(FAK)/4) + max(0,1-var(NF1)/2)","Vigil, D., et al Nat Rev Cancer (2010)","HRAS can be activated by GF stimulation through RTKs, in a way that depends on cell-cell contact mediated by FAK. Also constitutive activity inhibited by NF1."
+IAP,"min(1,var(NFkB))","Wang, C.-Y., et al. Science (1998)","NF-kB activates expression of IAPs, but levels of expression capped."
+Id2,"max(1 - floor(3*var(MITF)/4),2-var(Smad2_3))","Schlegel, N. C. et al. PC&MR (2009)",Invasive phenotype (low MITF) resistant to TGF inhibition of Id2 via Smad2/3. MITF varies between 0 and 3 and so adjustment is required.
+Id2_LC,var(CBF-B)*var(Runx3),"Collin et al., Curr Opin Hematology (2016)",Runx3 dimerise with CBF-B
+IKK,"max(var(Akt),max(var(TNFR),3*var(Erk)))","Bai, D., et al., IJC (2009)","IKK can be activated independently by Akt, ERK or TNF signalling."
+IKK,"max(var(Akt),max(var(TNFR),3*var(Erk)))","Liu, J., et al. Oncogene (2007)","IKK can be activated independently by Akt, ERK or TNF signalling."
+IKK,"max(var(Akt),max(var(TNFR),3*var(Erk)))","Aggarwal, B. B., et al. Blood (2012)","IKK can be activated independently by Akt, ERK or TNF signalling."
+IL-18,0,,
+IL-1B,1+var(IL-18),Griffiths et al. Cytokine (2005),"IL-1B consitutively present in epidermis, increased levels trigger LC migration"
+IL-1R,generic,,
+IL-34,1,,
+Integrins,var(CellCellContact)/2,"Paoli, P., et al. BBA - Mol Cell Res (2013)","Cell-Cell contact is a binary input (on or off), when on integrins are at normal activity level 1."
+Irf1,var(TNFR_LC)*var(IL-1R),Griffiths et al. Cytokine (2005),Combination of 2 cytokine signals are needed to induce LC migration
+Irf4,1,,
+JNK,"floor(avg(var(PKC),var(TNFR)))","López-Bergami, P., et al. Molecular Cell (2005)",JNK can be activated by PKC or TNF signalling.
+JNK,"floor(avg(var(PKC),var(TNFR)))","Aggarwal, B. B., et al. Blood (2012)",JNK can be activated by PKC or TNF signalling.
+JUNB,ceil(var(Erk)-1),"Hong, A. et al. Cancer Discov (2017)",High levels of ERK induce p21 arrest via Fra1 and JUNB
+LAMTOR-p14,1+var(TBR_LC),"Collin et al., Curr Opin Hematology (2016)",LAMTOR complex responds to TGF signalling
+MC1R,generic,NA,NA
+Mcl-1,"2*var(NFkB)-ceil(avg(var(BIM),var(PUMA)))","Akgul, C. et al CMLS (2000)","Transcription of Mcl-1 controlled by NF-kB, inhibited by interaction with BIM or PUMA."
+Mcl-1,"2*var(NFkB)-ceil(avg(var(BIM),var(PUMA)))","Chen et al., Molecular Cell, (2005)","Transcription of Mcl-1 controlled by NF-kB, inhibited by interaction with BIM or PUMA."
+Mdm,1-var(ARF),"Zhang et al., Cell, (1998)",Mdm inhibited by ARF
+MEK,"max(0,max(var(BRAF),var(CRAF)) - 2*var(MEKi)/3) + var(MEKGoF)/3","Burotto, M. et al. Cancer (2014)",MEK can be phosphorylated by either BRAF or CRAF
+MEK_LC,1,,
+MEKGoF,0,NA,NA
+MEKi,0,NA,NA
+MITF,2,NA,NA
+ML-IAP,3*var(MITF)/2 - 1,"Goding, C. R., & Arnheiter, H. Genes & Development (2019)",MITF varies between 0 and 3 and so adjustment is required.
+MOMP,"2*var(BaxBak)-(var(Bcl-2)+2*var(Mcl-1)+min(0,var(BCL2A1)-1))/2","Hussein, M. R., et al., J Pathology (2003)","BaxBak activity leads to mitochondrial membrane permeabilisation, resisted by BCL2A1, Bcl-2 and Mcl-1. Mcl-1 plays a critical role in resistance to apoptosis in melanoma."
+MOMP,"2*var(BaxBak)-(var(Bcl-2)+2*var(Mcl-1)+min(0,var(BCL2A1)-1))/2","Verhaegen, M. et al. Cancer Res (2006)","BaxBak activity leads to mitochondrial membrane permeabilisation, resisted by BCL2A1, Bcl-2 and Mcl-1. Mcl-1 plays a critical role in resistance to apoptosis in melanoma."
+MOMP,"2*var(BaxBak)-(var(Bcl-2)+2*var(Mcl-1)+min(0,var(BCL2A1)-1))/2","Vogler, M. Cell Death Differ (2012)","BaxBak activity leads to mitochondrial membrane permeabilisation, resisted by BCL2A1, Bcl-2 and Mcl-1. Mcl-1 plays a critical role in resistance to apoptosis in melanoma."
+mTOR_LC,"min(var(LAMTOR-p14),var(Akt_LC))","Collin et al., Curr Opin Hematology (2016)","LAMTOR complex acts as adaptor to aid in mTOR activation, which is also mediated by PI3K phosphorylation"
+mTOR_LC,"min(var(LAMTOR-p14),var(Akt_LC))",Liu et al. Nat Rev Mol Cell Bio (2020),"LAMTOR complex acts as adaptor to aid in mTOR activation, which is also mediated by PI3K phosphorylation"
+mTOR_LC,"min(var(LAMTOR-p14),var(Akt_LC))","Laplante, M. & Sabatini, D. Cell (2012)",Functional AND gate between TSC and LAMTOR dependent mechanisms of mTOR activation
+mTORC1,2-var(TSC),"Tee et al., PNAS, 2002",Constitutive expression is inhibited by TSC
+mTORC2,generic,NA,NA
+NF1,1,NA,NA
+NFkB,"ceil(var(IKK)/2)*max(1,var(cJUN))","Aggarwal, B. B., et al. Blood (2012)",IKK phosphorylation is necessary for NF-kB activation. Activity can be enhanced by interaction with AP-1 (cJUN).
+NFkB,"ceil(var(IKK)/2)*max(1,var(cJUN))","Sabio, G., & Davis, R. J. Sem Imm (2014)",IKK phosphorylation is necessary for NF-kB activation. Activity can be enhanced by interaction with AP-1 (cJUN).
+NRAS,floor(var(GF-RTK)*var(FAK)/4),"Schaller, M. D. BBA - Mol Cell Res (2001)","NRAS can be activated by GF stimulation through RTKs, in a way that depends on cell-cell contact mediated by FAK."
+NRAS,floor(var(GF-RTK)*var(FAK)/4),"Gentile, A., et al. Cancer and Metastasis Reviews (2008)","NRAS can be activated by GF stimulation through RTKs, in a way that depends on cell-cell contact mediated by FAK."
+p15,"min(1,var(CDKN2AB))*(2*var(Smad2_3)-avg(var(Id2),var(cMyc)))",Lasfar et al. (2010),"p15 mediates TGF-B induced cell cycle arrest, but this can be prevented by activation of Myc or Id2. CDKN2AB deletions lead to loss of gene."
+p15,"min(1,var(CDKN2AB))*(2*var(Smad2_3)-avg(var(Id2),var(cMyc)))","Schlegel, N. C. et al. PC&MR (2009)","p15 mediates TGF-B induced cell cycle arrest, but this can be prevented by activation of Myc or Id2. CDKN2AB deletions lead to loss of gene."
+p15,"min(1,var(CDKN2AB))*(2*var(Smad2_3)-avg(var(Id2),var(cMyc)))","Warner, B.J. et al. Mol and Cell Bio (1999)","p15 mediates TGF-B induced cell cycle arrest, but this can be prevented by activation of Myc or Id2. CDKN2AB deletions lead to loss of gene."
+p15,"min(1,var(CDKN2AB))*(2*var(Smad2_3)-avg(var(Id2),var(cMyc)))","McNeal, A. S. et al. Cancer Discov (2015)",NA
+p16,"min(1,var(CDKN2AB))* (3*var(Erk)-max(var(TCF)-1,0))","Bennett, D. C. PC&MR (2008)","p16 is produced in response to high levels of Erk activity, can be inhibited by binding of TCF to promoter. Melanomas frequently lose ARF expression through mutation or loss of expression of CDKN2A gene."
+p16,"min(1,var(CDKN2AB))* (3*var(Erk)-max(var(TCF)-1,0))","Delmas, V., et al. Genes & Development (2007)","p16 is produced in response to high levels of Erk activity, can be inhibited by binding of TCF to promoter. Melanomas frequently lose ARF expression through mutation or loss of expression of CDKN2A gene."
+p21,"avg(max(0,(3*var(MITF)/2-2))*3,var(p53)) - floor(avg(var(Akt),var(TBX2))) + 2*min(var(FRA1),var(JUNB))","Levy, C., Khaled, et al. Trends in Molecular Medicine (2006)","High levels of MITF induces p21 mediated arrest, as can p53 activation. P21 activation can be resisted by directe phosphorylation by Akt or by Tbx2 activation."
+p21,"avg(max(0,(3*var(MITF)/2-2))*3,var(p53)) - floor(avg(var(Akt),var(TBX2))) + 2*min(var(FRA1),var(JUNB))","El Deiry et al., Cell, (1993)","High levels of MITF induces p21 mediated arrest, as can p53 activation. P21 activation can be resisted by directe phosphorylation by Akt or by Tbx2 activation."
+p21,"avg(max(0,(3*var(MITF)/2-2))*3,var(p53)) - floor(avg(var(Akt),var(TBX2))) + 2*min(var(FRA1),var(JUNB))","Zhou BP et al., Nat Cell Biol, (2001)","High levels of MITF induces p21 mediated arrest, as can p53 activation. P21 activation can be resisted by directe phosphorylation by Akt or by Tbx2 activation."
+p21,"avg(max(0,(3*var(MITF)/2-2))*3,var(p53)) - floor(avg(var(Akt),var(TBX2))) + 2*min(var(FRA1),var(JUNB))","Bennett, D. C. PC&MR (2008)","High levels of MITF induces p21 mediated arrest, as can p53 activation. P21 activation can be resisted by directe phosphorylation by Akt or by Tbx2 activation."
+p27,"3-avg(3*var(cMyc),var(Akt),var(p90RSK),min(3*var(MITF)/2,2))+max(0,var(Smad2_3)-var(Akt))","Maddika et al., Drug Resistance, (2007)","p27 activated unless inhibited by cMyc, Akt, p90RSK or MITF. Of these cMyc is most important as loss of Myc alone can lead to p27 mediated arrest. P27 is also activated by TGF-B signalling, although this is specifically resisted by Akt phosphorylation. MITF inhibition maxes out at level 2."
+p27,"3-avg(3*var(cMyc),var(Akt),var(p90RSK),min(3*var(MITF)/2,2))+max(0,var(Smad2_3)-var(Akt))","Manning and Cantley, Cell, (2007)","p27 activated unless inhibited by cMyc, Akt, p90RSK or MITF. Of these cMyc is most important as loss of Myc alone can lead to p27 mediated arrest. P27 is also activated by TGF-B signalling, although this is specifically resisted by Akt phosphorylation. MITF inhibition maxes out at level 2."
+p27,"3-avg(3*var(cMyc),var(Akt),var(p90RSK),min(3*var(MITF)/2,2))+max(0,var(Smad2_3)-var(Akt))","Rana and John, Nat Rev Mol Cell Biol, (2008)","p27 activated unless inhibited by cMyc, Akt, p90RSK or MITF. Of these cMyc is most important as loss of Myc alone can lead to p27 mediated arrest. P27 is also activated by TGF-B signalling, although this is specifically resisted by Akt phosphorylation. MITF inhibition maxes out at level 2."
+p27,"3-avg(3*var(cMyc),var(Akt),var(p90RSK),min(3*var(MITF)/2,2))+max(0,var(Smad2_3)-var(Akt))",Lasfar et al. Carcinogenesis (2010),"p27 activated unless inhibited by cMyc, Akt, p90RSK or MITF. Of these cMyc is most important as loss of Myc alone can lead to p27 mediated arrest. P27 is also activated by TGF-B signalling, although this is specifically resisted by Akt phosphorylation. MITF inhibition maxes out at level 2."
+p27,"3-avg(3*var(cMyc),var(Akt),var(p90RSK),min(3*var(MITF)/2,2))+max(0,var(Smad2_3)-var(Akt))",Carreira et al. Genes & Development (2006),"p27 activated unless inhibited by cMyc, Akt, p90RSK or MITF. Of these cMyc is most important as loss of Myc alone can lead to p27 mediated arrest. P27 is also activated by TGF-B signalling, although this is specifically resisted by Akt phosphorylation. MITF inhibition maxes out at level 2."
+p53,generic,NA,NA
+p90RSK,3*var(Erk),"Shaul and Seger, BBA, (2007)",Factor of 3 undoes automated recaling
+PAR,var(PARP-1)-1,"David, K. K., et al., Front Biosci (2009)","PARP-1 synthesises PAR, which is usually degraded by PARG"
+PARP-1,"1+max(0,3*var(Erk)-4)","Hong, A. et al. Cancer Discov (2017)",High levels of ERK activity induce parthanatos
+PI3K,"max(2*var(HRAS),max(2*var(NRAS),var(GF-RTK)*var(FAK)))+max(0,1-var(PTEN))","Rodriguez-Viciana, P. et al., Nature, (1994)",PI3K can be activated by growth signalling (dependent on cell cell contact through FAK) directly or through RAS. Constitutive activation resisted by PTEN.
+PI3K,"max(2*var(HRAS),max(2*var(NRAS),var(GF-RTK)*var(FAK)))+max(0,1-var(PTEN))","Manning and Cantley, Cell, (2007)",PI3K can be activated by growth signalling (dependent on cell cell contact through FAK) directly or through RAS. Constitutive activation resisted by PTEN.
+PI3K,"max(2*var(HRAS),max(2*var(NRAS),var(GF-RTK)*var(FAK)))+max(0,1-var(PTEN))","Paoli, P., et al. BBA - Mol Cell Res (2013)",PI3K can be activated by growth signalling (dependent on cell cell contact through FAK) directly or through RAS. Constitutive activation resisted by PTEN.
+PI3K_LC,var(Axl)+var(CSF1R)+var(Tyro3)-1,"Stanley et al., CSH Pers Bio (2014)",PI3K acts downstream of RTKs
+PI3K_LC,var(Axl)+var(CSF1R)+var(Tyro3)-1,Lemke et al. Nat Rev Immunology (2008),PI3K acts downstream of RTKs
+PKA,"var(cAMP)-max(var(Smad2_3)-1,0)","Kaur, A., et al. BJC (2016)","PKA induced by cAMP signalling, inhibited by high levels of TGF signalling."
+PKA,"var(cAMP)-max(var(Smad2_3)-1,0)","Pierrat, M.-J., et al. JBC (2012)","PKA induced by cAMP signalling, inhibited by high levels of TGF signalling."
+PKC,"max(min(1,var(GF-RTK)),var(ROR2))","Easty, D. J., et al. PC&MR (2011)","PKC stimulated by RTK signalling, including Ror2"
+PKC,"max(min(1,var(GF-RTK)),var(ROR2))","Dissanayake, S. K., et al. JBC (2007).","PKC stimulated by RTK signalling, including Ror2"
+pRB,4 -(var(CycD_CDK4)),"Maddika et al., Drug Resistance, (2007)",pRB inhibited by phosphorylation by CycD-Cdk4 complex.
+Proliferation,generic,NA,NA
+Proliferation_LC,var(TCF_LC)*var(ERK_LC)*var(mTOR_LC)/2,,
+Pros1,1,,
+PTEN,1+var(p53)-floor(var(cJUN)/2),"Hettinger et al., Cell death & Differentiation (2007)","PTEN activated by p53, constitutive expression inhibited by cJun."
+PTEN,1+var(p53)-floor(var(cJUN)/2),"Stambolic et al., Mol Cell, (2001)","PTEN activated by p53, constitutive expression inhibited by cJun."
+Pu.1,generic,,
+PUMA,var(p53)-3*var(Erk)/2,"Villunger et al., Science, (2003)",Transciptional activation by p53 balanced by regulation by Erk through Foxo3
+PUMA,var(p53)-3*var(Erk)/2,Cook et al. FEBS J (2017),Transciptional activation by p53 balanced by regulation by Erk through Foxo3
+ReplicationStress,1,NA,NA
+Residency_LC,"floor(avg(var(AdhesionMolecules),var(E-cadherin),var(Id2_LC))) + 1 - ceil(var(Irf4)/2)",,
+ROR2,generic,NA,NA
+RTK,"max(1,var(cJUN)-2)","Sensi, M. et al. JID (2011)","Invasive state (MITF low) associated with increased expression of various RTKs. Otherwise, expressed at normal levels."
+RTK,"max(1,var(cJUN)-2)","Riesenberg, S., et al. Nat Comms (2015)","Invasive state (MITF low) associated with increased expression of various RTKs. Otherwise, expressed at normal levels."
+Runx3,generic,,
+S6K,generic,NA,NA
+Smad2_3,var(TBR)*ceil(3*var(TGF-B)/4),"Javelaud, D., et al. PC&MR (2008)",Smad2/3 responds to TGF-B signalling through TBR receptor.
+Smad2_3_LC,generic,,
+Survival_LC,"min(var(ERK_LC),var(mTOR_LC))",,
+TBR,3-ceil(var(MITF)),"Javelaud, D., et al. PC&MR (2011)",TBR expression lower in MITF high state.
+TBR,3-ceil(var(MITF)),Sun et al. Nature (2014),TBR expression lower in MITF high state.
+TBR,3-ceil(var(MITF)),Hoek et al. PCR (2006),TBR expression lower in MITF high state.
+TBR_LC,3*var(TGF-B)/2,Scaled for 3 level TGF-B,
+TBX2,ceil(3*var(MITF)/8),"Bennett, D. C. PC&MR (2008)","MITF induces expression of TBX2, MITF varies between 0 and 3 and so adjustment is required."
+TCF,generic,NA,NA
+TCF_LC,generic,,
+TGF-B,"max(1, 2*var(Erk)-1)","McNeal, A. S., et al. Cancer Discovery (2015)",MAPK activation leads to TGF-B expression (could be mediated by EGR1)
+TNF-a,"max(var(IL-1R)-1, var(Ets1)*var(cJUN)*var(Sp1)/2)",Griffiths et al. Cytokine (2005),Production of TNF-a by KCs is induced by high elvels of IL-1B
+TNF-a,"max(var(IL-1R)-1, var(Ets1)*var(cJUN)*var(Sp1)/2)","Falvo, J. V., et al. Current directions in autoimmunity (2010)","Expression of TNF contorlled by Sp1, cJUN/ATF-2, Ets1"
+TNFR,generic,NA,NA
+TNFR_LC,generic,,
+TSC,"2 - avg(var(Akt),3*var(Erk))","Ma et al., Cell, 2005",Consitutive TSC activity is inhibited by Akt and Erk.
+TSC,"2 - avg(var(Akt),3*var(Erk))","Inoki et al., Nat Cell Biol, 2002",Consitutive TSC activity is inhibited by Akt and Erk.
+Tyro3,"max(var(Pros1),var(Gas6))*max(0,1-var(Axl))",Gas6 is a ligand for Axl and Tyro3,"Tyro3 downregulated by Axl, Pros1 and Gas6 are ligands"
+Tyro3,"max(var(Pros1),var(Gas6))*max(0,1-var(Axl))","Bauer et al., JEM (2012)","Tyro3 downregulated by Axl, Pros1 and Gas6 are ligands"
+WNT,1,NA,NA
+Wnt5a,1 - floor(3*var(MITF)/4),"O’Connell, M. P. & Weeraratna, A. T.  PC&MR(2009)","Wnt5a singalling associated with low MITF state, MITF varies between 0 and 3 and so adjustment is required."
+Sp1,1,,
+Ets1,3*var(Erk)/2,"Wasylyk, B., et al. Trends Biochem Sci (1998)",Scaled ERK
+p38,generic,,

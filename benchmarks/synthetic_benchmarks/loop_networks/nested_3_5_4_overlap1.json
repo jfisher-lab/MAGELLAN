@@ -1,0 +1,290 @@
+{
+    "Model": {
+        "Name": "nested_3_5_4_overlap1",
+        "Variables": [
+            {
+                "Name": "nested_0_0",
+                "Id": 1,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(3)*240/1000"
+            },
+            {
+                "Name": "nested_0_1",
+                "Id": 2,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(1)*437/1000"
+            },
+            {
+                "Name": "nested_0_2",
+                "Id": 3,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(2)*758/1000-var(7)*263/1000"
+            },
+            {
+                "Name": "nested_1_0",
+                "Id": 4,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(3)*152/1000"
+            },
+            {
+                "Name": "nested_1_1",
+                "Id": 5,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(4)*641/1000"
+            },
+            {
+                "Name": "nested_1_2",
+                "Id": 6,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(5)*118/1000"
+            },
+            {
+                "Name": "nested_1_3",
+                "Id": 7,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(10)*362/1000-var(6)*849/1000"
+            },
+            {
+                "Name": "nested_2_0",
+                "Id": 8,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(7)*373/1000"
+            },
+            {
+                "Name": "nested_2_1",
+                "Id": 9,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(8)*488/1000"
+            },
+            {
+                "Name": "nested_2_2",
+                "Id": 10,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(9)*650/1000"
+            }
+        ],
+        "Relationships": [
+            {
+                "Id": 11,
+                "FromVariable": 9,
+                "ToVariable": 10,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 5,
+                "FromVariable": 4,
+                "ToVariable": 5,
+                "Type": "Activator"
+            },
+            {
+                "Id": 9,
+                "FromVariable": 7,
+                "ToVariable": 8,
+                "Type": "Activator"
+            },
+            {
+                "Id": 4,
+                "FromVariable": 3,
+                "ToVariable": 4,
+                "Type": "Activator"
+            },
+            {
+                "Id": 1,
+                "FromVariable": 1,
+                "ToVariable": 2,
+                "Type": "Activator"
+            },
+            {
+                "Id": 6,
+                "FromVariable": 5,
+                "ToVariable": 6,
+                "Type": "Activator"
+            },
+            {
+                "Id": 12,
+                "FromVariable": 10,
+                "ToVariable": 7,
+                "Type": "Activator"
+            },
+            {
+                "Id": 3,
+                "FromVariable": 3,
+                "ToVariable": 1,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 10,
+                "FromVariable": 8,
+                "ToVariable": 9,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 2,
+                "FromVariable": 2,
+                "ToVariable": 3,
+                "Type": "Activator"
+            },
+            {
+                "Id": 8,
+                "FromVariable": 7,
+                "ToVariable": 3,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 7,
+                "FromVariable": 6,
+                "ToVariable": 7,
+                "Type": "Inhibitor"
+            }
+        ]
+    },
+    "Layout": {
+        "Variables": [
+            {
+                "Id": 1,
+                "Name": "nested_0_0",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 105.774,
+                "PositionY": 389.96,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 2,
+                "Name": "nested_0_1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 131.078,
+                "PositionY": 512.46,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 3,
+                "Name": "nested_0_2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 261.66,
+                "PositionY": 424.78,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 4,
+                "Name": "nested_1_0",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 346.84,
+                "PositionY": 570.2,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 5,
+                "Name": "nested_1_1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 501.26,
+                "PositionY": 562.04,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 6,
+                "Name": "nested_1_2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 517.6,
+                "PositionY": 407.48,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 7,
+                "Name": "nested_1_3",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 382.22,
+                "PositionY": 306.24,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 8,
+                "Name": "nested_2_0",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 487.78,
+                "PositionY": 181.25,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 9,
+                "Name": "nested_2_1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 432.28,
+                "PositionY": 36.0,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 10,
+                "Name": "nested_2_2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 326.4,
+                "PositionY": 150.552,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            }
+        ],
+        "Containers": [
+            {
+                "Id": 1,
+                "Name": "C0",
+                "Size": 4,
+                "PositionX": -2,
+                "PositionY": -2
+            }
+        ],
+        "AnnotatedGridCells": [],
+        "Description": ""
+    },
+    "ltl": {
+        "states": [],
+        "operations": []
+    }
+}

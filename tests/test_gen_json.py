@@ -91,7 +91,7 @@ def test_gen_json_with_constant_nodes(tmp_path, sample_graph):
 
 def test_gen_json_invalid_input():
     with pytest.raises(TypeError, match="G must be a directed graph"):
-        gen_json("invalid", Path("test"), "test_model") # type: ignore
+        gen_json("invalid", Path("test"), "test_model")  # type: ignore
 
 
 def test_gen_json_invalid_func_type(tmp_path, sample_graph):

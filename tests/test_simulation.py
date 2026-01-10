@@ -47,7 +47,7 @@ def test_run_simulation(temp_folder):
         path_root, "tests", "helper_simulation", "helper_simulation_netw_in_1"
     )
     output_file = pj(temp_folder, "output_file")
-    bma_console = "C:\PROGRA~2\BMA\BioCheckConsole.exe" # type: ignore
+    bma_console = "C:\PROGRA~2\BMA\BioCheckConsole.exe"  # type: ignore
     expected_output = pj(
         path_root, "tests", "helper_simulation", "helper_simulation_out_1"
     )

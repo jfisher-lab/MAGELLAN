@@ -11,7 +11,7 @@ version = "1.0.0"
 dependencies = [
     "matplotlib",
     "numpy<=1.26.4",
-    "pandas",
+    "pandas<=2.3.1",
     "torch",
     "torch_geometric",
     "networkx",
@@ -33,6 +33,8 @@ dependencies = [
     "cvxpy>=1.6.0",
     "kaleido==0.2.1",
     "plotly>=6.0.0",
+    "ruff>=0.12.7",
+    "fire>=0.7.1",
 ]
 authors = [
     {name="Matthew A. Clarke", email="matthewaclarke1991@gmail.com"},
@@ -49,6 +51,7 @@ classifiers = [
 
 [project.optional-dependencies]
 visualisation = ["pygraphviz"]
+rawsciplex = ["scanpy", "anndata", "joblib"]
 z3 = ["z3"]
 latex = ["pydot", "graphviz"]
 testing = ["pytest", "pytest-md", "pytest-md-report"]
@@ -88,8 +91,8 @@ exclude = [
 line-length = 88
 indent-width = 4
 
-# Assume Python 3.9
-target-version = "py39"
+# Assume Python 3.11
+target-version = "py311"
 
 [tool.ruff.lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.

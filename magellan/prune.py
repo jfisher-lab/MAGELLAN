@@ -200,7 +200,6 @@ def check_paths_in_graph(G: nx.DiGraph, pert_dic_small: OrderedDict) -> None:
                     )
 
 
-
 def calc_metrics(
     y_pred: np.ndarray,
     y_true: np.ndarray,

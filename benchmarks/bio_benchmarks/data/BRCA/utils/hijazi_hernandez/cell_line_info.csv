@@ -1,0 +1,7 @@
+Cell Line,Cancer Type,Origin,Key Features,Database Sources for Mutation Data,Tissue
+MCF10A,Non-cancerous (Breast),Human breast epithelial cells,Non-tumorigenic used as a control in breast cancer research immortalized but non-transformed,COSMIC CCLE DepMap,Breast
+MCF7,Breast Cancer,Human breast adenocarcinoma,Estrogen receptor-positive (ER+) commonly used in hormone receptor-targeted therapies,COSMIC cBioPortal DepMap CCLE,Breast
+MDA-MB-231,Breast Cancer,Human breast carcinoma (TNBC),Highly aggressive triple-negative (ER- PR- HER2-) used in metastasis research,COSMIC CCLE DepMap cBioPortal,Breast
+AML Bone Marrow Aspirate,AML,Patient bone marrow samples,Primary samples derived from AML patients used for diagnostic and therapeutic research,COSMIC (for individual patient data) cBioPortal,Blood
+HL-60,AML,Human promyelocytic leukemia,Used for studying differentiation apoptosis and chemotherapeutic drug responses,COSMIC CCLE DepMap,Blood
+KG-1,AML,Human erythroleukemia,CD34-positive used in stem cell and leukemia research especially in relation to drug resistance,COSMIC CCLE DepMap,Blood

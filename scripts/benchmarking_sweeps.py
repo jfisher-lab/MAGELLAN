@@ -37,7 +37,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         "--list", action="store_true", help="List available parameter sweeps"
     )
     parser.add_argument(
-        "--sweep-dir",
+        "--sweep-configs-dir",
         type=Path,
         help="Directory containing sweep configs",
         default=Path(__file__).parent.parent
@@ -54,7 +54,9 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     parser.add_argument("--script", type=Path, help="Override path to main script")
 
-    parser.add_argument("--config", type=Path, help="Override path to base config")
+    parser.add_argument(
+        "--netw-config", type=Path, help="Override path to base network config"
+    )
 
     parser.add_argument(
         "--output-dir",
@@ -86,9 +88,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
 
     script_path = args.script or default_script_path
-    base_config = args.config or default_config_path
+    base_config = args.netw_config or default_config_path
 
-    sweeps_dir = args.sweep_dir
+    sweeps_dir = args.sweep_configs_dir
 
     if args.list:
         list_sweeps(sweeps_dir)
@@ -101,7 +103,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         else:
             return 1
 
-    if not args.sweep and not args.plot_all:
+    if not args.sweep and not args.all and not args.plot_all:
         parser.print_help()
         return 1
 
@@ -125,7 +127,9 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     # Run each requested sweep
     for sweep_name in sweep_names:
-        config_path = sweeps_dir / f"{sweep_name}.toml"
+        config_path = sweeps_dir / (
+            f"{sweep_name}.toml" if not sweep_name.endswith(".toml") else sweep_name
+        )
         if not config_path.exists():
             print(f"Error: Sweep config not found: {config_path}")
             continue
@@ -219,6 +223,8 @@ def plot_sweep_results(
                 # figsize=tuple(plot_config.get("figsize", (10, 10))),
                 y_min=plot_config.get("y_min", 0),
                 y_max=plot_config.get("y_max", 1),
+                x_axis_labels=plot_config.get("x_axis_labels"),
+                log_x_axis=plot_config.get("log_x_axis", False),
             )
 
             print(f"Plot saved to: {output_path}")

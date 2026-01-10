@@ -1,0 +1,184 @@
+{
+    "Model": {
+        "Name": "nested_3_4_overlap1",
+        "Variables": [
+            {
+                "Name": "nested_0_0",
+                "Id": 1,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(3)*240/1000"
+            },
+            {
+                "Name": "nested_0_1",
+                "Id": 2,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(1)*437/1000"
+            },
+            {
+                "Name": "nested_0_2",
+                "Id": 3,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(2)*758/1000-var(6)*849/1000"
+            },
+            {
+                "Name": "nested_1_0",
+                "Id": 4,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(3)*152/1000"
+            },
+            {
+                "Name": "nested_1_1",
+                "Id": 5,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(4)*641/1000"
+            },
+            {
+                "Name": "nested_1_2",
+                "Id": 6,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(5)*118/1000"
+            }
+        ],
+        "Relationships": [
+            {
+                "Id": 7,
+                "FromVariable": 6,
+                "ToVariable": 3,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 5,
+                "FromVariable": 4,
+                "ToVariable": 5,
+                "Type": "Activator"
+            },
+            {
+                "Id": 4,
+                "FromVariable": 3,
+                "ToVariable": 4,
+                "Type": "Activator"
+            },
+            {
+                "Id": 1,
+                "FromVariable": 1,
+                "ToVariable": 2,
+                "Type": "Activator"
+            },
+            {
+                "Id": 6,
+                "FromVariable": 5,
+                "ToVariable": 6,
+                "Type": "Activator"
+            },
+            {
+                "Id": 3,
+                "FromVariable": 3,
+                "ToVariable": 1,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 2,
+                "FromVariable": 2,
+                "ToVariable": 3,
+                "Type": "Activator"
+            }
+        ]
+    },
+    "Layout": {
+        "Variables": [
+            {
+                "Id": 1,
+                "Name": "nested_0_0",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 105.774,
+                "PositionY": 85.886,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 2,
+                "Name": "nested_0_1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 233.9,
+                "PositionY": 36.0,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 3,
+                "Name": "nested_0_2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 218.78,
+                "PositionY": 187.202,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 4,
+                "Name": "nested_1_0",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 171.708,
+                "PositionY": 340.14,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 5,
+                "Name": "nested_1_1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 311.46,
+                "PositionY": 413.46,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 6,
+                "Name": "nested_1_2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 359.68,
+                "PositionY": 263.48,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            }
+        ],
+        "Containers": [
+            {
+                "Id": 1,
+                "Name": "C0",
+                "Size": 4,
+                "PositionX": -2,
+                "PositionY": -2
+            }
+        ],
+        "AnnotatedGridCells": [],
+        "Description": ""
+    },
+    "ltl": {
+        "states": [],
+        "operations": []
+    }
+}

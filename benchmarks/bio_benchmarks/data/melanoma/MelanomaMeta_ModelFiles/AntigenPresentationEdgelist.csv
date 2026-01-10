@@ -1,0 +1,59 @@
+From,To,Type,Pathway,Cell Line/Tissue,Paper,Notes
+B-catenin,CCL4,Inhibitor,Antigen Presentation,BRAF/PTEN GEM,"Spranger, S., et al. Nature (2015)",B-catenin activity suppresses CCL4 via activation of ATF3
+B2M,HLA-1,Activator,Antigen Presentation,"Review, antigen presentation","Jhunjhunwala, S., et al. (2021)",B2m is a component of all HLA-I complexes
+COX-2,PGE2,Activator,Antigen Presentation,"Review, antigen presentation","Jhunjhunwala, S., et al. (2021)",COX-2 enzyme (and COX-1) required for production of PGE2. 
+Erk,COX-2,Activator,Antigen Presentation,BRAF/p16 GEM,"Zelenay, S. et al. Cell (2015)",COX-2 expression inhibited by BRAFi/MEKi
+IFN-gamma,IFNGR,Activator,Antigen Presentation,"Review, antigen presentation","Jhunjhunwala, S., et al. (2021)","IFN gamma is a ligand for IFN gamma receptor, formed of IFNGR1&2"
+IFNGR,STAT1,Activator,Antigen Presentation,"Review, antigen presentation","Jhunjhunwala, S., et al. (2021)",Binding of IFN gamma to receptor induces STAT1 activation through JAK1 and JAK2
+JAK1,STAT1,Activator,Antigen Presentation,"Review, antigen presentation","Jhunjhunwala, S., et al. (2021)",Binding of IFN gamma to receptor induces STAT1 activation through JAK1 and JAK2
+JAK2,STAT1,Activator,Antigen Presentation,"Review, antigen presentation","Jhunjhunwala, S., et al. (2021)",Binding of IFN gamma to receptor induces STAT1 activation through JAK1 and JAK2
+MITF,Differentiation Antigens,Activator,Antigen Presentation,"Review, MITF","Levy, C., et al. Trends Mol Med (2006)",Direct targets of MITF such as tyrosinases and gp100 are antigenic
+MITF,Differentiation Antigens,Activator,Antigen Presentation,HGFÐCDK4(R24C) GEM,"Landsberg, J. et al. Nature (2012)",Downregulation of MITF escapes control of gp100-reactive CTLs during ACT
+PGE2,DCActivation,Inhibitor,DCs,BRAF/p16 GEM,"Zelenay, S. et al. Cell (2015)",PGE2 in melanoma conditioned media prevents DC activation in vitro
+PGE2,DCActivation,Inhibitor,DCs,BRAF/p16 GEM,"Zelenay, S. et al. Cell (2015)",COX-2 activation prevents accumulation of CD103+ DCs in vivo
+STAT1,HLA-1,Activator,Antigen Presentation,"Review, antigen presentation","Jhunjhunwala, S., et al. (2021)",IFN gamma signalling upregulates HLA-I (and HLA-II)
+CCL4,DCInfiltration,Activator,DCs,"Review, antigen presentation","Jhunjhunwala, S., et al. (2021)",CCL4 is an attractant for circulating DCs. 
+Differentiation Antigens,DCActivation,Activator,DCs,"Review, antigen presentation","Jhunjhunwala, S., et al. (2021)",DCs and T-cells recognise differentiation antigens like gp100 and MART-1
+IL-10,DCActivation,Inhibitor,DCs,Bone marrow cells,"Wakkach, A. et al. Immunity (2003)",IL-10 induces immature phenotype in DCs
+TCF,IL-10,Activator,Secreted Factors,"624mel, 888mel, HeLa","Yaguchi, T. et al. J Immunol (2012)","B-catenin, TCF bind IL-10 promoter"
+Neoantigens,DCActivation,Activator,DCs,"Review, antigen presentation","Jhunjhunwala, S., et al. (2021)",DCs recognise neoantigens caused by nonsynonymous mutations
+Neoantigens,DCActivation,Activator,DCs,Patient-derived melanomas,"Snyder, A. et al. New Engl J Medicine (2014)",Signature of neoepitopes associated with response to anti-CTLA-4 Abs
+TGF-B,DCActivation,Inhibitor,DCs,B16F10 allograft model,"Papaspyridonos, M. et al. Nat Commun (2015)","TGF-B prevents differentiation of DCs, instead inducing Myeloid-derived suppressor cells, via Id1."
+DCinfiltration,DCActivation,Activator,DCs,GEM,"Salmon, H. et al. Immunity (2016)",Infiltration of DCs into tumour critical for immune response.
+DCActivation,T-cellActivation,Activator,T-cells,"Review, ICT","Sharma, P. & Allison, J. P. Cell (2015)",T-cells are activated by co-stimulation of CD28 by B7-1 and -2 on DCs
+Differentiation Antigens,HLA-antigen,Activator,T-cells,"Review, antigen presentation","Jhunjhunwala, S., et al. (2021)",DCs and T-cells recognise differentiation antigens like gp100 and MART-1
+HLA-1,HLA-antigen,Activator,T-cells,"Review, ICT","Sharma, P. & Allison, J. P. Cell (2015)",Presentation of antigen on HLA-I detected by TCR
+Neoantigens,HLA-antigen,Activator,T-cells,"Review, antigen presentation","Jhunjhunwala, S., et al. (2021)",DCs and T-cells recognise neoantigens caused by nonsynonymous mutations
+Neoantigens,HLA-antigen,Activator,T-cells,Patient-derived melanomas,"Snyder, A. et al. New Engl J Medicine (2014)",Signature of neoepitopes associated with response to anti-CTLA-4 Abs
+Neoantigens,HLA-antigen,Activator,T-cells,Patient-derived melanomas,"Lu, Y.-C. et al. Clin Cancer Res (2014)",Specific neoeptiopes such as mutant POLA2 and KiF2C are recognised by T-cells
+PD-L1,T-cellActivation,Inhibitor,T-cells,"Review, ICT","Sharma, P. & Allison, J. P. Cell (2015)",PD-1 expressed on T-cells binds to PD-L1 on tumour cells and blocks TCR signalling
+PD-1,T-cellActivation,Inhibitor,T-cells,"Review, ICT","Sharma, P. & Allison, J. P. Cell (2015)",PD-1 expressed on T-cells binds to PD-L1 on tumour cells and blocks TCR signalling
+STAT1,p27,Activator,Cell Cycle,B16,"Matsushita, H., et al. Cancer Imm Res (2015) https://doi.org/10.1158/2326-6066.cir-14-0098",IFN-gamma activates p27 via downregulation of SKP2
+STAT1,BCL2A1,Inhibitor,Survival,DM6,"Gollob, J. A., et al. Cancer Res (2005)",May be via MEK1 specifically although also MITF downregulation reported
+T-cellActivation,IFN-gamma,Activator,T-cells,"Review, resistance to ICT","Kalbasi, A. & Ribas, A. Nat Rev Immunol (2020)",T-cells produce IFN-gamma in response to activation
+IFN-gamma,DCActivation,Activator,DCs,Mice,"Garris, C. S. et al. Immunity (2018)","IFN-gamma stimulates production of IL-12 by DCs, necessary step for tumour rejection in response to anti-PD-1"
+DCActivation,IL-12,Activator,DCs,Mice,"Garris, C. S. et al. Immunity (2018)","IFN-gamma stimulates production of IL-12 by DCs, necessary step for tumour rejection in response to anti-PD-1"
+IL-12,T-cellActivation,Activator,DCs,Mice,"Garris, C. S. et al. Immunity (2018)","IL-12 can stimulate IFN-gamma production by TILs, independently of or synergistically with CD3/CD28 stimulation"
+HLA-antigen,TumourKilling,Activator,T-cells,"Review, ICT","Sharma, P. & Allison, J. P. Cell (2015)",Presentation of antigen on HLA-I detected by TCR
+Proliferation,TumourGrowth,Activator,,,,
+Apoptosis,TumourGrowth,Inhibitor,,,,
+TumourKilling,TumourGrowth,Inhibitor,,,,
+STING,IRF3,Activator,,WM39 melanoma,"Falahat, R. et al. Cancer Immunol Res (2019)",IRF3 phosphorylated in cells stimulated with STING agonist
+STING,IRF3,Activator,,"Review, IFNs in cancer","Franco, S. D., et al. Front Immunol (2017)","cytosolic DNA converted to cGAMP by cyclic-GMP-AMP synthase (cGAS) which is detected by STING, leading to IRF3 activation"
+cGAS,IRF3,Activator,,"Review, IFNs in cancer","Franco, S. D., et al. Front Immunol (2017)","cytosolic DNA converted to cGAMP by cyclic-GMP-AMP synthase (cGAS) which is detected by STING, leading to IRF3 activation"
+IRF3,IFN-I,Activator,,WM39 melanoma,"Falahat, R. et al. Cancer Immunol Res (2019)",IFN-B produced in cells stimulated with STING agonist
+IFN-I,IFNAR,Activator,,"Review, IFNs in cancer","Franco, S. D., et al. Front Immunol (2017)",IFN-I binds the IFNAR1/2 receptors
+IFNAR,HLA-1,Activator,,MCA205 mouse fibrosarcoma,"Sistigu, A. et al. Nat Med (2014)",Loss of IFNAR1 prevents IFN-induced expression of MHC-1 molecules
+IFNAR,HLA-1,Activator,,WM39 melanoma,"Falahat, R. et al. Cancer Immunol Res (2019)",HLA-1 produced in cells stimulated with STING agonist
+IFNAR,CXCL10,Activator,,MCA205 mouse fibrosarcoma,"Sistigu, A. et al. Nat Med (2014)",Loss of IFNAR1 prevents IFN-induced secretion of CXCL10
+IFNAR,CXCL10,Activator,,WM39 melanoma,"Falahat, R. et al. Cancer Immunol Res (2019)",CXCL10 produced in cells stimulated with STING agonist
+CXCL10,T-cellInfiltration,Activator,,"M537, panel of human melanoma samples","Harlin, H. et al. Cancer Res (2009)","CCL2, CCL3, CCL4, CCL5, CXCL9, and CXCL10 associated with TIL-rich gene expression profile and can attract T-cells in vitro"
+CCL4,T-cellInfiltration,Activator,,"M537, panel of human melanoma samples","Harlin, H. et al. Cancer Res (2009)","CCL2, CCL3, CCL4, CCL5, CXCL9, and CXCL10 associated with TIL-rich gene expression profile and can attract T-cells in vitro"
+IFNGR,CXCL10,Activator,,"endothelial, monocyte, fibroblast, and keratinocyte cells","Luster, A. D. & Ravetch, J. V. J Exp Medicine (1987)",CXCL10 produced in response to IFN-gamma stimulation
+IFN-I,DCActivation,Activator,,1969 sarcoma mouse model,"Diamond, M. S. et al. J Exp Medicine (2011)","DCs are activated by IFN-I, enhancing expression of co-stimulatory molecules and T-cell activation"
+DCActivation,CXCL10,Activator,,BRAFV600E PTEN-/- GEM ,"Spranger, S., et al. Cancer Cell (2017)",CD103+ DCs are primary source of CXCL10 (and CXCL9) in tumour environment
+DCinfiltration,DCActivation,Activator,,,,
+T-cellInfiltration,T-cellActivation,Activator,,,,
+IFNGR,PD-L1,Activator,,Patient samples,"Taube, J. M. et al. Sci Transl Med (2012)",PD-L1 expression in melanoma cells associated with T-cell infiltrate and IFN-gamma expression
+IFNGR,PD-L1,Activator,,Panel of melanoma cell lines,"Dong, H. et al. Nat Med (2002)",IFN-gamma induces PD-L1 expression in melanoma cell lines
+PD-L1_DC,T-cellActivation,Inhibitor,,MC38 mouse model,"Tang, H. et al. J Clin Invest (2018)",DCs expression of PD-L1 is key to anti-tumour effect of anti-PD-L1
