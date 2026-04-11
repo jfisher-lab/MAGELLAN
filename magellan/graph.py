@@ -2,6 +2,22 @@ import networkx as nx
 
 from magellan.json_io import gen_json
 
+SCAFFOLD_PREFIXES = ("dummy_", "udummy_")
+INHIBITOR_SCAFFOLD_PREFIXES = ("dummy_",)
+
+
+def is_scaffold_node(name: str) -> bool:
+    return name.startswith(SCAFFOLD_PREFIXES)
+
+
+def is_inhibitor_scaffold_node(name: str) -> bool:
+    # `dummy_` parents for inhibitor-only nodes are pure scaffolding and are
+    # masked out of the learned W. `udummy_` parents (universal-dummy) carry
+    # learned weights into biological nodes, so they must NOT be masked.
+    return name.startswith(INHIBITOR_SCAFFOLD_PREFIXES) and not name.startswith(
+        "udummy_"
+    )
+
 
 class Graph(nx.DiGraph):
     def __init__(

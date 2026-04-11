@@ -81,7 +81,7 @@ To plot these results, run:
 uv run scripts/benchmarking_sweeps.py --netw-config scripts/example_configs/example_benchmark_config.toml --sweep-configs-dir benchmarks/synthetic_benchmarks/configs/example_sweeps/ --plot-all
 ```
 
-For other benchmarking examples, see [`benchmarks/README.md`](benchmarks/README.md).
+For other benchmarking examples, see [`benchmarks/README.md`](benchmarks/README.md) and [MAGELLAN Supplement repository](https://github.com/jfisher-lab/MAGELLAN_Supplement).
 
 ## Citation
 

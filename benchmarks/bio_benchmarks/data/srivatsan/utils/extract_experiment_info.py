@@ -160,24 +160,26 @@ def main() -> None:
     output_dir = data_dir
 
     # Save summary
-    summary_df = pd.DataFrame({
-        "Metric": [
-            "Total Experiments",
-            "Total Rows",
-            "Unique Cell Types",
-            "Unique Drugs",
-            "Measured Genes (perturbation)",
-            "Experimental Genes",
-        ],
-        "Count": [
-            results["total_experiments"],
-            results["total_rows"],
-            len(results["cell_types"]),
-            len(results["drugs"]),
-            len(results["measured_genes"]),
-            len(results["experimental_genes"]),
-        ],
-    })
+    summary_df = pd.DataFrame(
+        {
+            "Metric": [
+                "Total Experiments",
+                "Total Rows",
+                "Unique Cell Types",
+                "Unique Drugs",
+                "Measured Genes (perturbation)",
+                "Experimental Genes",
+            ],
+            "Count": [
+                results["total_experiments"],
+                results["total_rows"],
+                len(results["cell_types"]),
+                len(results["drugs"]),
+                len(results["measured_genes"]),
+                len(results["experimental_genes"]),
+            ],
+        }
+    )
     summary_df.to_csv(output_dir / "extraction_summary.csv", index=False)
 
     # Save detailed lists
@@ -198,12 +200,12 @@ def main() -> None:
     )
 
     print(f"\n{'Output Files':-^80}")
-    print(f"  - extraction_summary.csv")
-    print(f"  - cell_types.csv")
-    print(f"  - drugs.csv")
-    print(f"  - measured_genes.csv")
-    print(f"  - perturbed_genes.csv")
-    print(f"  - experimental_genes.csv")
+    print("  - extraction_summary.csv")
+    print("  - cell_types.csv")
+    print("  - drugs.csv")
+    print("  - measured_genes.csv")
+    print("  - perturbed_genes.csv")
+    print("  - experimental_genes.csv")
     print(f"\nOutput saved to: {output_dir}")
     print("=" * 80)
 

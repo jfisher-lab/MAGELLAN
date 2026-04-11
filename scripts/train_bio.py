@@ -1,5 +1,6 @@
 # %%
 import argparse
+import math
 import os
 from collections import OrderedDict
 from pathlib import Path
@@ -22,6 +23,7 @@ from magellan.json_io import (
     get_pos_from_json,
     json_to_graph,
 )
+from magellan.onpath import _make_onpath_floor_wrapper, compute_onpath_edge_mask
 from magellan.plot import (
     analyze_prediction_errors,
     analyze_predictions,
@@ -71,6 +73,7 @@ from magellan.prune_opt import (
     WarmupScheduler,
     calculate_node_class_weights,
     node_weight_dict_to_df,
+    weighted_node_earth_mover_loss,
 )
 from magellan.pydot_io import graph_to_pydot
 from magellan.sci_opt import pred_bound_perts
@@ -182,6 +185,11 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         "node_class_weights_extreme_boost", 1.0
     )
     grad_clip_max_norm = config["training"].get("grad_clip_max_norm", None)
+    weight_decay = config["training"].get("weight_decay", 0.01)
+    # On-path weight floor (optional one-sided loss penalty). Disabled when
+    # onpath_floor_lambda <= 0.
+    onpath_floor_lambda = config["training"].get("onpath_floor_lambda", 0.0)
+    onpath_floor_target = config["training"].get("onpath_floor_target", 1.0)
     # Debug options
     mask_debug = config["debug"]["mask_debug"]
     use_warmup = config["training"]["use_warmup"]
@@ -190,6 +198,14 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
     seed = config["training"]["seed"]
     test_size = config["training"].get("test_size", 0.0)
     val_size = config["training"].get("val_size", 0.0)
+    _y_missing_fill_value_raw = config["training"].get("y_missing_fill_value", 0.0)
+    if _y_missing_fill_value_raw is None or (
+        isinstance(_y_missing_fill_value_raw, float)
+        and math.isnan(_y_missing_fill_value_raw)
+    ):
+        y_missing_fill_value: float | None = None
+    else:
+        y_missing_fill_value = float(_y_missing_fill_value_raw)
     np.random.seed(seed)
     torch.manual_seed(seed)
     print(out_dir)
@@ -263,7 +279,9 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         elif dual_spec_mode == "split_second":
             # spec_path = all train, split spec_path_2
             spec_keys_2 = list(pert_dic_small_2.keys())
-            val_pert_dic = None  # Not supported in this mode, use combined_split instead
+            val_pert_dic = (
+                None  # Not supported in this mode, use combined_split instead
+            )
             if test_size == 1.0:
                 # If test_size is 1.0, use all of spec 2 for testing (zero-shot)
                 train_pert_dic = OrderedDict(pert_dic_small)
@@ -296,7 +314,9 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         elif dual_spec_mode == "split_first":
             # split spec_path, spec_path_2 = all test
             spec_keys_1 = list(pert_dic_small.keys())
-            val_pert_dic = None  # Not supported in this mode, use combined_split instead
+            val_pert_dic = (
+                None  # Not supported in this mode, use combined_split instead
+            )
             if test_size > 0.0:
                 train_keys_1, test_keys_1 = train_test_split(
                     spec_keys_1, test_size=test_size, random_state=seed, shuffle=True
@@ -328,7 +348,10 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
             if holdout_size > 0.0:
                 # First split: train vs (val + test)
                 train_keys, holdout_keys = train_test_split(
-                    combined_keys, test_size=holdout_size, random_state=seed, shuffle=True
+                    combined_keys,
+                    test_size=holdout_size,
+                    random_state=seed,
+                    shuffle=True,
                 )
                 train_pert_dic = OrderedDict({k: combined_spec[k] for k in train_keys})
 
@@ -336,16 +359,25 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
                 if val_size > 0.0 and test_size > 0.0:
                     test_proportion = test_size / holdout_size
                     val_keys, test_keys = train_test_split(
-                        holdout_keys, test_size=test_proportion, random_state=seed, shuffle=True
+                        holdout_keys,
+                        test_size=test_proportion,
+                        random_state=seed,
+                        shuffle=True,
                     )
                     val_pert_dic = OrderedDict({k: combined_spec[k] for k in val_keys})
-                    test_pert_dic = OrderedDict({k: combined_spec[k] for k in test_keys})
+                    test_pert_dic = OrderedDict(
+                        {k: combined_spec[k] for k in test_keys}
+                    )
                 elif val_size > 0.0:
-                    val_pert_dic = OrderedDict({k: combined_spec[k] for k in holdout_keys})
+                    val_pert_dic = OrderedDict(
+                        {k: combined_spec[k] for k in holdout_keys}
+                    )
                     test_pert_dic = None  # type: ignore
                 else:
                     val_pert_dic = None  # type: ignore
-                    test_pert_dic = OrderedDict({k: combined_spec[k] for k in holdout_keys})
+                    test_pert_dic = OrderedDict(
+                        {k: combined_spec[k] for k in holdout_keys}
+                    )
 
                 print(
                     f"Dual spec mode 'combined_split': {len(train_pert_dic)} train, "
@@ -379,7 +411,10 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
             if val_size > 0.0 and test_size > 0.0:
                 test_proportion = test_size / holdout_size
                 val_keys, test_keys = train_test_split(
-                    holdout_keys, test_size=test_proportion, random_state=seed, shuffle=True
+                    holdout_keys,
+                    test_size=test_proportion,
+                    random_state=seed,
+                    shuffle=True,
                 )
             elif val_size > 0.0:
                 val_keys = holdout_keys
@@ -388,8 +423,16 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
                 val_keys = []
                 test_keys = holdout_keys
             train_pert_dic = OrderedDict({k: pert_dic_small[k] for k in train_keys})
-            val_pert_dic = OrderedDict({k: pert_dic_small[k] for k in val_keys}) if val_keys else None
-            test_pert_dic = OrderedDict({k: pert_dic_small[k] for k in test_keys}) if test_keys else None
+            val_pert_dic = (
+                OrderedDict({k: pert_dic_small[k] for k in val_keys})
+                if val_keys
+                else None
+            )
+            test_pert_dic = (
+                OrderedDict({k: pert_dic_small[k] for k in test_keys})
+                if test_keys
+                else None
+            )
             print(
                 f"Single spec mode: {len(train_pert_dic)} train, "
                 f"{len(val_pert_dic) if val_pert_dic else 0} val, "
@@ -399,7 +442,9 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
             train_pert_dic = pert_dic_small
             val_pert_dic = None  # type: ignore
             test_pert_dic = None  # type: ignore
-            print(f"Single spec mode: {len(train_pert_dic)} train samples, no val/test set")
+            print(
+                f"Single spec mode: {len(train_pert_dic)} train samples, no val/test set"
+            )
 
     # Combine all spec dicts for unique node checking and dummy setup
     combined_pert_dic = dict(train_pert_dic)
@@ -433,13 +478,13 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
 
     A_mult = get_adjacency_matrix_mult(G, method=tf_method)
 
-    # Note that this function will zero out missing values and include perturbations as expected values
+    # Note that this function will fill missing values with `y_missing_fill_value` and include perturbations as expected values
     X_train, y_train = get_data_and_update_y(
-        train_pert_dic, G, replace_missing_with_zero=True
+        train_pert_dic, G, y_missing_fill_value=y_missing_fill_value
     )
-    # Get data without zeroing out missing values and without including perturbations as expected values
+    # Get data without filling missing values (NaN) and without including perturbations as expected values — required by class-weight computation
     _, y_no_zero_no_pert_as_expectation_train = get_data(
-        train_pert_dic, G, y_replace_missing_with_zero=False
+        train_pert_dic, G, y_missing_fill_value=None
     )
 
     # After loading X and y
@@ -452,10 +497,10 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
     )
     if val_pert_dic:
         X_val, y_val = get_data_and_update_y(
-            val_pert_dic, G, replace_missing_with_zero=True
+            val_pert_dic, G, y_missing_fill_value=y_missing_fill_value
         )
         _, y_no_zero_no_pert_as_expectation_val = get_data(
-            val_pert_dic, G, y_replace_missing_with_zero=False
+            val_pert_dic, G, y_missing_fill_value=None
         )
         node_class_weights_val = calculate_node_class_weights(
             y_no_zero_no_pert_as_expectation_val,
@@ -471,10 +516,10 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
 
     if test_pert_dic:
         X_test, y_test = get_data_and_update_y(
-            test_pert_dic, G, replace_missing_with_zero=True
+            test_pert_dic, G, y_missing_fill_value=y_missing_fill_value
         )
         _, y_no_zero_no_pert_as_expectation_test = get_data(
-            test_pert_dic, G, y_replace_missing_with_zero=False
+            test_pert_dic, G, y_missing_fill_value=None
         )
         node_class_weights_test = calculate_node_class_weights(
             y_no_zero_no_pert_as_expectation_test,
@@ -514,9 +559,7 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
 
     train_mask_dic = construct_mask_dic(train_pert_dic, node_dic, edge_idx, mask_debug)
     if val_pert_dic:
-        val_mask_dic = construct_mask_dic(
-            val_pert_dic, node_dic, edge_idx, mask_debug
-        )
+        val_mask_dic = construct_mask_dic(val_pert_dic, node_dic, edge_idx, mask_debug)
     else:
         val_mask_dic = None
     if test_pert_dic:
@@ -556,7 +599,9 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         round_val=round_val,
     )
 
-    opt = torch.optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=0.01)
+    opt = torch.optim.AdamW(
+        model.parameters(), lr=learning_rate, weight_decay=weight_decay
+    )
     scheduler = ReduceLROnPlateau(opt, mode="min", factor=0.5, patience=5)
 
     warmup_scheduler = None
@@ -574,35 +619,57 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
 
     edge_signs = extract_edge_signs(G, edge_idx)
 
-    total_loss, sum_grad, train_epoch_losses, val_epoch_losses, test_epoch_losses = train_model(
-        model=model,
-        train_data=train_data,
-        test_data=test_data,
-        train_pert_dic=train_pert_dic,
-        test_pert_dic=test_pert_dic,
-        train_mask_dic=train_mask_dic,
-        test_mask_dic=test_mask_dic,
-        node_class_weights_train=node_class_weights_train,
-        node_class_weights_test=node_class_weights_test,
-        save_dir=out_dir,
-        node_dic=node_dic,
-        edge_idx_original=edge_idx_original,
-        edge_scale=edge_scale,
-        pert_mask=pert_mask,
-        opt=opt,
-        scheduler=scheduler,
-        edge_signs=edge_signs,
-        warmup_scheduler=warmup_scheduler,
-        early_stopping_enabled=early_stopping_enabled,
-        early_stopping_patience=early_stopping_patience,
-        allow_sign_flip=allow_sign_flip,
-        min_range=min_range,
-        max_range=max_range,
-        grad_clip_max_norm=grad_clip_max_norm,
-        val_data=val_data,
-        val_pert_dic=val_pert_dic,
-        val_mask_dic=val_mask_dic,
-        node_class_weights_val=node_class_weights_val,
+    # Build the on-path weight floor loss wrapper when enabled. Pulls edges on
+    # shortest paths from perturbations to observations up toward a per-edge
+    # target onpath_floor_target / sqrt(in_degree(dst)).
+    loss_fn = None
+    if onpath_floor_lambda > 0.0:
+        onpath_mask = compute_onpath_edge_mask(G, node_dic, edge_idx, train_pert_dic)
+        loss_fn = _make_onpath_floor_wrapper(
+            weighted_node_earth_mover_loss,
+            model,
+            onpath_mask,
+            edge_idx,
+            onpath_floor_lambda,
+            onpath_floor_target,
+        )
+        print(
+            f"On-path weight floor enabled: lambda={onpath_floor_lambda}, "
+            f"target={onpath_floor_target} ({int(onpath_mask.sum())} on-path edges)"
+        )
+
+    total_loss, sum_grad, train_epoch_losses, val_epoch_losses, test_epoch_losses = (
+        train_model(
+            model=model,
+            loss_fn=loss_fn,
+            train_data=train_data,
+            test_data=test_data,
+            train_pert_dic=train_pert_dic,
+            test_pert_dic=test_pert_dic,
+            train_mask_dic=train_mask_dic,
+            test_mask_dic=test_mask_dic,
+            node_class_weights_train=node_class_weights_train,
+            node_class_weights_test=node_class_weights_test,
+            save_dir=out_dir,
+            node_dic=node_dic,
+            edge_idx_original=edge_idx_original,
+            edge_scale=edge_scale,
+            pert_mask=pert_mask,
+            opt=opt,
+            scheduler=scheduler,
+            edge_signs=edge_signs,
+            warmup_scheduler=warmup_scheduler,
+            early_stopping_enabled=early_stopping_enabled,
+            early_stopping_patience=early_stopping_patience,
+            allow_sign_flip=allow_sign_flip,
+            min_range=min_range,
+            max_range=max_range,
+            grad_clip_max_norm=grad_clip_max_norm,
+            val_data=val_data,
+            val_pert_dic=val_pert_dic,
+            val_mask_dic=val_mask_dic,
+            node_class_weights_val=node_class_weights_val,
+        )
     )
 
     # Use validation losses for plotting if available, otherwise use test losses
@@ -818,14 +885,14 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         binary_metrics_train,
         out_dir / Path("binary_metrics_lollipop.png"),
         title="Binary Classification Metrics (Train)",
-        metrics_to_plot=["accuracy", "f1", "mcc"]
+        metrics_to_plot=["accuracy", "f1", "mcc"],
     )
 
     plot_metrics_lollipop(
         nonbinary_metrics_train,
         out_dir / Path("nonbinary_metrics_lollipop.png"),
         title="Non-Binary Classification Metrics (Train)",
-        metrics_to_plot=["accuracy", "f1", "mcc", "qwk"]
+        metrics_to_plot=["accuracy", "f1", "mcc", "qwk"],
     )
 
     plot_classification_curves(
@@ -1015,14 +1082,13 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
             binary_metrics_test,
             out_dir_test / Path("binary_metrics_lollipop.png"),
             title="Binary Classification Metrics (Test)",
-            metrics_to_plot=["accuracy", "f1", "mcc"]
+            metrics_to_plot=["accuracy", "f1", "mcc"],
         )
         plot_metrics_lollipop(
             nonbinary_metrics_test,
             out_dir_test / Path("nonbinary_metrics_lollipop.png"),
             title="Non-Binary Classification Metrics (Test)",
-            metrics_to_plot=["accuracy", "f1", "mcc", "qwk"]
-
+            metrics_to_plot=["accuracy", "f1", "mcc", "qwk"],
         )
         plot_classification_curves(
             y_true=y_no_zero_no_pert_as_expectation_test.loc[filtered_idx_real_test],

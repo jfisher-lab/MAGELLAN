@@ -1,4 +1,3 @@
-
 import json
 import time
 from pathlib import Path
@@ -14,10 +13,14 @@ from benchmarks.bio_benchmarks.data.srivatsan.utils.srivatsan_funcs import (
 
 
 def main(
-    csv_file: str = str(Path(__file__).parent.parent / "mcf7_brca_filtered_processed.csv"),
+    csv_file: str = str(
+        Path(__file__).parent.parent / "mcf7_brca_filtered_processed.csv"
+    ),
     cas_to_chembl_file: str = str(Path(__file__).parent.parent / "cas_to_chembl.json"),
-    chembl_to_targets_file: str = str(Path(__file__).parent.parent / "chembl_to_targets.json"),
-    sleep_time: float = 0.5
+    chembl_to_targets_file: str = str(
+        Path(__file__).parent.parent / "chembl_to_targets.json"
+    ),
+    sleep_time: float = 0.5,
 ) -> None:
     """
     Annotate CAS numbers with ChEMBL IDs and target information.
@@ -37,9 +40,9 @@ def main(
     print(f"Found {len(cas_numbers)} unique CAS numbers")
 
     # Step 1: Build CAS to ChEMBL ID mapping
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("STEP 1: Building CAS → ChEMBL ID lookup table")
-    print("="*60)
+    print("=" * 60)
 
     cas_to_chembl = {}
     chembl_ids = []
@@ -73,9 +76,9 @@ def main(
     print(f"  Mapped {len(cas_to_chembl)} out of {len(cas_numbers)} CAS numbers")
 
     # Step 2: Build ChEMBL ID to target symbols mapping
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("STEP 2: Building ChEMBL ID → Target Symbols lookup table")
-    print("="*60)
+    print("=" * 60)
 
     # Get unique ChEMBL IDs
     unique_chembl_ids = sorted(list(set(chembl_ids)))
@@ -91,8 +94,12 @@ def main(
         action_types = result["uniqueActionTypes"]
 
         if targets:
-            action_str = f" (actions: {', '.join(action_types)})" if action_types else ""
-            print(f"  ✓ Found {len(targets)} target(s): {', '.join(targets)}{action_str}")
+            action_str = (
+                f" (actions: {', '.join(action_types)})" if action_types else ""
+            )
+            print(
+                f"  ✓ Found {len(targets)} target(s): {', '.join(targets)}{action_str}"
+            )
             chembl_to_targets[chembl_id] = result
         else:
             print("  ⚠ No targets found")
@@ -105,17 +112,23 @@ def main(
     with open(chembl_to_targets_path, "w", encoding="utf-8") as f:
         json.dump(chembl_to_targets, f, indent=2)
     print(f"\n✓ Saved ChEMBL → Targets mapping to {chembl_to_targets_path}")
-    print(f"  Found targets for {sum(1 for v in chembl_to_targets.values() if v['targets'])} out of {len(chembl_to_targets)} ChEMBL IDs")
+    print(
+        f"  Found targets for {sum(1 for v in chembl_to_targets.values() if v['targets'])} out of {len(chembl_to_targets)} ChEMBL IDs"
+    )
 
     # Summary
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("SUMMARY")
-    print("="*60)
+    print("=" * 60)
     print(f"Total CAS numbers: {len(cas_numbers)}")
     print(f"CAS → ChEMBL mappings: {len(cas_to_chembl)}")
     print(f"Unique ChEMBL IDs: {len(unique_chembl_ids)}")
-    print(f"ChEMBL IDs with targets: {sum(1 for v in chembl_to_targets.values() if v['targets'])}")
-    print(f"ChEMBL IDs with action types: {sum(1 for v in chembl_to_targets.values() if v['uniqueActionTypes'])}")
+    print(
+        f"ChEMBL IDs with targets: {sum(1 for v in chembl_to_targets.values() if v['targets'])}"
+    )
+    print(
+        f"ChEMBL IDs with action types: {sum(1 for v in chembl_to_targets.values() if v['uniqueActionTypes'])}"
+    )
     print("\nOutput files:")
     print(f"  - {cas_to_chembl_path}")
     print(f"  - {chembl_to_targets_path}")

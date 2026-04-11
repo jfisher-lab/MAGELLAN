@@ -174,14 +174,9 @@ if __name__ == "__main__":
     print("=" * 100)
 
     # Print validation metrics only if they exist
-    if (
-        evaluation_result.val_nonbinary_metrics
-        and evaluation_result.val_binary_metrics
-    ):
+    if evaluation_result.val_nonbinary_metrics and evaluation_result.val_binary_metrics:
         print("=" * 100)
-        print(
-            f"Val Nonbinary F1: {evaluation_result.val_nonbinary_metrics['f1']:.4f}"
-        )
+        print(f"Val Nonbinary F1: {evaluation_result.val_nonbinary_metrics['f1']:.4f}")
         print(
             f"Val Nonbinary MCC: {evaluation_result.val_nonbinary_metrics['mcc']:.4f}"
         )

@@ -122,7 +122,13 @@ def test_train_model_basic(
     scheduler = ReduceLROnPlateau(optimizer, mode="min", factor=0.5, patience=5)
 
     # Run training
-    total_train_loss, sum_grad, train_epoch_losses, val_epoch_losses, test_epoch_losses = train_model(
+    (
+        total_train_loss,
+        sum_grad,
+        train_epoch_losses,
+        val_epoch_losses,
+        test_epoch_losses,
+    ) = train_model(
         model=model,
         train_data=mock_data,
         test_data=mock_data,
@@ -181,7 +187,13 @@ def test_train_model_with_warmup(
         optimizer=optimizer, warmup_steps=10, initial_lr=0.001, target_lr=0.01
     )
 
-    total_train_loss, sum_grad, train_epoch_losses, val_epoch_losses, test_epoch_losses = train_model(
+    (
+        total_train_loss,
+        sum_grad,
+        train_epoch_losses,
+        val_epoch_losses,
+        test_epoch_losses,
+    ) = train_model(
         model=model,
         train_data=mock_data,
         test_data=mock_data,
@@ -229,7 +241,13 @@ def test_train_model_gradient_clipping(
     optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
     scheduler = ReduceLROnPlateau(optimizer, mode="min", factor=0.5, patience=5)
 
-    total_train_loss, sum_grad, train_epoch_losses, val_epoch_losses, test_epoch_losses = train_model(
+    (
+        total_train_loss,
+        sum_grad,
+        train_epoch_losses,
+        val_epoch_losses,
+        test_epoch_losses,
+    ) = train_model(
         model=model,
         train_data=mock_data,
         test_data=mock_data,

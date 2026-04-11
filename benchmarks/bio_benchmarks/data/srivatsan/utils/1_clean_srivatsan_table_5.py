@@ -15,7 +15,7 @@ from benchmarks.bio_benchmarks.data.srivatsan.utils.srivatsan_funcs import (
 def main(
     input_file: str = str(Path(__file__).parent.parent / "Supplementary_Table_5.txt"),
     output_file: str = str(Path(__file__).parent.parent / "S5.parquet"),
-    chunksize: int = 200_000
+    chunksize: int = 200_000,
 ) -> None:
     """
     Clean and convert Srivatsan Supplementary Table 5 to Parquet format.
@@ -33,7 +33,7 @@ def main(
     print(f"Detected {len(columns)} columns: {columns}")
 
     # Step 2: Estimate total chunks (for progress bar only)
-    total_lines = sum(1 for _ in open(input_path, 'r', encoding='utf-8')) - 2
+    total_lines = sum(1 for _ in open(input_path, "r", encoding="utf-8")) - 2
     total_chunks = total_lines // chunksize + 1
     print(f"Processing ~{total_lines:,} rows in {total_chunks} chunks")
 
@@ -47,10 +47,10 @@ def main(
         names=columns,
         engine="python",
         chunksize=chunksize,
-        dtype=str,                    # Read everything as strings to avoid casting errors
-        on_bad_lines="skip",          # Skip malformed lines
-        keep_default_na=True,         # Treat empty fields as NaN
-        na_values=['', 'NA', 'na', 'N/A', 'n/a', 'NaN', 'nan'],  # Explicit NA values
+        dtype=str,  # Read everything as strings to avoid casting errors
+        on_bad_lines="skip",  # Skip malformed lines
+        keep_default_na=True,  # Treat empty fields as NaN
+        na_values=["", "NA", "na", "N/A", "n/a", "NaN", "nan"],  # Explicit NA values
     )
 
     # Step 4: Write safely with schema consistency
@@ -63,7 +63,9 @@ def main(
         for chunk_idx, chunk in enumerate(chunks):
             # Check for column count mismatches
             if len(chunk.columns) != len(expected_columns):
-                print(f"Chunk {chunk_idx}: Expected {len(expected_columns)} columns, got {len(chunk.columns)}")
+                print(
+                    f"Chunk {chunk_idx}: Expected {len(expected_columns)} columns, got {len(chunk.columns)}"
+                )
 
                 # Add missing columns
                 for col in expected_columns:
@@ -79,9 +81,7 @@ def main(
             if first_chunk:
                 # Create schema from first chunk with all string types
                 # This ensures consistent types even if some chunks have all-null columns
-                schema = pa.schema([
-                    (col, pa.string()) for col in expected_columns
-                ])
+                schema = pa.schema([(col, pa.string()) for col in expected_columns])
                 writer = pq.ParquetWriter(output_path, schema)
                 first_chunk = False
 
@@ -102,4 +102,3 @@ def main(
 
 if __name__ == "__main__":
     fire.Fire(main)
-

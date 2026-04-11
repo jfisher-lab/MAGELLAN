@@ -19,7 +19,7 @@ from sklearn.metrics import (
 from torch_geometric.data import Data
 
 from magellan.gnn_model import Net
-from magellan.graph import Graph
+from magellan.graph import Graph, is_inhibitor_scaffold_node
 from magellan.sci_opt import (
     base_adj,
     enforce_pert_dic_order,
@@ -405,6 +405,7 @@ def add_dummy_nodes_and_generate_A_inh(
     pert_dic: OrderedDict,
     max_range: int,
     tf_method: str = "avg",
+    universal_dummy_value: int | None = None,
 ) -> tuple[nx.DiGraph, list[pd.DataFrame], list, dict]:
     """
     Add dummy nodes to the graph and generate the adjacency matrix and inhibitor list.
@@ -416,6 +417,7 @@ def add_dummy_nodes_and_generate_A_inh(
     pert_dic (dict): The dictionary containing experiments, with 'pert' and 'exp' nodes.
     max_range (int): The maximum range for nodes.
     tf_method (str): The method to use for the update function, either "avg" or "sum".
+    universal_dummy_value (int): The value to use for the universal dummy nodes. Optional: universal dummy parents for all non-inhibitor biological nodes. When universal_dummy_value is set, every biological node that does not already have an inhibitor-only dummy gets a udummy_ activator parent fixed at that value, giving it a learned single-hop shortcut to the target class.
     Returns:
     tuple: A tuple containing the updated graph, adjacency matrix, node list, inhibitor list, and inhibitor dictionary.
     """
@@ -425,7 +427,26 @@ def add_dummy_nodes_and_generate_A_inh(
     # A, inh = get_adj(G, pert_dic, node_list, method=tf_method)
     A_mult = get_adjacency_matrix_mult(G, method=tf_method)
     inh = get_inh(G)
-    Adjacency_per_experiment = get_experiment_array(A_mult, inh, pert_dic, G)
+
+    # Collect the set of biological nodes that will receive a udummy_ parent.
+    # This must happen before get_experiment_array so the per-experiment
+    # adjacency can include A[bio, udummy_bio] = 1 entries (mirroring how
+    # inhibitor dummies are added inside get_adj_single).
+    udummy_targets: list[str] | None = None
+    if universal_dummy_value is not None:
+        inh_target_nodes = set(inh)
+        udummy_targets = [
+            n
+            for n in G.nodes()
+            if n != "0A_node00"
+            and not n.startswith("dummy_")
+            and not n.startswith("udummy_")
+            and n not in inh_target_nodes
+        ]
+
+    Adjacency_per_experiment = get_experiment_array(
+        A_mult, inh, pert_dic, G, udummy_targets=udummy_targets
+    )
 
     # add dummy node to G to allow control of inhibitor-only nodes
     for ele in inh:
@@ -437,16 +458,23 @@ def add_dummy_nodes_and_generate_A_inh(
     # node_list = node_list + inh  # add dummy node to node list
     inh_dic = {ele: max_range for ele in inh}
 
+    if udummy_targets is not None:
+        udummy_dic: dict[str, int] = {}
+        for ele in udummy_targets:
+            udummy_node = f"udummy_{ele}"
+            G.add_edge(udummy_node, ele, sign="Activator")
+            G.add_edge(udummy_node, udummy_node, sign="Activator")
+            udummy_dic[udummy_node] = universal_dummy_value
+        for v in pert_dic.values():
+            v["pert"].update(udummy_dic)
+
     # sort A rows and columns to match sorted(G.nodes()) This MUST occur AFTER the dummy nodes are added
     node_list = get_sorted_node_list(G)
     # Ensure A matrices have consistent row/column order with node_list
     Adjacency_per_experiment = [
-        pd.DataFrame(a, index=node_list, columns=node_list)
+        a.reindex(index=node_list, columns=node_list, fill_value=0.0).copy()
         for a in Adjacency_per_experiment
     ]
-    Adjacency_per_experiment = [
-        a.loc[node_list, node_list] for a in Adjacency_per_experiment
-    ]  # Reorder both rows and columns
 
     for v in pert_dic.values():
         v["pert"].update(
@@ -462,6 +490,7 @@ def dummy_setup(
     test_pert_dic: OrderedDict | None,
     max_range: int,
     tf_method: str,
+    universal_dummy_value: int | None = None,
 ):
     """
     Set up G, inh with dummy nodes for test and train
@@ -473,6 +502,8 @@ def dummy_setup(
     :param pert_dic_small: dictionary of perturbations
     :param max_range: maximum range of the network
     :param tf_method: method to use for the adjacency matrix
+    :param universal_dummy_value: if set, add udummy_ activator parents at this
+        value for every biological node that is not already an inhibitor-only node.
     :return: G, Adjacency_per_experiment_train, Adjacency_per_experiment_test
     """
 
@@ -485,6 +516,7 @@ def dummy_setup(
         pert_dic_small,
         max_range,
         tf_method,
+        universal_dummy_value=universal_dummy_value,
     )
 
     # Get Adjacency matrix for train and test
@@ -493,6 +525,7 @@ def dummy_setup(
         train_pert_dic,
         max_range,
         tf_method,
+        universal_dummy_value=universal_dummy_value,
     )
     if test_pert_dic is not None:
         _, Adjacency_per_experiment_test, _, _ = add_dummy_nodes_and_generate_A_inh(
@@ -500,6 +533,7 @@ def dummy_setup(
             test_pert_dic,
             max_range,
             tf_method,
+            universal_dummy_value=universal_dummy_value,
         )
     else:
         Adjacency_per_experiment_test = None
@@ -588,7 +622,11 @@ def get_adjacency_matrix_mult(G: nx.DiGraph, method: str = "avg") -> pd.DataFram
 
 
 def get_experiment_array(
-    A_mult: pd.DataFrame, inh: list, pert_dic_all: dict, G: nx.DiGraph
+    A_mult: pd.DataFrame,
+    inh: list,
+    pert_dic_all: dict,
+    G: nx.DiGraph,
+    udummy_targets: list | None = None,
 ) -> list[pd.DataFrame]:
     """
     Get the experiment array for each experiment from the adjacency matrix and the perturbation dictionary by adding dummy nodes for all inhibitor nodes, and replacing parents with dummy nodes when perturbed.
@@ -597,33 +635,43 @@ def get_experiment_array(
     :param inh: list, the inhibitor nodes
     :param pert_dic_all: dict, the perturbation dictionary
     :param node_list: list, the node list
+    :param udummy_targets: optional list of bare biological node names that
+        receive a ``udummy_<node>`` activator parent. Passed through to
+        :func:`get_adj_single` so the universal-dummy edges appear in the
+        per-experiment adjacency.
     """
 
     # node_list = get_sorted_node_list(G)
     A: list[pd.DataFrame] = []
     for pert_dic in pert_dic_all.values():
         pert_dic = pert_dic["pert"]
-        A.append(get_adj_single(A_mult, inh, pert_dic, G))
+        A.append(
+            get_adj_single(A_mult, inh, pert_dic, G, udummy_targets=udummy_targets)
+        )
 
     # A = np.array(A)
     return A
 
 
 def get_data_and_update_y(
-    pert_dic: OrderedDict, G: nx.DiGraph, replace_missing_with_zero: bool = True
+    pert_dic: OrderedDict,
+    G: nx.DiGraph,
+    y_missing_fill_value: float | None = 0.0,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """
     Get data and create perturbation and expectation matrices where the perturbations are also included as expected values.
 
     pert_dic: dictionary containing perturbation information
-    node_list: list of nodes in the graph
+    G: graph whose sorted nodes form the y/X index
+    y_missing_fill_value: value used to fill missing observations in y. See
+        :func:`magellan.sci_opt.get_data` for details. Defaults to ``0.0``.
 
     Returns:
     X: perturbation matrix
     y: expectation matrix
     """
     pert_dic = enforce_pert_dic_order(pert_dic)
-    X, y = get_data(pert_dic, G, replace_missing_with_zero)
+    X, y = get_data(pert_dic, G, y_missing_fill_value=y_missing_fill_value)
     for experiment_name, experiment_data in pert_dic.items():
         for perturbed_node, perturbation_value in experiment_data["pert"].items():
             X.at[perturbed_node, experiment_name] = perturbation_value
@@ -866,7 +914,15 @@ def create_pert_mask(edge_idx: torch.Tensor, node_dic: dict) -> torch.Tensor:
     pert_mask = torch.zeros(edge_idx.shape[1]).to(torch.int64)
     pert_mask[edge_idx[0, :] == edge_idx[1, :]] = 1  # Set self-loops to 1
 
-    dummy_idx = [v for k, v in node_dic.items() if "dummy" in k]
+    # Only inhibitor `dummy_` scaffolds are pure constant-value injectors
+    # whose outgoing edge weight must be pinned at 1 every forward pass
+    # (see Net.forward: edge_weight.data = ... + pert_mask).  `udummy_`
+    # parents (universal-dummy) carry LEARNED weights -- the model needs to
+    # tune per-node sensitivity to the universal class-1 attractor -- so
+    # their outgoing edges must NOT be in pert_mask.  The udummy self-loop
+    # is still pinned at 1 via the self-loop branch above, which preserves
+    # the udummy node's pinned input value.
+    dummy_idx = [v for k, v in node_dic.items() if is_inhibitor_scaffold_node(k)]
     pert_mask[torch.isin(edge_idx[0, :], torch.tensor(dummy_idx))] = 1
 
     return pert_mask

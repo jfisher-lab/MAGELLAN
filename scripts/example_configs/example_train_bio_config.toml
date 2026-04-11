@@ -40,10 +40,15 @@ class_weight_method = "inverse_freq"  # "balanced" or "inverse_freq"
 use_warmup = true
 warmup_steps = 10
 warmup_initial_lr_factor = 0.1  # Initial learning rate factor
+weight_decay = 0.01  # AdamW weight decay (L2 regularization), default 0.01
 use_node_class_weights = true
 seed = 42
 include_extreme_values_stage = false
 test_size = 0.0
+# Value used to fill missing observations in the y-matrix during training.
+# 0.0 (default)
+# nan: leave missing entries as NaN (requires a downstream masked loss).
+y_missing_fill_value = 0.0
 [debug]
 mask_debug = false  # Set to true to see masked edges
 

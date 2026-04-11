@@ -1737,7 +1737,7 @@ def plot_metrics_lollipop(
         "balanced_accuracy": "Balanced Accuracy",
         "average_precision": "Avg Precision",
     }
-    
+
     filtered_metrics = []
     for metric_key in metrics_to_plot:
         if metric_key in metrics:

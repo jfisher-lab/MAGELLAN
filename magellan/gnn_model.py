@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from collections.abc import Callable
 from pathlib import Path
 
 import networkx as nx
@@ -10,6 +11,7 @@ from torch_geometric.data import Data
 from torch_geometric.nn import SimpleConv
 from tqdm.autonotebook import tqdm
 
+from magellan.graph import is_inhibitor_scaffold_node
 from magellan.prune_opt import (
     EarlyStopping,
     ModelCheckpoint,
@@ -165,9 +167,15 @@ def get_edge_weight_matrix(
     if remove_dummy_and_self_loops:
         for n in node_list:
             W.at[n, n] = 0  # set self loops to 0
-            if "dummy" in n:
-                W[n] = 0  # set dummy --> child nodes to 0
-                W.loc[n] = 0  # set child nodes --> dummy to 0
+            if is_inhibitor_scaffold_node(n):
+                # Only inhibitor `dummy_` scaffolds are pure structural
+                # placeholders -- their weights should not be exposed.
+                # `udummy_` (universal-dummy) scaffolds carry the trained
+                # weight that propagates the udummy_value into biological
+                # nodes via pred_mat_bound_single, so their rows/cols MUST
+                # be preserved in the exported W.
+                W[n] = 0  # set scaffold --> child nodes to 0
+                W.loc[n] = 0  # set child nodes --> scaffold to 0
 
     return W
 
@@ -242,6 +250,7 @@ def train_model(
     val_pert_dic: OrderedDict | None = None,
     val_mask_dic: dict | None = None,
     node_class_weights_val: dict | None = None,
+    loss_fn: Callable | None = None,
 ) -> tuple[list[float], list[float], list[float], list[float], list[float]]:
     """Train the neural network model through curriculum stages.
 
@@ -277,6 +286,14 @@ def train_model(
         val_pert_dic: Dictionary of validation perturbations
         val_mask_dic: Dictionary of masks for each validation perturbation
         node_class_weights_val: Node-specific class weights for validation
+        loss_fn: Optional replacement for ``weighted_node_earth_mover_loss``.
+            Must accept the same call signature
+            ``(pred, target, *, node_weights, node_names, min_range, max_range)``
+            and return a scalar loss tensor.  When ``None`` (default) the
+            standard loss is used.  When a new loss function is
+            provided it is applied to all loss
+            computations alike (so any added penalty is reflected in the
+            early-stopping / checkpoint-selection metrics).
 
     Returns:
         Tuple containing:
@@ -286,6 +303,7 @@ def train_model(
         - List of validation epoch losses (empty if no val set)
         - List of test epoch losses (empty if no test set)
     """
+    _loss = loss_fn if loss_fn is not None else weighted_node_earth_mover_loss
     train_pert_dic_small = enforce_pert_dic_order(train_pert_dic)
     if test_pert_dic is not None:
         test_pert_dic_small = enforce_pert_dic_order(test_pert_dic)
@@ -328,15 +346,23 @@ def train_model(
     if not no_val_set:
         monitor_metric = "val_loss"
         if verbose:
-            print("Validation set provided. Monitoring validation loss for early stopping.")
+            print(
+                "Validation set provided. Monitoring validation loss for early stopping."
+            )
     elif not no_test_set:
-        monitor_metric = "val_loss"  # test acts as validation for backward compatibility
+        monitor_metric = (
+            "val_loss"  # test acts as validation for backward compatibility
+        )
         if verbose:
-            print("No validation set. Using test set for early stopping (backward compatible).")
+            print(
+                "No validation set. Using test set for early stopping (backward compatible)."
+            )
     else:
         monitor_metric = "train_loss"
         if verbose:
-            print("No validation or test set provided. Monitoring training loss for callbacks.")
+            print(
+                "No validation or test set provided. Monitoring training loss for callbacks."
+            )
 
     monitor_mode = "min"
 
@@ -400,7 +426,7 @@ def train_model(
                 exp_node_names = [
                     node for node, idx in node_dic.items() if idx in idx_exp
                 ]
-                train_loss = weighted_node_earth_mover_loss(
+                train_loss = _loss(
                     pred=pred[idx_exp],
                     target=target,
                     node_weights=node_class_weights_train,
@@ -485,7 +511,7 @@ def train_model(
                             pert_mask=pert_mask,
                         )
 
-                        val_loss = weighted_node_earth_mover_loss(
+                        val_loss = _loss(
                             pred=pred[idx_exp],
                             target=target,
                             node_weights=node_class_weights_val,
@@ -549,7 +575,7 @@ def train_model(
                         )
 
                         # Calculate test loss for this experiment
-                        test_loss = weighted_node_earth_mover_loss(
+                        test_loss = _loss(
                             pred=pred[idx_exp],
                             target=target,
                             node_weights=node_class_weights_test,  # Use test weights
@@ -615,4 +641,10 @@ def train_model(
     model_checkpoint.load_best_model()
 
     # Return losses. val/test_epoch_losses will be empty if no val/test set
-    return total_train_loss, sum_grad, train_epoch_losses, val_epoch_losses, test_epoch_losses
+    return (
+        total_train_loss,
+        sum_grad,
+        train_epoch_losses,
+        val_epoch_losses,
+        test_epoch_losses,
+    )

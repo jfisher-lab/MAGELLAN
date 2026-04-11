@@ -21,7 +21,9 @@ def enforce_pert_dic_order(pert_dic: OrderedDict) -> OrderedDict:
 
 
 def get_data(
-    pert_dic_all: OrderedDict, G: nx.DiGraph, y_replace_missing_with_zero: bool = True
+    pert_dic_all: OrderedDict,
+    G: nx.DiGraph,
+    y_missing_fill_value: float | None = 0.0,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """
     Extract data (X and y) from spec where:
@@ -34,13 +36,16 @@ def get_data(
                         {'pert': {node_1: value_1, node_2: value_2, ...},
                          'exp': {node_x, value_x, node_y: value_y}}
                          }
-    :param node_list: list of node names in ascending order
-    :param y_replace_missing_with_zero: if True, replace missing values in y with 0
+    :param G: graph whose sorted nodes form the y/X index
+    :param y_missing_fill_value: value used for genes with no observation in an
+        experiment.  ``None`` leaves missing entries as NaN (used by the class-weight
+        computation and any downstream masked loss).
 
     :return X: pandas.DataFrame, index: node_list, columns: experiments in ascending order
         perturbation data, values: perturbed values for perturbed nodes under each experiment, 0 otherwise
     :return y: pandas.DataFrame, index: node_list, columns: experiments in ascending order
-        expectation data, values: expected values for expected nodes under each experiment, 0 otherwise
+        expectation data, values: expected values for expected nodes under each experiment,
+        ``y_missing_fill_value`` (or NaN if None) otherwise
 
 
     """
@@ -60,10 +65,12 @@ def get_data(
 
     exp_list = sorted(list(pert_dic_all.keys()))
 
-    if y_replace_missing_with_zero:
-        y = pd.DataFrame(data=0.0, index=node_list, columns=exp_list)
-    else:
+    if y_missing_fill_value is None:
         y = pd.DataFrame(data=np.nan, index=node_list, columns=exp_list)
+    else:
+        y = pd.DataFrame(
+            data=float(y_missing_fill_value), index=node_list, columns=exp_list
+        )
     X = pd.DataFrame(data=0.0, index=node_list, columns=exp_list)
 
     for experiment_name, experiment_data in pert_dic_all.items():
@@ -113,7 +120,11 @@ def update_function_mask(
 
 
 def get_adj_single(
-    A_single: pd.DataFrame, inh: list, pert_dic: dict, G: nx.DiGraph
+    A_single: pd.DataFrame,
+    inh: list,
+    pert_dic: dict,
+    G: nx.DiGraph,
+    udummy_targets: list | None = None,
 ) -> pd.DataFrame:
     """
     Get the adjacency matrix for a single experiment, adding dummy nodes for all inhibitor nodes, and replacing parents with dummy nodes when perturbed.
@@ -122,6 +133,10 @@ def get_adj_single(
     :param inh: list, the inhibitor nodes
     :param pert_dic: dict, the perturbation dictionary
     :param node_list: list, the node list
+    :param udummy_targets: optional list of bare biological node names that
+        receive a ``udummy_<node>`` activator parent (universal-dummy
+        mechanism). The udummy edge weights are injected here so they appear
+        in the per-experiment adjacency that drives :func:`pred_mat_bound_single`.
     """
     node_list = get_sorted_node_list(G)
     A_single = A_single.copy()
@@ -130,18 +145,47 @@ def get_adj_single(
     # add dummy node for all inhibitor nodes
     # note that the normalising constant in A (by average is not changed after dummy node is added)
     # e.g. 1/2 will not change to 1/3
-    for node in inh:
-        dummy = "dummy_%s" % node
-        A_single.at[dummy, dummy] = 1  # self loop for dummy nodes
-        A_single.at[node, dummy] = (
-            1  # activation from dummy node to all-inhibitor node, dummy-->n
+    if inh:
+        dummy_names = [f"dummy_{node}" for node in inh]
+        all_labels = list(A_single.index) + dummy_names
+        A_single = A_single.reindex(
+            index=all_labels, columns=all_labels, fill_value=0.0
         )
+
+        for node in inh:
+            dummy = f"dummy_{node}"
+            A_single.at[dummy, dummy] = 1  # self loop for dummy nodes
+            A_single.at[node, dummy] = 1  # activation: dummy-->node
+
+    # Mirror the inhibitor-dummy treatment for udummy_ parents. Without this,
+    # udummy_<node> edges added to G in add_dummy_nodes_and_generate_A_inh are
+    # never written into the per-experiment adjacency, so the universal-dummy
+    # input value cannot propagate through pred_mat_bound_single.
+    if udummy_targets:
+        udummy_names = [f"udummy_{node}" for node in udummy_targets]
+        missing_udummy = [n for n in udummy_names if n not in A_single.index]
+        if missing_udummy:
+            all_labels = list(A_single.index) + missing_udummy
+            A_single = A_single.reindex(
+                index=all_labels, columns=all_labels, fill_value=0.0
+            )
+        for node in udummy_targets:
+            udummy = f"udummy_{node}"
+            A_single.at[udummy, udummy] = 1  # self loop for udummy nodes
+            A_single.at[node, udummy] = 1  # activation: udummy --> node
 
     # the following code was before the above code (for n in inh ... A_single.at[n. dummy] = 1)
     # it is moved here because the dummy parents need to be removed if a node is perturbed
     # remove parent node, add self loop for perturbed node
     if pert_dic is not None:
-        for node in pert_dic:
+        pert_nodes = list(pert_dic)
+        missing = [n for n in pert_nodes if n not in A_single.index]
+        if missing:
+            all_labels = list(A_single.index) + missing
+            A_single = A_single.reindex(
+                index=all_labels, columns=all_labels, fill_value=0.0
+            )
+        for node in pert_nodes:
             A_single.loc[node] = 0  # remove parents
             A_single.at[node, node] = 1  # add self loop
 
@@ -487,9 +531,17 @@ def pred_all_bound_single(
 
     zero_correct = Identity - eye_correct
 
-    # Handle dummy nodes if they exist
+    # Only inhibitor-only dummy_<gene> parents need a child<-dummy entry in
+    # zero_correct. Universal-dummy (udummy_) parents are deliberately
+    # excluded here because they already propagate through the per-experiment
+    # adjacency: get_adj_single writes A[bio, udummy_bio] = 1 for every
+    # udummy_targets entry, so the BMA forward W * A * X path delivers the
+    # udummy_value to bio via the learned W[bio, udummy_bio]. Adding udummy
+    # to zero_correct would double-count that contribution.
     dummy_nodes = [
-        (idx_dic[k.replace("dummy_", "")], idx_dic[k]) for k in idx_dic if "dummy" in k
+        (idx_dic[k.removeprefix("dummy_")], idx_dic[k])
+        for k in idx_dic
+        if k.startswith("dummy_")
     ]
     if dummy_nodes:
         idx_child, idx_dummy = zip(*dummy_nodes)

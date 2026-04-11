@@ -54,9 +54,11 @@ from magellan.prune import (
     make_node_dic,
     make_pert_idx,
 )
+from magellan.onpath import _make_onpath_floor_wrapper, compute_onpath_edge_mask
 from magellan.prune_opt import (
     WarmupScheduler,
     calculate_node_class_weights,
+    weighted_node_earth_mover_loss,
 )
 from magellan.sci_opt import get_data, get_sorted_node_list, pred_bound_perts
 
@@ -247,6 +249,10 @@ class PruningTestConfig:
     l1_lambda: float = 0.0
     l2_lambda: float = 0.0
     weight_decay: float = 0.00
+    # On-path weight floor (optional one-sided loss penalty). Disabled when
+    # onpath_floor_lambda <= 0.
+    onpath_floor_lambda: float = 0.0
+    onpath_floor_target: float = 1.0
     model_save_dir: Path | str = Path(".")
 
     # Simulation parameters
@@ -733,7 +739,10 @@ def split_specifications(
         # Calculate proportion of test within holdout
         test_proportion = test_size / holdout_size
         val_keys, test_keys = train_test_split(
-            holdout_keys, test_size=test_proportion, random_state=random_state, shuffle=True
+            holdout_keys,
+            test_size=test_proportion,
+            random_state=random_state,
+            shuffle=True,
         )
     elif val_size > 0.0:
         # Only validation, no test
@@ -1483,6 +1492,7 @@ def train_network(
     val_pert_dic: OrderedDict | None = None,
     val_mask_dic: dict | None = None,
     node_class_weights_val: dict | None = None,
+    G: nx.DiGraph | None = None,
 ) -> tuple[list[float], list[float], list[float], list[float], list[float]]:
     """Train network using curriculum learning and advanced loss functions"""
     # Setup optimizer and schedulers
@@ -1504,37 +1514,64 @@ def train_network(
         target_lr=config.learning_rate,
     )
 
+    # Build the on-path weight floor loss wrapper when enabled. Requires the
+    # graph G to identify edges on shortest paths from perturbations to
+    # observations.
+    loss_fn = None
+    if config.onpath_floor_lambda > 0.0:
+        if G is None:
+            raise ValueError(
+                "onpath_floor_lambda > 0 requires the graph G to be passed to train_network"
+            )
+        onpath_mask = compute_onpath_edge_mask(G, node_dic, edge_idx, train_pert_dic)
+        loss_fn = _make_onpath_floor_wrapper(
+            weighted_node_earth_mover_loss,
+            model,
+            onpath_mask,
+            edge_idx,
+            config.onpath_floor_lambda,
+            config.onpath_floor_target,
+        )
+        if verbose:
+            print(
+                f"On-path weight floor enabled: lambda={config.onpath_floor_lambda}, "
+                f"target={config.onpath_floor_target} ({int(onpath_mask.sum())} on-path edges)"
+            )
+
     # Train model using the advanced training function
-    total_loss, sum_grad, train_epoch_losses, val_epoch_losses, test_epoch_losses = train_model(
-        model=model,
-        train_data=train_data,
-        test_data=test_data,
-        train_pert_dic=train_pert_dic,
-        test_pert_dic=test_pert_dic,
-        node_dic=node_dic,
-        edge_idx_original=edge_idx,
-        train_mask_dic=train_mask_dic,
-        test_mask_dic=test_mask_dic,
-        edge_scale=edge_scale,
-        pert_mask=pert_mask,
-        opt=opt,
-        max_range=config.max_range,
-        scheduler=scheduler,
-        warmup_scheduler=warmup_scheduler,
-        early_stopping_enabled=config.early_stopping_enabled,
-        early_stopping_patience=config.early_stopping_patience,
-        allow_sign_flip=config.allow_sign_flip,
-        node_class_weights_train=node_class_weights_train,
-        node_class_weights_test=node_class_weights_test,
-        save_dir=config.model_save_dir,
-        warmup_steps=config.warmup_steps,
-        verbose=verbose,
-        edge_signs=edge_signs,
-        epochs=config.epochs,
-        val_data=val_data,
-        val_pert_dic=val_pert_dic,
-        val_mask_dic=val_mask_dic,
-        node_class_weights_val=node_class_weights_val,
+    total_loss, sum_grad, train_epoch_losses, val_epoch_losses, test_epoch_losses = (
+        train_model(
+            model=model,
+            loss_fn=loss_fn,
+            train_data=train_data,
+            test_data=test_data,
+            train_pert_dic=train_pert_dic,
+            test_pert_dic=test_pert_dic,
+            node_dic=node_dic,
+            edge_idx_original=edge_idx,
+            train_mask_dic=train_mask_dic,
+            test_mask_dic=test_mask_dic,
+            edge_scale=edge_scale,
+            pert_mask=pert_mask,
+            opt=opt,
+            max_range=config.max_range,
+            scheduler=scheduler,
+            warmup_scheduler=warmup_scheduler,
+            early_stopping_enabled=config.early_stopping_enabled,
+            early_stopping_patience=config.early_stopping_patience,
+            allow_sign_flip=config.allow_sign_flip,
+            node_class_weights_train=node_class_weights_train,
+            node_class_weights_test=node_class_weights_test,
+            save_dir=config.model_save_dir,
+            warmup_steps=config.warmup_steps,
+            verbose=verbose,
+            edge_signs=edge_signs,
+            epochs=config.epochs,
+            val_data=val_data,
+            val_pert_dic=val_pert_dic,
+            val_mask_dic=val_mask_dic,
+            node_class_weights_val=node_class_weights_val,
+        )
     )
 
     return total_loss, sum_grad, train_epoch_losses, val_epoch_losses, test_epoch_losses
@@ -1754,8 +1791,8 @@ def run_pruning_benchmark(
 
     # Generate specifications
     if config.generate_specifications:
-        train_specs, val_specs, test_specs, spec_stats = generate_diverse_specifications(
-            G_true, config, verbose
+        train_specs, val_specs, test_specs, spec_stats = (
+            generate_diverse_specifications(G_true, config, verbose)
         )
         train_spec_df = pd.DataFrame.from_dict(train_specs, orient="index")
         train_spec_df.to_csv(
@@ -1763,11 +1800,17 @@ def run_pruning_benchmark(
         )
         if val_specs:
             val_spec_df = pd.DataFrame.from_dict(val_specs, orient="index")
-            val_spec_df.to_csv(Path(out_dir, "val_specifications_output.csv"), index=True)
+            val_spec_df.to_csv(
+                Path(out_dir, "val_specifications_output.csv"), index=True
+            )
         test_spec_df = pd.DataFrame.from_dict(test_specs, orient="index")
         test_spec_df.to_csv(Path(out_dir, "test_specifications_output.csv"), index=True)
         train_dic_small = OrderedDict(sorted(train_specs.items(), key=lambda t: t[0]))
-        val_pert_dic = OrderedDict(sorted(val_specs.items(), key=lambda t: t[0])) if val_specs else None
+        val_pert_dic = (
+            OrderedDict(sorted(val_specs.items(), key=lambda t: t[0]))
+            if val_specs
+            else None
+        )
         test_pert_dic = OrderedDict(sorted(test_specs.items(), key=lambda t: t[0]))
         if verbose:
             print(f"Generated {len(train_specs)} train specifications")
@@ -1891,7 +1934,9 @@ def run_pruning_benchmark(
                 f"Phenotype nodes are measured in {spec_stats['n_phenotype_outputs']} specifications"
             )
             # print(f"pert_dic_small[0:10]: {list(pert_dic_small.items())[0:10]}")
-        train_specs, val_specs, test_specs = split_specifications(train_dic_small, config)
+        train_specs, val_specs, test_specs = split_specifications(
+            train_dic_small, config
+        )
         train_spec_df = pd.DataFrame.from_dict(train_specs, orient="index")
         train_spec_df.to_csv(
             Path(out_dir, "train_specifications_output_nongenerated.csv"), index=True
@@ -1906,7 +1951,11 @@ def run_pruning_benchmark(
             Path(out_dir, "test_specifications_output_nongenerated.csv"), index=True
         )
         train_dic_small = OrderedDict(sorted(train_specs.items(), key=lambda t: t[0]))
-        val_pert_dic = OrderedDict(sorted(val_specs.items(), key=lambda t: t[0])) if val_specs else None
+        val_pert_dic = (
+            OrderedDict(sorted(val_specs.items(), key=lambda t: t[0]))
+            if val_specs
+            else None
+        )
         test_pert_dic = OrderedDict(sorted(test_specs.items(), key=lambda t: t[0]))
     # Prepare network for training
     # Combine all perturbation dicts for dummy setup
@@ -1941,17 +1990,17 @@ def run_pruning_benchmark(
     else:
         X_test, y_test = None, None
     _, y_no_zero_no_pert_as_expectation_train = get_data(
-        train_dic_small, G_noisy, y_replace_missing_with_zero=False
+        train_dic_small, G_noisy, y_missing_fill_value=None
     )
     if val_pert_dic:
         _, y_no_zero_no_pert_as_expectation_val = get_data(
-            val_pert_dic, G_noisy, y_replace_missing_with_zero=False
+            val_pert_dic, G_noisy, y_missing_fill_value=None
         )
     else:
         y_no_zero_no_pert_as_expectation_val = None
     if test_pert_dic:
         _, y_no_zero_no_pert_as_expectation_test = get_data(
-            test_pert_dic, G_noisy, y_replace_missing_with_zero=False
+            test_pert_dic, G_noisy, y_missing_fill_value=None
         )
     else:
         y_no_zero_no_pert_as_expectation_test = None
@@ -1999,16 +2048,24 @@ def run_pruning_benchmark(
     # Prepare edge scaling and masks
     edge_scale = create_edge_scale(A_mult, pert_idx)
     train_mask_dic = construct_mask_dic(train_dic_small, node_dic, edge_idx)
-    val_mask_dic = construct_mask_dic(val_pert_dic, node_dic, edge_idx) if val_pert_dic else None
+    val_mask_dic = (
+        construct_mask_dic(val_pert_dic, node_dic, edge_idx) if val_pert_dic else None
+    )
     test_mask_dic = construct_mask_dic(test_pert_dic, node_dic, edge_idx)
     pert_mask = create_pert_mask(edge_idx, node_dic)
 
     # Initialize model
     if config.use_random_weight_init:
         if config.random_weight_init_distribution == "uniform":
-            edge_weight = torch.rand(edge_idx.shape[1]) * (config.random_weight_init_upper - config.random_weight_init_lower) + config.random_weight_init_lower
+            edge_weight = (
+                torch.rand(edge_idx.shape[1])
+                * (config.random_weight_init_upper - config.random_weight_init_lower)
+                + config.random_weight_init_lower
+            )
         else:
-            raise ValueError(f"Unsupported random weight initialization distribution: {config.random_weight_init_distribution}")
+            raise ValueError(
+                f"Unsupported random weight initialization distribution: {config.random_weight_init_distribution}"
+            )
     else:
         edge_weight = torch.ones(edge_idx.shape[1]) * config.edge_weight_init
     model = Net(
@@ -2021,7 +2078,13 @@ def run_pruning_benchmark(
     )
     edge_signs = extract_edge_signs(G_noisy, edge_idx)
     # Train model
-    total_train_loss, sum_grad, train_epoch_losses, val_epoch_losses, test_epoch_losses = train_network(
+    (
+        total_train_loss,
+        sum_grad,
+        train_epoch_losses,
+        val_epoch_losses,
+        test_epoch_losses,
+    ) = train_network(
         train_data=train_data,
         test_data=test_data,
         model=model,
@@ -2042,6 +2105,7 @@ def run_pruning_benchmark(
         val_pert_dic=val_pert_dic,
         val_mask_dic=val_mask_dic,
         node_class_weights_val=node_class_weights_val,
+        G=G_noisy,
     )
 
     plot_loss_vs_validation_loss(

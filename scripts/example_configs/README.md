@@ -87,6 +87,8 @@ Controls the training loop, optimization, and data handling.
 | `test_size` | float | `0.0` | 0.0 to 1.0 | Fraction of data for test set (`0.0` = no test split) |
 | `dual_spec_mode` | string | None | See below | Mode for handling two specification files |
 | `grad_clip_max_norm` | float | None | ≥ 0 or None | Gradient clipping threshold (None = no clipping) |
+| `onpath_floor_lambda` | float | `0.0` | ≥ 0 | Strength of the on-path weight floor penalty, as a fraction of the base loss. `0.0` disables the feature. See On-Path Weight Floor below. |
+| `onpath_floor_target` | float | `1.0` | ≥ 0 | Base target weight for on-path edges. The per-edge target is `onpath_floor_target / sqrt(in_degree(dst))`. Only used when `onpath_floor_lambda > 0`. |
 
 **Class Weight Methods**:
 - `"inverse_freq"`: Weight values inversely proportional to frequency; unobserved values get weight = max_range + 1
@@ -137,7 +139,7 @@ When `spec_path_2` is provided, `dual_spec_mode` controls how the two specificat
 
 #### Class Weighting Strategies
 
-The `class_weight_method` parameter controls how prediction errors are weighted during training. This is important for handling class imbalance in experimental data:
+The `class_weight_method` parameter controls how prediction errors are weighted during training. This is particularly important for handling class imbalance in experimental data:
 
 - **inverse_freq**: Strongly penalizes errors on rare values; suitable for highly imbalanced data
 - **inverse_freq_sparsity_stable**: Ignores unobserved values; use when many theoretical values are never observed
@@ -160,6 +162,30 @@ Edge weights can be initialized in two ways:
    - Edges initialized from `[random_weight_init_lower, random_weight_init_upper]`
    - Can help avoid local minima
    - Useful for exploring weight space
+
+#### On-Path Weight Floor
+
+The on-path weight floor adds an optional one-sided penalty that keeps
+signal-carrying edges from decaying to zero during training. It is disabled by
+default (`onpath_floor_lambda = 0.0`).
+
+An edge is considered 'on-path' if it lies on at least one shortest path from a
+perturbation source node to an observation (measured) node in the training data.
+These are the edges that propagate the perturbation signal to phenotype nodes.
+
+When enabled (`onpath_floor_lambda > 0`):
+
+- Each on-path edge `u → v` is given a per-edge target
+  `onpath_floor_target / sqrt(in_degree(v))`, so edges feeding high-fan-in nodes
+  get a proportionally lower floor.
+- A one-sided ReLU penalty is applied: only edges below their target are
+  penalised, so already-strong edges are left unconstrained.
+- The penalty uses Polyak-style scaling (`penalty × base_loss.detach()`), so
+  `onpath_floor_lambda` is interpreted as a fraction of the base loss
+  (e.g. `1.0` ≈ up to a 100% additional penalty scaling).
+
+This is an advanced feature for networks where signal fails to propagate through
+to phenotype nodes; leave it off unless you observe that behaviour.
 
 ---
 
@@ -223,6 +249,8 @@ Training configuration for synthetic benchmarks. Inherits most parameters from t
 | `hybrid_loss_alpha` | float | `1.0` | Weight for hybrid loss component |
 | `use_class_weights` | boolean | `false` | Enable class weighting in loss function |
 | `use_node_class_weights` | boolean | `true` | Enable node-specific class weights |
+| `onpath_floor_lambda` | float | `0.0` | Strength of the on-path weight floor penalty (`0.0` disables). Same behaviour as train_bio.py — see [On-Path Weight Floor](#on-path-weight-floor). |
+| `onpath_floor_target` | float | `1.0` | Base target weight for on-path edges (`target / sqrt(in_degree(dst))`). Only used when `onpath_floor_lambda > 0`. |
 
 ### [simulation]
 
@@ -289,6 +317,10 @@ Controls shortest path algorithm and pathway filtering.
 | `filter_source` | list | None | Only use interactions from at least one of the specified databases (e.g., `["HPRD", "SPIKE"]`) |
 | `replace_gene` | dict | Required | Replace proteins with same gene names (e.g., `{Q8N726 = "CDKN2A_arf", P42771 = "CDKN2A_p16"}`) |
 | `gene_replace_dict` | dict | Required | Replace gene names for standardization (e.g., `{gene_name = {ERBB1 = "EGFR"}}`) |
+| `pheno_strategy` | string | `"none"` | Strategy for selecting the phenotype layer from DEG genes. In-script values: `"downstream"`, `"random"`, `"none"`.|
+| `pheno_fraction` | float | `0.25` | Fraction of DEG genes to assign to the phenotype layer (used by `downstream`/`random`). |
+| `pheno_min_primary_sources` | integer | `1` | Omnipath edge confidence threshold for building the distance graph (used by `downstream`). |
+| `pheno_seed` | integer | `42` | Random seed for the `random` strategy. |
 
 **Pathway Strategy (`to_combine`)**: Specifies how to link different node types:
 - `"mut_deg_pheno"`: Connect mutations → differentially expressed genes → phenotypes
@@ -297,6 +329,18 @@ Controls shortest path algorithm and pathway filtering.
 **Edge Weighting (`weighted_edge`)**: Controls path selection in Dijkstra's algorithm:
 - `"reciprocal_n_references"`: Prefer well-documented interactions (1 / number_of_references)
 - `false`: Unweighted (all edges have equal cost)
+
+**Phenotype Layer Selection (`pheno_strategy`)**: By default the phenotype layer
+is exactly the genes marked as phenotypes in the gene node table. Setting
+`pheno_strategy` instead narrows the phenotype layer to a fraction
+(`pheno_fraction`) of the DEG genes using one of:
+
+- `"downstream"`: Select the most downstream DEG genes by shortest-path distance
+  from the mutation genes (genes unreachable from any mutation count as maximally
+  downstream). Uses `pheno_min_primary_sources` to filter the Omnipath graph.
+- `"random"`: Select a random subset of DEG genes (a control for network
+  sparsity, independent of any selection criterion). Uses `pheno_seed`.
+- `"none"` (default): Keep the phenotype genes from the gene node table.
 
 ### [shortest_path_input]
 
