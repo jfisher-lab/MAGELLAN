@@ -1,9 +1,11 @@
 from collections import OrderedDict
 
 import networkx as nx
+import numpy as np
 import pandas as pd
 import pytest
 
+from magellan.prune import get_data_and_update_y
 from magellan.sci_opt import get_data
 
 
@@ -111,3 +113,127 @@ def test_get_data_completely_empty_dict():
 
     with pytest.raises(ValueError, match="pert_dic_all cannot be empty"):
         get_data(pert_dic_all, G)
+
+
+def _abc_single_experiment_pert_dic() -> OrderedDict:
+    pert_dic_all = {
+        "exp1": {
+            "pert": {"A": 1.0},
+            "exp": {"B": 0.5},
+        },
+    }
+    return OrderedDict(sorted(pert_dic_all.items(), key=lambda t: t[0]))
+
+
+def test_get_data_y_missing_fill_value_default_zero() -> None:
+    """Default fill value (0.0) coerces missing y entries to 0.0."""
+    G = nx.DiGraph()
+    G.add_edge("A", "B")
+    G.add_edge("B", "C")
+    pert_dic_all = _abc_single_experiment_pert_dic()
+
+    X, y = get_data(pert_dic_all, G)
+
+    assert y.loc["B", "exp1"] == 0.5
+    assert y.loc["A", "exp1"] == 0.0
+    assert y.loc["C", "exp1"] == 0.0
+    assert X.loc["A", "exp1"] == 1.0
+    assert X.loc["B", "exp1"] == 0.0
+
+
+def test_get_data_y_missing_fill_value_one() -> None:
+    """Fill value of 1.0 coerces missing y entries to 1.0; observed entries are preserved."""
+    G = nx.DiGraph()
+    G.add_edge("A", "B")
+    G.add_edge("B", "C")
+    pert_dic_all = _abc_single_experiment_pert_dic()
+
+    X, y = get_data(pert_dic_all, G, y_missing_fill_value=1.0)
+
+    assert y.loc["B", "exp1"] == 0.5
+    assert y.loc["A", "exp1"] == 1.0
+    assert y.loc["C", "exp1"] == 1.0
+    # X is independent of the y fill value.
+    assert X.loc["A", "exp1"] == 1.0
+    assert X.loc["B", "exp1"] == 0.0
+    assert X.loc["C", "exp1"] == 0.0
+
+
+def test_get_data_y_missing_fill_value_none_gives_nan() -> None:
+    """Fill value of None leaves missing y entries as NaN."""
+    G = nx.DiGraph()
+    G.add_edge("A", "B")
+    G.add_edge("B", "C")
+    pert_dic_all = _abc_single_experiment_pert_dic()
+
+    _, y = get_data(pert_dic_all, G, y_missing_fill_value=None)
+
+    assert y.loc["B", "exp1"] == 0.5
+    assert np.isnan(y.loc["A", "exp1"])
+    assert np.isnan(y.loc["C", "exp1"])
+
+
+def test_get_data_and_update_y_default_fill_zero() -> None:
+    """get_data_and_update_y defaults to 0.0 fill and writes perturbations into X."""
+    G = nx.DiGraph()
+    G.add_edge("A", "B")
+    G.add_edge("B", "C")
+    pert_dic_all = _abc_single_experiment_pert_dic()
+
+    X, y = get_data_and_update_y(pert_dic_all, G)
+
+    assert not y.isna().any().any()
+    assert y.loc["B", "exp1"] == 0.5
+    assert y.loc["A", "exp1"] == 0.0
+    assert y.loc["C", "exp1"] == 0.0
+    assert X.loc["A", "exp1"] == 1.0
+    assert X.loc["B", "exp1"] == 0.0
+    assert X.loc["C", "exp1"] == 0.0
+
+
+def test_get_data_and_update_y_fill_one() -> None:
+    """get_data_and_update_y fills missing y entries with 1.0 when configured."""
+    G = nx.DiGraph()
+    G.add_edge("A", "B")
+    G.add_edge("B", "C")
+    pert_dic_all = _abc_single_experiment_pert_dic()
+
+    X, y = get_data_and_update_y(pert_dic_all, G, y_missing_fill_value=1.0)
+
+    assert y.loc["B", "exp1"] == 0.5
+    assert y.loc["A", "exp1"] == 1.0
+    assert y.loc["C", "exp1"] == 1.0
+    assert X.loc["A", "exp1"] == 1.0
+    assert X.loc["B", "exp1"] == 0.0
+    assert X.loc["C", "exp1"] == 0.0
+
+
+def test_get_data_and_update_y_fill_none_keeps_nan_with_pert_in_X() -> None:
+    """With fill None, perturbations still propagate into X even when the matching y cell is NaN."""
+    G = nx.DiGraph()
+    G.add_edge("A", "B")
+    G.add_edge("B", "C")
+    pert_dic_all = {
+        "exp1": {
+            "pert": {"A": 1.0},
+            "exp": {"B": 0.5},
+        },
+        "exp2": {
+            "pert": {"B": -1.0, "C": 2.0},
+            "exp": {"A": 0.7},
+        },
+    }
+    pert_dic_all = OrderedDict(sorted(pert_dic_all.items(), key=lambda t: t[0]))
+
+    X, y = get_data_and_update_y(pert_dic_all, G, y_missing_fill_value=None)
+
+    assert y.loc["B", "exp1"] == 0.5
+    assert y.loc["A", "exp2"] == 0.7
+    assert np.isnan(y.loc["A", "exp1"])
+    assert np.isnan(y.loc["C", "exp1"])
+    assert np.isnan(y.loc["B", "exp2"])
+    assert np.isnan(y.loc["C", "exp2"])
+    # Perturbation values propagate into X regardless of y NaN.
+    assert X.loc["A", "exp1"] == 1.0
+    assert X.loc["B", "exp2"] == -1.0
+    assert X.loc["C", "exp2"] == 2.0

@@ -1,0 +1,44 @@
+# sweeps/configs/network_size_sweep.toml
+name = "network_size_sweep"
+description = "Investigating impact of network size by scaling both nodes and specifications"
+output_dir_suffix = "network_size_sweep"
+default_seeds = [42, 43, 44]
+
+# These parameters will be applied to all parameter sets
+[base_params]
+graph_generation.generate_specifications = "true"
+graph_generation.grow_base_graph = "true"
+training.model_save_dir = "models"  
+
+# Each parameter set represents a different configuration to test
+[[parameter_sets]]
+specification_generation.n_specifications = 30
+graph_generation.n_nodes = 120
+
+[[parameter_sets]]
+specification_generation.n_specifications = 60
+graph_generation.n_nodes = 240
+
+[[parameter_sets]]
+specification_generation.n_specifications = 120
+graph_generation.n_nodes = 480
+
+[[parameter_sets]]
+specification_generation.n_specifications = 240
+graph_generation.n_nodes = 960
+
+# [[parameter_sets]]
+# specification_generation.n_specifications = 200
+# graph_generation.n_nodes = 800
+
+# [[parameter_sets]]
+# specification_generation.n_specifications = 400
+# graph_generation.n_nodes = 1600
+
+[[plotting_configs]]
+x_axis_metric = "override_graph_generation.n_nodes"
+y_axis_metrics = ["test_nonbinary_f1", "test_nonbinary_qwk", "test_nonbinary_mcc"]
+neat_x_axis_label = "Network Size (Nodes)"
+figsize = [10, 10]
+y_min = 0
+y_max = 1

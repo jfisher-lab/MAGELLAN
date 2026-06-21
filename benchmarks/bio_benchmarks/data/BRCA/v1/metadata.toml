@@ -1,0 +1,5 @@
+data_created = "2025-02-26"
+data_version = "v2"
+data_description = "BRCA data with updates to specification"
+git_commit = '1d113b30fa6ca725adbde2c4e886af766bc687d0'
+git_repo = 'proteomic_nsclc_model'

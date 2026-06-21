@@ -1,7 +1,9 @@
 import re
 from ast import literal_eval
+from collections.abc import Iterable, Iterator
 from itertools import chain, product, zip_longest
 
+import alive_progress as ap
 import numpy as np
 import pandas as pd
 
@@ -150,8 +152,29 @@ def get_style(df):
 # shortest path
 
 
-def assign_path(df, G, gene_comb, weighted_edge=None, filter_gene=None, thre=np.inf):
-    for u, v in gene_comb:
+def _iter_gene_pairs(
+    gene_comb: set[tuple[str, str]], show_progress: bool
+) -> Iterator[tuple[str, str]]:
+    if not show_progress:
+        yield from gene_comb
+        return
+
+    with ap.alive_bar(len(gene_comb), title="Searching shortest paths") as bar:
+        for gene_pair in gene_comb:
+            yield gene_pair
+            bar()
+
+
+def assign_path(
+    df: pd.DataFrame,
+    G,
+    gene_comb: set[tuple[str, str]],
+    weighted_edge: str | tuple[str, str] | None = None,
+    filter_gene: bool | Iterable[str] = False,
+    thre: float = np.inf,
+    show_progress: bool = True,
+) -> pd.DataFrame:
+    for u, v in _iter_gene_pairs(gene_comb, show_progress=show_progress):
         # list of shortest paths from u to v
         path_dic = get_path(G, u, v, weighted_edge, thre)
 
@@ -176,14 +199,14 @@ def assign_path(df, G, gene_comb, weighted_edge=None, filter_gene=None, thre=np.
             path_list, sign_list = path_dic
 
         # assign results to df
-        df.loc[u, v][["from", "to"]] = [u, v]
+        df.loc[(u, v), ["from", "to"]] = [u, v]
 
         if len(path_list) == 0:  # no paths found
             n_path, avg_path = 0, ""
         else:
             n_path, avg_path = len(path_list), np.mean([len(k) for k in path_list])
 
-        df.loc[u, v][["# path", "avg len"]] = [n_path, avg_path]
+        df.loc[(u, v), ["# path", "avg len"]] = [n_path, avg_path]
         df.at[(u, v), "shortest path"] = path_list
 
         df.at[(u, v), "sign"] = sign_list
@@ -191,13 +214,22 @@ def assign_path(df, G, gene_comb, weighted_edge=None, filter_gene=None, thre=np.
     return df
 
 
-def find_path(G, gene_sets, to_combine, weighted_edge=None, filter_gene=None, thre=2):
+def find_path(
+    G,
+    gene_sets: dict[str, set[str]],
+    to_combine: list | str,
+    weighted_edge: str | tuple[str, str] | None = None,
+    filter_gene: bool | Iterable[str] = False,
+    thre: int = 2,
+    show_progress: bool = True,
+) -> pd.DataFrame:
     """
     Find shortest paths between gene combinations on a graph
 
     :param G: BMATool.graph.Graph, node: gene, edge: interaction between genes in Omnipath
     :param gene_sets: dict, key: gene set types, value: set of genes of the corresponding type
 
+    :param show_progress: bool, whether to show a progress bar when searching pairwise paths
     :return df: pandas.DataFrame, shortest paths results
 
     """
@@ -218,9 +250,23 @@ def find_path(G, gene_sets, to_combine, weighted_edge=None, filter_gene=None, th
         columns=["from", "to", "shortest path", "sign", "# path", "avg len"],
     )
 
-    df = assign_path(df, G, gene_comb_inter, weighted_edge, filter_gene, thre=np.inf)
     df = assign_path(
-        df, G, gene_comb_intra, weighted_edge, filter_gene, thre=thre
+        df,
+        G,
+        gene_comb_inter,
+        weighted_edge,
+        filter_gene,
+        thre=np.inf,
+        show_progress=show_progress,
+    )
+    df = assign_path(
+        df,
+        G,
+        gene_comb_intra,
+        weighted_edge,
+        filter_gene,
+        thre=thre,
+        show_progress=show_progress,
     )  # only allow at most (thre - 2) gene between same-type genes
 
     return df

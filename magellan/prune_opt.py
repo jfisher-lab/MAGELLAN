@@ -261,7 +261,6 @@ def generate_curriculum_stages(
             return [all_nodes_stage, critical_nodes_stage]
 
 
-
 def get_curric_node_weights(
     y: torch.Tensor | int | float | None, stage: dict, node_dic: dict
 ) -> torch.Tensor:
@@ -276,8 +275,6 @@ def get_curric_node_weights(
             if node in node_dic:
                 weights[node_dic[node]] = stage["weight"]
     return weights
-
-
 
 
 def calculate_node_class_weights(

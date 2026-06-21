@@ -1694,6 +1694,106 @@ def plot_node_weights(node_weight_df: pd.DataFrame, out_dir: str | Path) -> int:
     return 0
 
 
+def plot_metrics_lollipop(
+    metrics: dict,
+    output_path: str | Path,
+    title: str = "Classification Metrics",
+    figsize: tuple = (6, 6),
+    y_min: float = 0,
+    y_max: float = 1,
+    metrics_to_plot: list[str] = [
+        "accuracy",
+        "precision",
+        "recall",
+        "specificity",
+        "f1",
+        "mcc",
+        "qwk",
+        "roc_auc",
+        "balanced_accuracy",
+        "average_precision",
+    ],
+) -> None:
+    """Plot metrics as a lollipop chart with value labels.
+
+    Args:
+        metrics: Dictionary containing classification metrics
+        output_path: Path to save the output figure
+        title: Title for the plot
+        figsize: Figure dimensions (width, height) in inches
+        y_min: Minimum value for y-axis
+        y_max: Maximum value for y-axis
+        metrics_to_plot: List of metrics to plot in order
+    """
+    METRIC_DISPLAY_NAMES = {
+        "accuracy": "Accuracy",
+        "precision": "Precision",
+        "recall": "Recall",
+        "specificity": "Specificity",
+        "f1": "F1 Score",
+        "mcc": "MCC",
+        "qwk": "QWK",
+        "roc_auc": "ROC AUC",
+        "balanced_accuracy": "Balanced Accuracy",
+        "average_precision": "Avg Precision",
+    }
+
+    filtered_metrics = []
+    for metric_key in metrics_to_plot:
+        if metric_key in metrics:
+            value = metrics[metric_key]
+            if value != "NA" and isinstance(value, (int, float, np.number)):
+                filtered_metrics.append((metric_key, value))
+
+    if not filtered_metrics:
+        print(f"Warning: No valid metrics to plot for {output_path}")
+        return
+
+    metric_keys = [m[0] for m in filtered_metrics]
+    metric_values = [m[1] for m in filtered_metrics]
+    metric_names = [METRIC_DISPLAY_NAMES.get(k, k) for k in metric_keys]
+
+    plt.style.use("seaborn-v0_8-paper")
+
+    # Create figure
+    fig, ax = plt.subplots(figsize=figsize)
+
+    positions = np.arange(len(metric_values))
+
+    palette = sns.color_palette("colorblind", n_colors=10)
+    colors = [palette[i % len(palette)] for i in range(len(metric_values))]
+
+    ax.vlines(positions, 0, metric_values, color="gray", linewidth=1.5, alpha=0.7)
+
+    ax.scatter(positions, metric_values, s=100, color=colors, zorder=3, alpha=0.8)
+
+    for pos, val in zip(positions, metric_values):
+        label_y = val + (y_max - y_min) * 0.03
+        ax.text(
+            pos,
+            label_y,
+            f"{val:.3f}",
+            ha="center",
+            va="bottom",
+            fontsize=9,
+        )
+
+    ax.set_xlabel("Metric", fontsize=11)
+    ax.set_ylabel("Value", fontsize=11)
+    ax.set_title(title, fontsize=12)
+    ax.set_ylim(y_min, y_max * 1.1)
+
+    ax.set_xticks(positions)
+    ax.set_xticklabels(metric_names, rotation=45, ha="right")
+
+    ax.grid(True, linestyle="--", alpha=0.4, axis="y")
+
+    plt.tight_layout()
+
+    plt.savefig(output_path, dpi=300, bbox_inches="tight")
+    plt.close(fig)
+
+
 def write_metrics_to_txt(
     binary_metrics: dict, nonbinary_metrics: dict, path: Path
 ) -> None:
@@ -1755,6 +1855,8 @@ def plot_metrics_vs_bias(
     y_max: float = 1,
     show_title: bool = False,
     legend_loc: str = "best",
+    x_axis_labels: list[str] | None = None,
+    log_x_axis: bool = False,
 ) -> None:
     """
     Plot multiple metrics vs x_axis_metric with error bars on a single plot.
@@ -1765,11 +1867,14 @@ def plot_metrics_vs_bias(
         x_axis_metric: Column name to use for x-axis
         y_axis_metrics: List of metric column names to plot
         neat_x_axis_label: Display label for x-axis
+        neat_y_axis_label: Display label for y-axis
         figsize: Size of the figure (width, height)
         y_min: Minimum value for y-axis limits
         y_max: Maximum value for y-axis limits
         show_title: Whether to display the title
         legend_loc: Location for legend placement
+        x_axis_labels: Custom labels for x-axis ticks (if None, uses actual values)
+        log_x_axis: Whether to use logarithmic scale for x-axis
     """
     plt.style.use("seaborn-v0_8-paper")
     # Get the full colorblind palette (it has 10 colors)
@@ -1791,9 +1896,7 @@ def plot_metrics_vs_bias(
         if metric in fixed_metric_colors:
             metric_colors[metric] = fixed_metric_colors[metric]
             # Track which palette index was used by the fixed color
-            # (this part is a bit tricky as we don't know the exact index of the fixed color easily)
-            # A simpler approach is to assign other colors sequentially from *unused* indices.
-            pass  # We'll handle assignment below
+            pass  # We handle assignment below
 
     # Assign colors. First fixed, then others from remaining palette colors.
     # available_palette = list(range(len(palette)))
@@ -1896,6 +1999,10 @@ def plot_metrics_vs_bias(
     # Set y-axis limits
     ax.set_ylim(y_min, y_max)
 
+    # Set x-axis scale if logarithmic is requested
+    if log_x_axis:
+        ax.set_xscale("log")
+
     # Add labels and grid
     ax.set_xlabel(neat_x_axis_label, fontsize=11)
     ax.set_ylabel(neat_y_axis_label, fontsize=11)
@@ -1919,8 +2026,20 @@ def plot_metrics_vs_bias(
     if len(x_values) > 5:
         step = max(1, len(x_values) // 5)
         ax.set_xticks(x_values[::step])
+        if x_axis_labels:
+            # Use corresponding subset of custom labels
+            ax.set_xticklabels(
+                [
+                    x_axis_labels[i]
+                    for i in range(0, len(x_axis_labels), step)
+                    if i < len(x_axis_labels)
+                ]
+            )
     else:
         ax.set_xticks(x_values)
+        if x_axis_labels:
+            # Use custom labels for all ticks
+            ax.set_xticklabels(x_axis_labels[: len(x_values)])
 
     # Tighter layout to reduce white space
     fig.tight_layout(pad=0.8)

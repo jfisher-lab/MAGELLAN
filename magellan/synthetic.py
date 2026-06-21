@@ -32,7 +32,9 @@ from magellan.plot import (
     create_annotation_matrix,
     get_filtered_indices,
     plot_loss_vs_validation_loss,
+    save_trained_network_and_visualise,
 )
+from magellan.pydot_io import graph_to_pydot
 from magellan.prune import (
     check_dummy_nodes,
     check_no_self_loops,
@@ -52,9 +54,11 @@ from magellan.prune import (
     make_node_dic,
     make_pert_idx,
 )
+from magellan.onpath import _make_onpath_floor_wrapper, compute_onpath_edge_mask
 from magellan.prune_opt import (
     WarmupScheduler,
     calculate_node_class_weights,
+    weighted_node_earth_mover_loss,
 )
 from magellan.sci_opt import get_data, get_sorted_node_list, pred_bound_perts
 
@@ -218,6 +222,10 @@ class PruningTestConfig:
         else "cpu"
     )
     edge_weight_init: float = 0.5
+    use_random_weight_init: bool = False
+    random_weight_init_distribution: str = "uniform"
+    random_weight_init_lower: float = 0.0
+    random_weight_init_upper: float = 2.0
     n_iter: int = 50
     max_update: bool = True
     round_val: bool = False
@@ -237,9 +245,14 @@ class PruningTestConfig:
     noise_std: float = 1.0
     tf_method: str = "avg"
     test_size: float = 0.0
+    val_size: float = 0.0
     l1_lambda: float = 0.0
     l2_lambda: float = 0.0
     weight_decay: float = 0.00
+    # On-path weight floor (optional one-sided loss penalty). Disabled when
+    # onpath_floor_lambda <= 0.
+    onpath_floor_lambda: float = 0.0
+    onpath_floor_target: float = 1.0
     model_save_dir: Path | str = Path(".")
 
     # Simulation parameters
@@ -689,43 +702,70 @@ def simulate_node_values(
 
 def split_specifications(
     specifications: dict | OrderedDict, config: PruningTestConfig
-) -> tuple[dict, dict]:
-    """Split specifications dictionary into train and test sets.
+) -> tuple[dict, dict, dict]:
+    """Split specifications dictionary into train, validation, and test sets.
 
     Args:
         specifications: Dictionary of specifications to split
-        config: Configuration parameters containing test_size value
+        config: Configuration parameters containing test_size and val_size values
 
     Returns:
-        tuple[dict, dict]: Train and test specification dictionaries
+        tuple[dict, dict, dict]: Train, validation, and test specification dictionaries
     """
     test_size = config.test_size
+    val_size = config.val_size
     random_state = config.seed
 
-    # If test_size is 0, return all data as training and empty dict as test
-    if test_size == 0.0:
-        return specifications, {}
+    # If both test_size and val_size are 0, return all data as training
+    if test_size == 0.0 and val_size == 0.0:
+        return specifications, {}, {}
 
     # Get list of specification keys
     spec_keys = list(specifications.keys())
 
-    # Split the keys
-    train_keys, test_keys = train_test_split(
-        spec_keys, test_size=test_size, random_state=random_state, shuffle=True
+    # Calculate the combined holdout size (val + test)
+    holdout_size = val_size + test_size
+
+    if holdout_size == 0.0:
+        return specifications, {}, {}
+
+    # First split: train vs (val + test)
+    train_keys, holdout_keys = train_test_split(
+        spec_keys, test_size=holdout_size, random_state=random_state, shuffle=True
     )
 
-    # Create train and test dictionaries
+    # Second split: val vs test (from holdout)
+    if val_size > 0.0 and test_size > 0.0:
+        # Calculate proportion of test within holdout
+        test_proportion = test_size / holdout_size
+        val_keys, test_keys = train_test_split(
+            holdout_keys,
+            test_size=test_proportion,
+            random_state=random_state,
+            shuffle=True,
+        )
+    elif val_size > 0.0:
+        # Only validation, no test
+        val_keys = holdout_keys
+        test_keys = []
+    else:
+        # Only test, no validation
+        val_keys = []
+        test_keys = holdout_keys
+
+    # Create dictionaries
     train_specs = {k: specifications[k] for k in train_keys}
+    val_specs = {k: specifications[k] for k in val_keys}
     test_specs = {k: specifications[k] for k in test_keys}
 
-    return train_specs, test_specs
+    return train_specs, val_specs, test_specs
 
 
 def generate_diverse_specifications(
     G: nx.DiGraph,
     config: PruningTestConfig,
     verbose: bool = True,
-) -> tuple[dict, dict, dict]:
+) -> tuple[dict, dict, dict, dict]:
     """Generate diverse and informative specifications with optional noise and node-specific class imbalance
 
     Args:
@@ -734,7 +774,7 @@ def generate_diverse_specifications(
         verbose: Whether to print verbose output
 
     Returns:
-        tuple[dict, dict, dict]: Generated train and test specifications, and a dictionary of statistics
+        tuple[dict, dict, dict, dict]: Generated train, validation, test specifications, and a dictionary of statistics
     """
     # Validate configuration parameters
     validate_config(G, config)
@@ -762,10 +802,10 @@ def generate_diverse_specifications(
             specifications, nodes, node_preferred_values, node_sets["terminal_nodes"]
         )
 
-    # Split specifications into train and test sets
-    train_specs, test_specs = split_specifications(specifications, config)
+    # Split specifications into train, validation, and test sets
+    train_specs, val_specs, test_specs = split_specifications(specifications, config)
 
-    return train_specs, test_specs, stats
+    return train_specs, val_specs, test_specs, stats
 
 
 def validate_config(G: nx.DiGraph, config: PruningTestConfig) -> None:
@@ -1448,7 +1488,12 @@ def train_network(
     config: PruningTestConfig,
     edge_signs: torch.Tensor,
     verbose: bool = True,
-) -> tuple[list[float], list[float], list[float], list[float]]:
+    val_data=None,
+    val_pert_dic: OrderedDict | None = None,
+    val_mask_dic: dict | None = None,
+    node_class_weights_val: dict | None = None,
+    G: nx.DiGraph | None = None,
+) -> tuple[list[float], list[float], list[float], list[float], list[float]]:
     """Train network using curriculum learning and advanced loss functions"""
     # Setup optimizer and schedulers
     opt = torch.optim.AdamW(
@@ -1469,36 +1514,67 @@ def train_network(
         target_lr=config.learning_rate,
     )
 
+    # Build the on-path weight floor loss wrapper when enabled. Requires the
+    # graph G to identify edges on shortest paths from perturbations to
+    # observations.
+    loss_fn = None
+    if config.onpath_floor_lambda > 0.0:
+        if G is None:
+            raise ValueError(
+                "onpath_floor_lambda > 0 requires the graph G to be passed to train_network"
+            )
+        onpath_mask = compute_onpath_edge_mask(G, node_dic, edge_idx, train_pert_dic)
+        loss_fn = _make_onpath_floor_wrapper(
+            weighted_node_earth_mover_loss,
+            model,
+            onpath_mask,
+            edge_idx,
+            config.onpath_floor_lambda,
+            config.onpath_floor_target,
+        )
+        if verbose:
+            print(
+                f"On-path weight floor enabled: lambda={config.onpath_floor_lambda}, "
+                f"target={config.onpath_floor_target} ({int(onpath_mask.sum())} on-path edges)"
+            )
+
     # Train model using the advanced training function
-    total_loss, sum_grad, train_epoch_losses, test_epoch_losses = train_model(
-        model=model,
-        train_data=train_data,
-        test_data=test_data,
-        train_pert_dic=train_pert_dic,
-        test_pert_dic=test_pert_dic,
-        node_dic=node_dic,
-        edge_idx_original=edge_idx,
-        train_mask_dic=train_mask_dic,
-        test_mask_dic=test_mask_dic,
-        edge_scale=edge_scale,
-        pert_mask=pert_mask,
-        opt=opt,
-        max_range=config.max_range,
-        scheduler=scheduler,
-        warmup_scheduler=warmup_scheduler,
-        early_stopping_enabled=config.early_stopping_enabled,
-        early_stopping_patience=config.early_stopping_patience,
-        allow_sign_flip=config.allow_sign_flip,
-        node_class_weights_train=node_class_weights_train,
-        node_class_weights_test=node_class_weights_test,
-        save_dir=config.model_save_dir,
-        warmup_steps=config.warmup_steps,
-        verbose=verbose,
-        edge_signs=edge_signs,
-        epochs=config.epochs,
+    total_loss, sum_grad, train_epoch_losses, val_epoch_losses, test_epoch_losses = (
+        train_model(
+            model=model,
+            loss_fn=loss_fn,
+            train_data=train_data,
+            test_data=test_data,
+            train_pert_dic=train_pert_dic,
+            test_pert_dic=test_pert_dic,
+            node_dic=node_dic,
+            edge_idx_original=edge_idx,
+            train_mask_dic=train_mask_dic,
+            test_mask_dic=test_mask_dic,
+            edge_scale=edge_scale,
+            pert_mask=pert_mask,
+            opt=opt,
+            max_range=config.max_range,
+            scheduler=scheduler,
+            warmup_scheduler=warmup_scheduler,
+            early_stopping_enabled=config.early_stopping_enabled,
+            early_stopping_patience=config.early_stopping_patience,
+            allow_sign_flip=config.allow_sign_flip,
+            node_class_weights_train=node_class_weights_train,
+            node_class_weights_test=node_class_weights_test,
+            save_dir=config.model_save_dir,
+            warmup_steps=config.warmup_steps,
+            verbose=verbose,
+            edge_signs=edge_signs,
+            epochs=config.epochs,
+            val_data=val_data,
+            val_pert_dic=val_pert_dic,
+            val_mask_dic=val_mask_dic,
+            node_class_weights_val=node_class_weights_val,
+        )
     )
 
-    return total_loss, sum_grad, train_epoch_losses, test_epoch_losses
+    return total_loss, sum_grad, train_epoch_losses, val_epoch_losses, test_epoch_losses
 
 
 class EvaluationResult:
@@ -1511,10 +1587,14 @@ class EvaluationResult:
         test_nonbinary_metrics: dict | None,
         history: pd.DataFrame,
         spec_stats: dict,
+        val_binary_metrics: dict | None = None,
+        val_nonbinary_metrics: dict | None = None,
     ):
         self.edge_stats = edge_stats
         self.train_binary_metrics = train_binary_metrics
         self.train_nonbinary_metrics = train_nonbinary_metrics
+        self.val_binary_metrics = val_binary_metrics
+        self.val_nonbinary_metrics = val_nonbinary_metrics
         self.test_binary_metrics = test_binary_metrics
         self.test_nonbinary_metrics = test_nonbinary_metrics
         self.history = history
@@ -1706,21 +1786,36 @@ def run_pruning_benchmark(
             f"Network with {len(original_edges)} true edges and {len(spurious_edges)} spurious edges"
         )
 
+    # Save initial network visualization
+    graph_to_pydot(G_noisy, out_dir / "network_before_training", format="png")
+
     # Generate specifications
     if config.generate_specifications:
-        train_specs, test_specs, spec_stats = generate_diverse_specifications(
-            G_true, config, verbose
+        train_specs, val_specs, test_specs, spec_stats = (
+            generate_diverse_specifications(G_true, config, verbose)
         )
         train_spec_df = pd.DataFrame.from_dict(train_specs, orient="index")
         train_spec_df.to_csv(
             Path(out_dir, "train_specifications_output.csv"), index=True
         )
+        if val_specs:
+            val_spec_df = pd.DataFrame.from_dict(val_specs, orient="index")
+            val_spec_df.to_csv(
+                Path(out_dir, "val_specifications_output.csv"), index=True
+            )
         test_spec_df = pd.DataFrame.from_dict(test_specs, orient="index")
         test_spec_df.to_csv(Path(out_dir, "test_specifications_output.csv"), index=True)
         train_dic_small = OrderedDict(sorted(train_specs.items(), key=lambda t: t[0]))
+        val_pert_dic = (
+            OrderedDict(sorted(val_specs.items(), key=lambda t: t[0]))
+            if val_specs
+            else None
+        )
         test_pert_dic = OrderedDict(sorted(test_specs.items(), key=lambda t: t[0]))
         if verbose:
             print(f"Generated {len(train_specs)} train specifications")
+            if val_specs:
+                print(f"Generated {len(val_specs)} validation specifications")
             print(f"Generated {len(test_specs)} test specifications")
 
         def count_node_participation(specs: dict) -> pd.DataFrame:
@@ -1839,34 +1934,37 @@ def run_pruning_benchmark(
                 f"Phenotype nodes are measured in {spec_stats['n_phenotype_outputs']} specifications"
             )
             # print(f"pert_dic_small[0:10]: {list(pert_dic_small.items())[0:10]}")
-        train_specs, test_specs = split_specifications(train_dic_small, config)
+        train_specs, val_specs, test_specs = split_specifications(
+            train_dic_small, config
+        )
         train_spec_df = pd.DataFrame.from_dict(train_specs, orient="index")
         train_spec_df.to_csv(
             Path(out_dir, "train_specifications_output_nongenerated.csv"), index=True
         )
+        if val_specs:
+            val_spec_df = pd.DataFrame.from_dict(val_specs, orient="index")
+            val_spec_df.to_csv(
+                Path(out_dir, "val_specifications_output_nongenerated.csv"), index=True
+            )
         test_spec_df = pd.DataFrame.from_dict(test_specs, orient="index")
         test_spec_df.to_csv(
             Path(out_dir, "test_specifications_output_nongenerated.csv"), index=True
         )
         train_dic_small = OrderedDict(sorted(train_specs.items(), key=lambda t: t[0]))
+        val_pert_dic = (
+            OrderedDict(sorted(val_specs.items(), key=lambda t: t[0]))
+            if val_specs
+            else None
+        )
         test_pert_dic = OrderedDict(sorted(test_specs.items(), key=lambda t: t[0]))
     # Prepare network for training
-    # G_noisy_no_dummy_1 = G_noisy.copy()
-    # G_noisy_no_dummy_2 = G_noisy.copy()
-    # G_noisy_no_dummy_3 = G_noisy.copy()
-    pert_dic_all = train_dic_small | test_pert_dic
-    # G_noisy, _, inh, _ = add_dummy_nodes_and_generate_A_inh(
-    #     G_noisy_no_dummy_1,
-    #     pert_dic_all,
-    #     config.max_range,
-    #     config.tf_method,
-    # )
-    # _, Adjacency_per_experiment_train, _, _ = add_dummy_nodes_and_generate_A_inh(
-    #     G_noisy_no_dummy_2, train_dic_small, config.max_range, config.tf_method
-    # )
-    # _, Adjacency_per_experiment_test, _, _ = add_dummy_nodes_and_generate_A_inh(
-    #     G_noisy_no_dummy_3, test_pert_dic, config.max_range, config.tf_method
-    # )
+    # Combine all perturbation dicts for dummy setup
+    pert_dic_all = dict(train_dic_small)
+    if val_pert_dic:
+        pert_dic_all.update(val_pert_dic)
+    if test_pert_dic:
+        pert_dic_all.update(test_pert_dic)
+
     G_noisy, inh, Adjacency_per_experiment_train, Adjacency_per_experiment_test = (
         dummy_setup(
             G_noisy,
@@ -1883,16 +1981,26 @@ def run_pruning_benchmark(
 
     # Generate training data
     X_train, y_train = get_data_and_update_y(train_dic_small, G_noisy)
+    if val_pert_dic:
+        X_val, y_val = get_data_and_update_y(val_pert_dic, G_noisy)
+    else:
+        X_val, y_val = None, None
     if test_pert_dic:
         X_test, y_test = get_data_and_update_y(test_pert_dic, G_noisy)
     else:
         X_test, y_test = None, None
     _, y_no_zero_no_pert_as_expectation_train = get_data(
-        train_dic_small, G_noisy, y_replace_missing_with_zero=False
+        train_dic_small, G_noisy, y_missing_fill_value=None
     )
+    if val_pert_dic:
+        _, y_no_zero_no_pert_as_expectation_val = get_data(
+            val_pert_dic, G_noisy, y_missing_fill_value=None
+        )
+    else:
+        y_no_zero_no_pert_as_expectation_val = None
     if test_pert_dic:
         _, y_no_zero_no_pert_as_expectation_test = get_data(
-            test_pert_dic, G_noisy, y_replace_missing_with_zero=False
+            test_pert_dic, G_noisy, y_missing_fill_value=None
         )
     else:
         y_no_zero_no_pert_as_expectation_test = None
@@ -1902,6 +2010,15 @@ def run_pruning_benchmark(
         min_range=config.min_range,
         max_range=config.max_range,
     )
+    if val_pert_dic and y_no_zero_no_pert_as_expectation_val is not None:
+        node_class_weights_val = calculate_node_class_weights(
+            y_no_zero_no_pert_as_expectation_val,
+            method=config.class_weight_method,
+            min_range=config.min_range,
+            max_range=config.max_range,
+        )
+    else:
+        node_class_weights_val = None
     if test_pert_dic and y_no_zero_no_pert_as_expectation_test is not None:
         node_class_weights_test = calculate_node_class_weights(
             y_no_zero_no_pert_as_expectation_test,
@@ -1919,6 +2036,10 @@ def run_pruning_benchmark(
     edge_idx_original = edge_idx.clone()
     # Create PyG data object
     train_data = create_pyg_data_object(X_train, y_train, edge_idx)
+    if X_val is not None and y_val is not None:
+        val_data = create_pyg_data_object(X_val, y_val, edge_idx)
+    else:
+        val_data = None
     if X_test is not None and y_test is not None:
         test_data = create_pyg_data_object(X_test, y_test, edge_idx)
     else:
@@ -1927,11 +2048,26 @@ def run_pruning_benchmark(
     # Prepare edge scaling and masks
     edge_scale = create_edge_scale(A_mult, pert_idx)
     train_mask_dic = construct_mask_dic(train_dic_small, node_dic, edge_idx)
+    val_mask_dic = (
+        construct_mask_dic(val_pert_dic, node_dic, edge_idx) if val_pert_dic else None
+    )
     test_mask_dic = construct_mask_dic(test_pert_dic, node_dic, edge_idx)
     pert_mask = create_pert_mask(edge_idx, node_dic)
 
     # Initialize model
-    edge_weight = torch.ones(edge_idx.shape[1]) * config.edge_weight_init
+    if config.use_random_weight_init:
+        if config.random_weight_init_distribution == "uniform":
+            edge_weight = (
+                torch.rand(edge_idx.shape[1])
+                * (config.random_weight_init_upper - config.random_weight_init_lower)
+                + config.random_weight_init_lower
+            )
+        else:
+            raise ValueError(
+                f"Unsupported random weight initialization distribution: {config.random_weight_init_distribution}"
+            )
+    else:
+        edge_weight = torch.ones(edge_idx.shape[1]) * config.edge_weight_init
     model = Net(
         edge_weight=edge_weight,
         min_val=config.min_range,
@@ -1941,8 +2077,14 @@ def run_pruning_benchmark(
         round_val=config.round_val,
     )
     edge_signs = extract_edge_signs(G_noisy, edge_idx)
-    # Train model]
-    total_train_loss, sum_grad, train_epoch_losses, test_epoch_losses = train_network(
+    # Train model
+    (
+        total_train_loss,
+        sum_grad,
+        train_epoch_losses,
+        val_epoch_losses,
+        test_epoch_losses,
+    ) = train_network(
         train_data=train_data,
         test_data=test_data,
         model=model,
@@ -1959,11 +2101,16 @@ def run_pruning_benchmark(
         config=config,
         verbose=verbose,
         edge_signs=edge_signs,
+        val_data=val_data,
+        val_pert_dic=val_pert_dic,
+        val_mask_dic=val_mask_dic,
+        node_class_weights_val=node_class_weights_val,
+        G=G_noisy,
     )
 
     plot_loss_vs_validation_loss(
         epoch_losses=train_epoch_losses,
-        test_losses=test_epoch_losses,
+        test_losses=val_epoch_losses if val_epoch_losses else test_epoch_losses,
         out_dir=out_dir,
     )
 
@@ -2005,6 +2152,30 @@ def run_pruning_benchmark(
         pert_dic_all=train_dic_small,
         config=config,
     )
+    # Validation metrics
+    if X_val is not None and y_val is not None and val_pert_dic:
+        # Need to get Adjacency_per_experiment for validation
+        _, Adjacency_per_experiment_val, _, _ = dummy_setup(
+            G_noisy.copy(),
+            val_pert_dic,
+            val_pert_dic,
+            None,
+            config.max_range,
+            config.tf_method,
+        )
+        binary_metrics_val, nonbinary_metrics_val = get_metrics(
+            X=X_val,
+            y=y_val,
+            y_no_zero_no_pert_as_expectation=y_no_zero_no_pert_as_expectation_val,
+            W=W,
+            Adjacency_per_experiment=Adjacency_per_experiment_val,
+            G=G_noisy,
+            pert_dic_all=val_pert_dic,
+            config=config,
+        )
+    else:
+        binary_metrics_val, nonbinary_metrics_val = None, None
+
     if X_test is not None and y_test is not None:
         binary_metrics_test, nonbinary_metrics_test = get_metrics(
             X=X_test,
@@ -2019,6 +2190,30 @@ def run_pruning_benchmark(
     else:
         binary_metrics_test, nonbinary_metrics_test = None, None
 
+    # Save trained network visualization
+    if config.base_graph_import and config.base_graph_import.exists():
+        # Use full visualization with JSON metadata when importing a base graph
+        save_trained_network_and_visualise(
+            input_json=config.base_graph_import,
+            W=W,
+            path_data=out_dir,
+            file_name=config.base_graph_import.stem,
+            min_range=config.min_range,
+            max_range=config.max_range,
+        )
+    else:
+        # For generated graphs, use simple visualization
+        from magellan.prune import get_trained_network
+        from magellan.plot import annotate_graph
+
+        G_trained = get_trained_network(G_noisy, W)
+        G_trained_visual = annotate_graph(G_trained, W)
+        graph_to_pydot(
+            G_trained_visual,
+            out_dir / "network_after_training",
+            format="png",
+        )
+
     return EvaluationResult(
         edge_stats,
         binary_metrics_train,
@@ -2027,6 +2222,8 @@ def run_pruning_benchmark(
         nonbinary_metrics_test,
         history,
         spec_stats,
+        val_binary_metrics=binary_metrics_val,
+        val_nonbinary_metrics=nonbinary_metrics_val,
     )
 
 

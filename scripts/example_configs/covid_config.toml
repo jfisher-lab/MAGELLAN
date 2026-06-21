@@ -1,0 +1,47 @@
+[paths]
+root_path = "/home/charlie/Desktop/automodel/benchmarks/bio_benchmarks"
+data_dir = "data/covid/"
+model_version = ""
+model_path = "COVID_model.json"
+spec_version = ""
+spec_path = "spec.csv"
+
+
+[model_params]
+tf_method = "sum"
+min_range = 0
+max_range = 4  # default
+filter_spec = true  # default (filter specification based on nodes in json)
+learning_rate = 0.01
+n_iter = 100
+edge_weight_init = 0.5  # Yuxin used 0.5
+max_update = true
+round_val = false
+use_ordered_dict = true
+check_paths = false
+allow_sign_flip = false
+
+
+[training]
+epochs = 10000  # default
+use_hybrid_loss = true
+hybrid_loss_alpha = 1.0  # 0.7 is the default, lower is more bce, higher is more mse
+category_curriculum = false
+phenotype_nodes_first = false
+early_stopping_enabled = true
+early_stopping_patience = 20
+use_class_weights = false
+class_weight_method = "inverse_freq"  # or "balanced"
+use_warmup = true
+warmup_steps = 10
+warmup_initial_lr_factor = 0.1  # Initial learning rate factor
+use_node_class_weights = true
+# boundary_penalty_alpha = 1.5
+seed = 42
+include_extreme_values_stage = false
+use_node_class_weights_extreme_boost = 1.0
+
+
+[debug]
+mask_debug = false  # Set to true to see masked edges
+

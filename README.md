@@ -61,14 +61,27 @@ This script takes as input a BMA network in JSON format, and a specification of 
 
 ### Benchmarks
 
-To run the benchmarks, run the `benchmarking_sweeps.py` script.
+To run the benchmarks, run the `benchmarking_sweeps.py` script. 
 
 ```bash
-uv run scripts/benchmarking_sweeps.py --sweep-dir benchmarks/synthetic_benchmarks/configs --sweep example_sweep
+uv run scripts/benchmarking_sweeps.py --netw-config scripts/example_configs/example_benchmark_config.toml --sweep-configs-dir benchmarks/synthetic_benchmarks/configs/example_sweeps/ --sweep example_sweep
 ```
 
 This will run benchmarks specified for sweep configs in the sweep directory.
 
+To run example sweeps, run:
+
+```bash
+uv run scripts/benchmarking_sweeps.py --netw-config scripts/example_configs/example_benchmark_config.toml --sweep-configs-dir benchmarks/synthetic_benchmarks/configs/example_sweeps/ --all
+```
+
+To plot these results, run:
+
+```bash
+uv run scripts/benchmarking_sweeps.py --netw-config scripts/example_configs/example_benchmark_config.toml --sweep-configs-dir benchmarks/synthetic_benchmarks/configs/example_sweeps/ --plot-all
+```
+
+For other benchmarking examples, see [`benchmarks/README.md`](benchmarks/README.md) and [MAGELLAN Supplement repository](https://github.com/jfisher-lab/MAGELLAN_Supplement).
 
 ## Citation
 

@@ -14,7 +14,11 @@ max_range = 2  # default
 filter_spec = true  # default (filter specification based on nodes in json)
 learning_rate = 0.005
 n_iter = 200
-edge_weight_init = 0.5  
+edge_weight_init = 0.5
+use_random_weight_init = false
+random_weight_init_distribution = "uniform"
+random_weight_init_lower = 0.0
+random_weight_init_upper = 2.0
 max_update = true
 round_val = false
 use_ordered_dict = true
@@ -36,10 +40,15 @@ class_weight_method = "inverse_freq"  # "balanced" or "inverse_freq"
 use_warmup = true
 warmup_steps = 10
 warmup_initial_lr_factor = 0.1  # Initial learning rate factor
+weight_decay = 0.01  # AdamW weight decay (L2 regularization), default 0.01
 use_node_class_weights = true
 seed = 42
 include_extreme_values_stage = false
 test_size = 0.0
+# Value used to fill missing observations in the y-matrix during training.
+# 0.0 (default)
+# nan: leave missing entries as NaN (requires a downstream masked loss).
+y_missing_fill_value = 0.0
 [debug]
 mask_debug = false  # Set to true to see masked edges
 

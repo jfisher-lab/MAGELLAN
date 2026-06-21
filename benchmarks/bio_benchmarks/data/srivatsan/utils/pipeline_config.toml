@@ -1,0 +1,39 @@
+# Pipeline Configuration for Srivatsan Data Processing
+# This config orchestrates the 4-step data processing pipeline
+
+[general]
+# Skip steps if their output files already exist
+skip_existing = true
+
+[step_1]
+# Clean and convert Srivatsan Supplementary Table 5 to Parquet format
+input_file = "../Supplementary_Table_5.txt"
+output_file = "../S5.parquet"
+chunksize = 200000
+
+[step_2]
+# Filter Srivatsan dataset for MCF7 cell line and BRCA pathway genes
+s5_path = "../S5.parquet"
+supp_table_path = "../Supplementary_Table_3.txt"
+json_path = "../../BRCA/v1/json/kegg_shortest_path_with_phenotype.json"
+joined_output_path = "../mcf7_brca_filtered.parquet"
+processed_output_path = "../mcf7_brca_filtered_processed.csv"
+cell_type = "MCF7"
+
+[step_3]
+# Annotate CAS numbers with ChEMBL IDs and target information
+csv_file = "../mcf7_brca_filtered_processed.csv"
+cas_to_chembl_file = "../cas_to_chembl.json"
+chembl_to_targets_file = "../chembl_to_targets.json"
+sleep_time = 0.5
+
+[step_4]
+# Convert Srivatsan MCF7 BRCA filtered data to specification format
+input_file = "../mcf7_brca_filtered_processed.csv"
+output_file = "../spec/spec_master.csv"
+cas_to_chembl_file = "../cas_to_chembl.json"
+chembl_to_targets_file = "../chembl_to_targets.json"
+brca_json_file = "../../BRCA/v1/json/kegg_shortest_path_with_phenotype.json"
+literature_spec_file = "../../BRCA/v1/spec/literature_curated_specification.csv"
+brca_max_pert_level = 2
+

@@ -56,12 +56,24 @@ cut_off = config["shortest_path_settings"]["cut_off"]
 weighted_edge = config["shortest_path_settings"]["weighted_edge"]
 # use consensus sign if an interaction is both activation AND inhibition
 consensus_sign = config["shortest_path_settings"]["consensus_sign"]
+# show progress bars while searching shortest paths
+show_progress = config["shortest_path_settings"].get("show_progress", True)
 # link mutations to DEGs to phenotypes
 
 # if source name, e.g. 'SIGNOR', then only use interactions in the source database
 filter_source_prime = config["shortest_path_settings"].get("filter_source_prime")
 # if list, e.g. ['HPRD', 'SPIKE'], then only use interactions in at least one of the databases
 filter_source = config["shortest_path_settings"].get("filter_source")
+
+# Phenotype layer selection strategy. "none" (default) keeps the phenotype
+# genes defined in the gene node table. Other in-script strategies narrow the
+# pheno layer to a fraction of the DEG genes.
+pheno_strategy = config["shortest_path_settings"].get("pheno_strategy", "none")
+pheno_fraction = config["shortest_path_settings"].get("pheno_fraction", 0.25)
+pheno_min_primary_sources = config["shortest_path_settings"].get(
+    "pheno_min_primary_sources", 1
+)
+pheno_seed = config["shortest_path_settings"].get("pheno_seed", 42)
 
 #################
 # load bma data #
@@ -98,6 +110,38 @@ gene_sets = {"mut": mut, "deg": deg, "pheno": pheno}
 # gene_sets['deg'].add('KRAS')
 # gene_sets['deg'].add('HRAS')
 
+# Optionally refine the phenotype layer using a topology/data-driven strategy.
+# "downstream" and "random" are supported here; "frequency"/"magnitude" require
+# training-split DEG data and are library-only (see refine_pheno_from_strategy).
+if pheno_strategy != "none":
+    supported_strategies = {"downstream", "random", "none"}
+    if pheno_strategy not in supported_strategies:
+        raise ValueError(
+            f"pheno_strategy={pheno_strategy!r} is not supported in "
+            "gen_shortest_path_net.py. Use one of 'downstream', 'random', 'none'. "
+        )
+    import omnipath as op
+
+    from magellan.pheno_strategies import refine_pheno_from_strategy
+
+    # Raw Omnipath interactions provide source/target gene symbols and
+    # n_primary_sources used by the downstream strategy.
+    int_op_for_pheno = op.interactions.OmniPath.get(  # type: ignore
+        organism="human", genesymbols=True, directed=False
+    )
+    gene_sets = refine_pheno_from_strategy(
+        gene_sets=gene_sets,
+        int_op=int_op_for_pheno,
+        strategy=pheno_strategy,
+        fraction=pheno_fraction,
+        seed=pheno_seed,
+        min_primary_sources=pheno_min_primary_sources,
+    )
+    # Keep the local mut/deg/pheno sets in sync for downstream visualisation.
+    mut = gene_sets["mut"]
+    deg = gene_sets["deg"]
+    pheno = gene_sets["pheno"]
+
 # set of bma genes
 bma_gene = set(df_gene["gene_name"].dropna())
 
@@ -131,6 +175,7 @@ df_remove = path.shortest_path(
     to_combine=[["mut", "deg"], ["deg", "pheno"]],
     thre=thre,
     file_path=os.path.join(results_path, file_name),
+    show_progress=show_progress,
 )
 
 # generate graph and json

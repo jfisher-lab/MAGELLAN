@@ -1,0 +1,83 @@
+﻿cell_line,code,if,expect,citation,sentence
+MCF10A,MCF10A.basal,NULL,Apoptosis=0,PMID: 12798140,"""These cells exhibit numerous features of normal breast epithelium, including lack of tumorigenicity in nude mice, lack of anchorage-independent growth, and dependence on growth factors and hormones for proliferation and survival"""
+MCF10A,MCF10A.basal,NULL,Proliferation=0,PMID: 12798140,"""These cells exhibit numerous features of normal breast epithelium, including lack of tumorigenicity in nude mice, lack of anchorage-independent growth, and dependence on growth factors and hormones for proliferation and survival"""
+MCF10A,MCF10A.basal,NULL,PIK3CA=-0,PLACEHOLDER,PLACEHOLDER
+MCF10A,MCF10A.basal,NULL,AKT1=0,PLACEHOLDER,PLACEHOLDER
+MCF10A,MCF10A.basal,NULL,Apoptosis=0,PMID: 12798140,"""These cells exhibit numerous features of normal breast epithelium, including lack of tumorigenicity in nude mice, lack of anchorage-independent growth, and dependence on growth factors and hormones for proliferation and survival"""
+MCF10A,MCF10A.basal,NULL,MYC=0,PMID: 12798140,
+MCF10A,MCF10A.basal,NULL,SHC2=1,PLACEHOLDER,PLACEHOLDER
+MCF7,MCF7.basal,NULL,Proliferation=1,PLACEHOLDER,PLACEHOLDER
+MCF7,MCF7.basal,NULL,AKT1=1,PLACEHOLDER,PLACEHOLDER
+MCF7,MCF7.basal,NULL,MTOR=1,PLACEHOLDER,PLACEHOLDER
+MCF7,MCF7.basal,NULL,C05981=2,PLACEHOLDER,PLACEHOLDER
+MCF7,MCF7.basal,NULL,Apoptosis=0,PLACEHOLDER,PLACEHOLDER
+MCF7,MCF7.basal,NULL,MYC=1,PMID: 28427212,"""We found that MYC was the highest expressed MDA-MB-231 cells"""
+MCF7,MCF7.basal,NULL,MAP2K1=1,PLACEHOLDER,PLACEHOLDER
+MCF7,MCF7.basal,NULL,SHC2=1,PLACEHOLDER,
+MDA-MB-231,MDA-MB-231.basal,NULL,Apoptosis=0,PLACEHOLDER,PLACEHOLDER
+MDA-MB-231,MDA-MB-231.basal,NULL,MYC=2,PMID: 28427212,"""We found that MYC was the highest expressed MDA-MB-231 cells"""
+MDA-MB-231,MDA-MB-231.basal,NULL,Proliferation=2,PLACEHOLDER,PLACEHOLDER
+MDA-MB-231,MDA-MB-231.basal,NULL,MAP2K1=2,PLACEHOLDER,PLACEHOLDER
+T47D,T47D.basal,NULL,Proliferation=1,PLACEHOLDER,PLACEHOLDER
+T47D,T47D.basal,NULL,Apoptosis=0,PLACEHOLDER,PLACEHOLDER
+BT474,BT474.basal,NULL,Proliferation=1,PLACEHOLDER,PLACEHOLDER
+BT474,BT474.basal,NULL,Apoptosis=0,PLACEHOLDER,PLACEHOLDER
+MDA-MB-468,MDA-MB-468.basal,NULL,Proliferation=2,PLACEHOLDER,PLACEHOLDER
+MDA-MB-468,MDA-MB-468.basal,NULL,Apoptosis=0,PLACEHOLDER,PLACEHOLDER
+HCC1954,HCC1954.basal,NULL,Proliferation=2,PLACEHOLDER,PLACEHOLDER
+HCC1954,HCC1954.basal,NULL,Apoptosis=0,PLACEHOLDER,PLACEHOLDER
+MCF7,MCF7.estradiol.stimulation,C00951=2,Proliferation=2,PMID: 29513878,"""A single administration of estradiol (E2) or progesterone increased MCF-7 cell viability in a dose-dependent manner."""
+MCF7,MCF7.estradiol.stimulation,C00951=2,ESR1=2,PMID: 29513878,"""Given that estradiol (E2) is the principal form of estrogen, breast cancer MCF-7 cells were treated with E2 to provoke the effects mediated by estrogen."""
+MCF7,MCF7.estradiol.stimulation,C00951=2,AKT1=2,PMID: 10424760,"""AKT1 activity was increased by either estradiol or IGF-I in estrogen-dependent MCF-7 cells"""
+MCF7,MCF7.insulin.stimulation,IGF1=2,AKT1=2,PMID: 10424760,"""AKT1 activity was increased by either estradiol or IGF-I in estrogen-dependent MCF-7 cells"""
+MCF10A,MCF10A.progesterone.stimulation,C00410=2,Proliferation=0,PMID: 19690070,"""Progestin treatment did not alter the cell cycle over 48 h."""
+MCF10A,MCF10A.progesterone.stimulation,C00410=2,Apoptosis=0,PMID: 19690070,"""Progestin treatment inhibited apoptosis induced by activation of the FasL pathway."", ""A decrease in caspase 3/7 levels indicates inhibition of apoptosis."""
+MCF7,MCF7.progesterone.stimulation,PGR=2,Proliferation=2,PMID: 29513878,"""A single administration of estradiol (E2) or progesterone increased MCF-7 cell viability in a dose-dependent manner."""
+MCF7,MCF7.progesterone.stimulation,PGR=2,AKT1=2,PMID: 12394246,"""Progesterone activates the PI3-kinase/Akt pathway as shown by the increase in the phosphorylation of Akt protein."""
+MCF7,MCF7.progesterone.stimulation.LY294002,"PGR=2,AKT1=0",Proliferation=0,PMID: 12394246,"""Progesterone enhances LY294002 induced-growth inhibition and apoptosis."""
+MCF7,MCF7.progesterone.stimulation.LY294002,"PGR=2,AKT1=0",Apoptosis=1,PMID: 12394246,"""Progesterone enhances LY294002 induced-growth inhibition and apoptosis."""
+MCF7,MCF7.progesterone.stimulation.TP53KI,"PGR=2,TP53=2",Apoptosis=2,PMID: 14529565,"""progesterone significantly enhances growth inhibition and apoptosis in MCF-7 cells overexpressing p53, but not in cells transfected with the control vector."""
+MCF7,MCF7.EGF+tamoxifen,"ESR1=0,EGFR=2",Proliferation=1,PMID: 24758408,"""EGF treatment of E2/TAM treated cells led to a marked cell proliferation thereby overruling the anti-estrogen-mediated inhibition of cell proliferation."""
+MCF7,MCF7.EGF+tamoxifen+MEKinhibitor,"ESR1=0,EGFR=2,MAP2K1=0",Proliferation=1,PMID: 24758408,"""The MEK inhibitor (U0126) did not block the proliferation."""
+MCF7,MCF7.tamoxifen,ESR1=0,Proliferation=0,PMID: 24758408,"""Treatment with TAM did significantly inhibit proliferation of MCF7-EGFR cells stimulated with E2 alone."""
+MDA-MB-231,MDA-MB-231.tamoxifen,ESR1=0,Proliferation=2,PMID: 8297653,"""in the MDA-MB-231 cell line, long-term tamoxifen exposure had no obvious effect on the doubling time"""
+MCF7,MCF7.tamoxifen,ESR1=0,Apoptosis=2,PMID: 28534964,"""TAM induced MCF-7 cell apoptosis and the percentage of apoptotic cells significantly increased in a dose-dependent manner (P<0.05)"""
+MDA-MB-231,MDA-MB-231.tamoxifen,ESR1=0,Apoptosis=2,PMID: 25228280,Tamoxifen induced significant apoptosis in MDA-MB-231
+MDA-MB-231,MDA-MB-231.tamoxifen,ESR1=0,AKT1=0,PMID: 25228280,"""Tamoxifen-induced apoptosis was associated with inhibition of cancerous inhibitor of protein phosphatase 2A (CIP2A) and phospho-Akt (p-Akt) in a dose-dependent manner. """
+MDA-MB-231,MDA-MB-231.tamoxifen,"ESR1=0,AKT1=2",Apoptosis=0,PMID: 25228280,"""Ectopic expression of either CIP2A or Akt protected MDA-MB-231 cells from tamoxifen-induced apoptosis."""
+MCF10A,MCF10A.HER2.overexpression,ERBB2=2,Proliferation=2,PMID: 36661191,"""Furthermore, MCF10AHER2 cells displayed a hallmark of in vitro transformation, with increased anchorage-independent growth compared to that of control cells"""
+MCF10A,MCF10A.HER2.overexpression,ERBB2=2,Apoptosis=0,PMID: 36661191,"""Furthermore, MCF10AHER2 cells displayed a hallmark of in vitro transformation, with increased anchorage-independent growth compared to that of control cells"""
+MCF10A,MCF10A.HER2.overexpression,EGF=2,Proliferation=1,PMID: 11533657,"""ErbB2, but not ErbB1, reinitiates proliferation and induces luminal repopulation in epithelial acini"""
+MCF10A,MCF10A.HER2.overexpression,ERBB2=2,PIK3CA=2,PMID: 11533657,"""Activation of both p75.B1 and p75.B2 homodimers induced a modest increase in Ser 473 phosphorylation of Akt, a downstream target of the PtdIns-3-OH kinase signalling pathway"""
+MCF10A,MCF10A.HER2.overexpression,EGFR=2,PIK3CA=1,PMID: 11533657,"""Activation of both p75.B1 and p75.B2 homodimers induced a modest increase in Ser 473 phosphorylation of Akt, a downstream target of the PtdIns-3-OH kinase signalling pathway"""
+MCF7,MCF7.AKTi,AKT1=0,Proliferation=1,NULL,"""Genomics of Drug Sensitivity in Cancer"""
+MCF7,MCF7.BRAFi,BRAF=0,Proliferation=1,NULL,"""Genomics of Drug Sensitivity in Cancer"""
+MDA-MB-231,MDA-MB-231.AKT1i,AKT1=0,Proliferation=2,NULL,"""Genomics of Drug Sensitivity in Cancer"""
+MDA-MB-231,MDA-MB-231.BRAFi,BRAF=0,Proliferation=2,NULL,"""Genomics of Drug Sensitivity in Cancer"""
+MCF7,MCF7.EGFRi,EGFR=0,Proliferation=1,NULL,"""Genomics of Drug Sensitivity in Cancer"""
+MCF7,MCF7.ERBB2i,ERBB2=0,Proliferation=1,NULL,"""Genomics of Drug Sensitivity in Cancer"""
+MCF7,MCF7.ESR1i,ESR1=0,Proliferation=0,"Sensitive (by GDC0810, Tamoxifen inhibition)","""Genomics of Drug Sensitivity in Cancer"""
+MCF7,MCF7.FGFR1i,FGFR1=0,Proliferation=1,NULL,"""Genomics of Drug Sensitivity in Cancer"""
+MCF7,MCF7.IGF1R,IGF1R=0,Proliferation=1,NULL,"""Genomics of Drug Sensitivity in Cancer"""
+MDA-MB-231,MDA-MB-231.IGF1Ri,IGF1R=0,Proliferation=2,NULL,"""Genomics of Drug Sensitivity in Cancer"""
+MCF7,MCF7.KITi,KIT=0,Proliferation=1,NULL,"""Genomics of Drug Sensitivity in Cancer"""
+MCF7,MCF7.SRCi,SRC=0,Proliferation=1,NULL,"""Genomics of Drug Sensitivity in Cancer"""
+BT474,BT474.AKT1i,AKT1=0,Proliferation=1,,"""Genomics of Drug Sensitivity in Cancer"""
+BT474,BT474.BRAFi,BRAF=0,Proliferation=1,,"""Genomics of Drug Sensitivity in Cancer"""
+BT474,BT474.FGFR1i,FGFR1=0,Proliferation=1,,"""Genomics of Drug Sensitivity in Cancer"""
+BT474,BT474.GSK3Bi,GSK3B=0,Proliferation=1,,"""Genomics of Drug Sensitivity in Cancer"""
+BT474,BT474.IGF1Ri,IGF1R=0,Proliferation=1,,"""Genomics of Drug Sensitivity in Cancer"""
+BT474,BT474.KITi,KIT=0,Proliferation=1,,"""Genomics of Drug Sensitivity in Cancer"""
+BT474,BT474.SRCi,SRC=0,Proliferation=1,,"""Genomics of Drug Sensitivity in Cancer"""
+BT474,BT474.TP53i,TP53=0,Proliferation=1,Insensitive (by MIRA-1 inhibition),"""Genomics of Drug Sensitivity in Cancer"""
+BT474,BT474.ERBB2,ERBB2=0,Proliferation=0,"Sensitive (by Lapatinib, Afatinib, Sapitinib inhibition)","""Genomics of Drug Sensitivity in Cancer"""
+HCC1954,HCC1954.AKT1i,AKT1=0,Proliferation=2,"Sensitive (by GSK2110183B, Uprosertib inhibition)","""Genomics of Drug Sensitivity in Cancer"""
+MDA-MB-468,MDA-MB-468.EGFRi,EGFR=0,Proliferation=0,"Sensitive (by Sapitinib, AZD3759, Lapatinib, Gefitinib inhibition)","""Genomics of Drug Sensitivity in Cancer"""
+MDA-MB-468,MDA-MB-468.ERBB2i,ERBB2=0,Proliferation=0,"Sensitive (by Sapitinib, Lapatinib inhibition)","""Genomics of Drug Sensitivity in Cancer"""
+MDA-MB-468,MDA-MB-468.FGFR1i,FGFR1=0,Proliferation=2,Insensitive (by PD173074 inhibition),"""Genomics of Drug Sensitivity in Cancer"""
+MDA-MB-468,MDA-MB-468.KITi,KIT=0,Proliferation=0,Sensitive (by Axitinib inhibition),"""Genomics of Drug Sensitivity in Cancer"""
+T47D,T47D.AKT1i,AKT1=0,Proliferation=0,"Sensitive (by Ipatasertib, GSK2110183B inhibition)","""Genomics of Drug Sensitivity in Cancer"""
+T47D,T47D.EGFRi,EGFR=0,Proliferation=1,Insensitive (by Foretinib inhibition),"""Genomics of Drug Sensitivity in Cancer"""
+T47D,T47D.ESR1i,ESR1=0,Proliferation=0,"Sensitive (by GDC0810, Tamoxifen inhibition)","""Genomics of Drug Sensitivity in Cancer"""
+T47D,T47D.FGFR1i,FGFR1=0,Proliferation=1,Insensitive (by Foretinib inhibition),"""Genomics of Drug Sensitivity in Cancer"""
+T47D,T47D.IGF1Ri,IGF1R=0,Proliferation=0,Sensitive (by GSK1904529A inhibition),"""Genomics of Drug Sensitivity in Cancer"""

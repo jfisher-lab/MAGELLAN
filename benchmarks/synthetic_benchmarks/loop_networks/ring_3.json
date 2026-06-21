@@ -1,0 +1,103 @@
+{
+    "Model": {
+        "Name": "ring_3",
+        "Variables": [
+            {
+                "Name": "ring3_0",
+                "Id": 1,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(3)*240/1000"
+            },
+            {
+                "Name": "ring3_1",
+                "Id": 2,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(1)*437/1000"
+            },
+            {
+                "Name": "ring3_2",
+                "Id": 3,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(2)*758/1000"
+            }
+        ],
+        "Relationships": [
+            {
+                "Id": 2,
+                "FromVariable": 2,
+                "ToVariable": 3,
+                "Type": "Activator"
+            },
+            {
+                "Id": 1,
+                "FromVariable": 1,
+                "ToVariable": 2,
+                "Type": "Activator"
+            },
+            {
+                "Id": 3,
+                "FromVariable": 3,
+                "ToVariable": 1,
+                "Type": "Inhibitor"
+            }
+        ]
+    },
+    "Layout": {
+        "Variables": [
+            {
+                "Id": 1,
+                "Name": "ring3_0",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 79.16,
+                "PositionY": 159.868,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 2,
+                "Name": "ring3_1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 223.58,
+                "PositionY": 160.816,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 3,
+                "Name": "ring3_2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 152.344,
+                "PositionY": 36.0,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            }
+        ],
+        "Containers": [
+            {
+                "Id": 1,
+                "Name": "C0",
+                "Size": 4,
+                "PositionX": -2,
+                "PositionY": -2
+            }
+        ],
+        "AnnotatedGridCells": [],
+        "Description": ""
+    },
+    "ltl": {
+        "states": [],
+        "operations": []
+    }
+}

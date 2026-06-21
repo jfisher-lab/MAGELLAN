@@ -1,0 +1,45 @@
+# sweeps/configs/n_iter_sweep.toml
+name = "n_iter_sweep"
+description = "Investigating impact of training iterations (n_iter) on model performance"
+output_dir_suffix = "n_iter_sweep"
+default_seeds = [42, 43, 44]
+
+# These parameters will be applied to all parameter sets
+[base_params]
+graph_generation.generate_specifications = "true"
+graph_generation.grow_base_graph = "true"
+training.model_save_dir = "models"  
+
+# Each parameter set represents a different configuration to test
+[[parameter_sets]]
+training.n_iter = 2
+
+[[parameter_sets]]
+training.n_iter = 5
+
+[[parameter_sets]]
+training.n_iter = 10
+
+[[parameter_sets]]
+training.n_iter = 25
+
+[[parameter_sets]]
+training.n_iter = 50
+
+[[parameter_sets]]
+training.n_iter = 150
+
+[[parameter_sets]]
+training.n_iter = 300
+
+[[parameter_sets]]
+training.n_iter = 500
+
+[[plotting_configs]]
+x_axis_metric = "override_training.n_iter"
+y_axis_metrics = ["test_nonbinary_f1", "test_nonbinary_qwk", "test_nonbinary_mcc"]
+neat_x_axis_label = "Training Iterations (n_iter)"
+figsize = [10, 10]
+y_min = 0
+y_max = 1
+log_x_axis = true

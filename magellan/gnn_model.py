@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from collections.abc import Callable
 from pathlib import Path
 
 import networkx as nx
@@ -10,15 +11,11 @@ from torch_geometric.data import Data
 from torch_geometric.nn import SimpleConv
 from tqdm.autonotebook import tqdm
 
+from magellan.graph import is_inhibitor_scaffold_node
 from magellan.prune_opt import (
     EarlyStopping,
     ModelCheckpoint,
     WarmupScheduler,
-    curriculum_weighted_loss_func,
-    get_curric_node_weights,
-    get_extreme_value_weights,
-    hybrid_loss,
-    weighted_hybrid_loss,
     weighted_node_earth_mover_loss,
 )
 from magellan.sci_opt import enforce_pert_dic_order, get_sorted_node_list
@@ -170,9 +167,15 @@ def get_edge_weight_matrix(
     if remove_dummy_and_self_loops:
         for n in node_list:
             W.at[n, n] = 0  # set self loops to 0
-            if "dummy" in n:
-                W[n] = 0  # set dummy --> child nodes to 0
-                W.loc[n] = 0  # set child nodes --> dummy to 0
+            if is_inhibitor_scaffold_node(n):
+                # Only inhibitor `dummy_` scaffolds are pure structural
+                # placeholders -- their weights should not be exposed.
+                # `udummy_` (universal-dummy) scaffolds carry the trained
+                # weight that propagates the udummy_value into biological
+                # nodes via pred_mat_bound_single, so their rows/cols MUST
+                # be preserved in the exported W.
+                W[n] = 0  # set scaffold --> child nodes to 0
+                W.loc[n] = 0  # set child nodes --> scaffold to 0
 
     return W
 
@@ -215,253 +218,6 @@ def extract_edge_signs(G: nx.DiGraph, edge_idx: torch.Tensor) -> torch.Tensor:
     return edge_signs
 
 
-def train_model_flexible(
-    model: Net,
-    data: Data,
-    pert_dic_small: dict,
-    node_dic: dict,
-    edge_idx_original: torch.Tensor,
-    mask_dic: dict,
-    edge_scale: torch.Tensor,
-    pert_mask: torch.Tensor,
-    curriculum_stages: list[dict],
-    opt: torch.optim.Optimizer,
-    scheduler: ReduceLROnPlateau,
-    edge_signs: torch.Tensor,
-    max_range: int,
-    min_range: int = 0,
-    use_hybrid_loss: bool = False,
-    boundary_penalty_alpha: float | None = None,
-    warmup_scheduler: WarmupScheduler | None = None,
-    hybrid_loss_alpha: float | None = None,
-    use_class_weights: bool = False,
-    use_node_class_weights: bool = False,
-    class_weights: tuple[float, float] | None = None,
-    node_class_weights: dict | None = None,
-    early_stopping_enabled: bool = True,
-    early_stopping_patience: int = 10,
-    allow_sign_flip: bool = True,
-    verbose: bool = True,
-    grad_clip_max_norm: float | None = None,
-) -> tuple[list[float], list[float], list[float]]:
-    """Train the neural network model through curriculum stages.
-
-    Args:
-        model: Neural network model
-        data: PyG Data object containing features and targets
-        pert_dic_small: Dictionary of perturbations
-        node_dic: Dictionary mapping node names to indices
-        edge_idx_original: Original edge indices
-        mask_dic: Dictionary of masks for each perturbation
-        edge_scale: Edge scaling factors
-        pert_mask: Perturbation mask
-        curriculum_stages: List of curriculum learning stages
-        opt: Optimizer
-        scheduler: Learning rate scheduler
-        warmup_scheduler: Optional warmup scheduler
-        use_hybrid_loss: Whether to use hybrid loss
-        hybrid_loss_alpha: Alpha parameter for hybrid loss
-        use_class_weights: Whether to use class weights
-        use_node_class_weights: Whether to use node-specific class weights
-        class_weights: Class weights array
-        node_class_weights: Node-specific class weights
-        early_stopping_enabled: Whether to use early stopping
-        early_stopping_patience: Patience for early stopping
-        allow_sign_flip: Whether to allow negative weights
-
-    Returns:
-        Tuple containing:
-        - List of total losses
-        - List of gradient sums
-        - List of epoch losses
-    """
-    raise NotImplementedError(
-        "This function is was for comparing different methods and is deprecated"
-    )
-
-    total_loss = []
-    sum_grad = []
-    epoch_losses = []
-
-    for stage in curriculum_stages:
-        if verbose:
-            print(f"\nStarting curriculum stage: {stage['name']}")
-        node_weights = get_curric_node_weights(data.y, stage, node_dic)
-
-        total_steps = stage["epochs"] * len(pert_dic_small)
-        pert_items = list(
-            enumerate(pert_dic_small.keys())
-        )  # Keep index-key pairs together
-
-        # Reset average loss for new stage
-        avg_epoch_loss = float("inf")
-
-        with tqdm(
-            total=total_steps, desc=f"Training {stage['name']}", ncols=100, leave=False
-        ) as pbar:
-            # Create new early stopping instance for each stage
-            early_stopping = EarlyStopping(
-                patience=early_stopping_patience,
-                min_delta=1e-4,
-                enabled=early_stopping_enabled,
-                pbar=pbar,
-            )
-            for i in range(stage["epochs"]):
-                epoch_loss = []
-                # Shuffle while maintaining index-key correspondence
-                np.random.shuffle(pert_items)
-
-                for (
-                    j,
-                    k,
-                ) in pert_items:  # j maintains the original index for data.x/data.y
-                    if warmup_scheduler is not None:
-                        warmup_scheduler.step()
-
-                    idx_exp = [node_dic[ele] for ele in pert_dic_small[k]["exp"]]
-                    edge_idx_training = edge_idx_original.detach().clone()
-
-                    if data.x is None:
-                        raise ValueError("data.x is None")
-                    input_features = data.x[:, j].reshape([-1, 1])
-
-                    if not isinstance(data.y, torch.Tensor):
-                        raise ValueError("data.y is not a tensor")
-                    target = data.y[idx_exp, j].reshape([-1, 1])
-
-                    pred = model(
-                        x=input_features,
-                        edge_index=edge_idx_training,
-                        edge_mask=mask_dic[k],
-                        edge_scale=edge_scale,
-                        pert_mask=pert_mask,
-                    )
-
-                    opt.zero_grad()
-
-                    if stage.get("focus_extreme_values", False):
-                        # Get weights that emphasize extreme values
-                        extreme_weights = get_extreme_value_weights(
-                            target=target,
-                            pred=pred[idx_exp],
-                            min_range=min_range,
-                            max_range=max_range,
-                            middle_penalty=0.5,
-                            extreme_boost=stage.get("extreme_values_weight", 3.0),
-                        )
-
-                        # Combine with existing weights
-                        combined_weights = node_weights[idx_exp] * extreme_weights
-                    else:
-                        combined_weights = node_weights[idx_exp]
-
-                    # Calculate loss based on configuration
-                    if use_hybrid_loss:
-                        if use_class_weights and not use_node_class_weights:
-                            if class_weights is None:
-                                raise ValueError(
-                                    "class_weights is None but use_class_weights is True"
-                                )
-                            if hybrid_loss_alpha is None:
-                                raise ValueError(
-                                    "hybrid_loss_alpha is None but use_hybrid_loss is True"
-                                )
-                            loss = weighted_hybrid_loss(
-                                pred=pred[idx_exp],
-                                target=target,
-                                weights=combined_weights,
-                                alpha=hybrid_loss_alpha,
-                                pos_weight=class_weights[1],
-                                class_weights=class_weights,
-                            )
-                        elif use_node_class_weights:
-                            if node_class_weights is None:
-                                raise ValueError(
-                                    "node_class_weights is None but use_node_class_weights is True"
-                                )
-                            exp_node_names = [
-                                node for node, idx in node_dic.items() if idx in idx_exp
-                            ]
-                            loss = weighted_node_earth_mover_loss(
-                                pred=pred[idx_exp],
-                                target=target,
-                                node_weights=node_class_weights,
-                                node_names=exp_node_names,
-                                min_range=min_range,
-                                max_range=max_range,
-                                # boundary_penalty_alpha=boundary_penalty_alpha,
-                                # alpha=hybrid_loss_alpha,
-                            )
-                        else:
-                            if hybrid_loss_alpha is None:
-                                raise ValueError(
-                                    "hybrid_loss_alpha is None but use_hybrid_loss is True"
-                                )
-                            loss = hybrid_loss(
-                                pred=pred[idx_exp],
-                                target=target,
-                                alpha=hybrid_loss_alpha,
-                            )
-                    else:
-                        loss = curriculum_weighted_loss_func(
-                            pred=pred[idx_exp],
-                            target=target,
-                            weights=node_weights[idx_exp],
-                        )
-
-                    loss.backward()
-                    # Apply gradient adjustments based on edge signs
-                    for i, (sign) in enumerate(edge_signs):
-                        if sign < 0:  # For inhibitory edges
-                            if model.edge_weight.grad is not None:
-                                # Invert the gradient direction for inhibitory edges
-                                model.edge_weight.grad[i] = -model.edge_weight.grad[i]
-                    if grad_clip_max_norm is not None:
-                        torch.nn.utils.clip_grad_norm_(
-                            model.parameters(), max_norm=grad_clip_max_norm
-                        )
-                    opt.step()
-
-                    if not allow_sign_flip:
-                        with torch.no_grad():
-                            for param in model.parameters():
-                                param.data.clamp_(min=0)
-
-                    loss_val = loss.detach().numpy()
-                    total_loss.append(loss_val)
-                    epoch_loss.append(loss_val)
-
-                    if model.edge_weight.grad is None:
-                        raise ValueError("model.edge_weight.grad is None")
-                    sum_grad.append(model.edge_weight.grad.sum().numpy())
-
-                    # Update progress bar with both loss and early stopping counter
-                    postfix_dict = {
-                        "loss": f"{loss_val:.6f}",
-                        "early_stop": f"{early_stopping.counter + 1}/{early_stopping.patience}",
-                    }
-                    pbar.set_postfix(**postfix_dict)  # type: ignore
-                    pbar.update(1)
-
-                avg_epoch_loss = np.mean(epoch_loss)
-                epoch_losses.append(avg_epoch_loss)
-                print(f"Epoch {i + 1}, Average Loss: {avg_epoch_loss:.6f}")
-
-                scheduler.step(avg_epoch_loss)
-
-                early_stopping(float(avg_epoch_loss))
-                if early_stopping.early_stop:
-                    if verbose:
-                        print(
-                            f"\nEarly stopping triggered during {stage['name']} at epoch {i + 1}"
-                        )
-                    break
-
-        if verbose:
-            print("\nTraining complete.")
-    return total_loss, sum_grad, epoch_losses
-
-
 def train_model(
     model: Net,
     train_data: Data,
@@ -490,50 +246,80 @@ def train_model(
     verbose: bool = True,
     grad_clip_max_norm: float | None = None,
     warmup_steps: int = 100,
-) -> tuple[list[float], list[float], list[float], list[float]]:
+    val_data: Data | None = None,
+    val_pert_dic: OrderedDict | None = None,
+    val_mask_dic: dict | None = None,
+    node_class_weights_val: dict | None = None,
+    loss_fn: Callable | None = None,
+) -> tuple[list[float], list[float], list[float], list[float], list[float]]:
     """Train the neural network model through curriculum stages.
 
     Args:
         model: Neural network model
-        data: PyG Data object containing features and targets
-        pert_dic_small: Dictionary of perturbations
+        train_data: PyG Data object containing training features and targets
+        test_data: PyG Data object for test set (holdout evaluation only)
+        train_pert_dic: Dictionary of training perturbations
+        test_pert_dic: Dictionary of test perturbations
         node_dic: Dictionary mapping node names to indices
         edge_idx_original: Original edge indices
-        train_mask_dic: Dictionary of masks for each perturbation
-        test_mask_dic: Dictionary of masks for each perturbation
+        train_mask_dic: Dictionary of masks for each training perturbation
+        test_mask_dic: Dictionary of masks for each test perturbation
         edge_scale: Edge scaling factors
         pert_mask: Perturbation mask
-        curriculum_stages: List of curriculum learning stages
         opt: Optimizer
         scheduler: Learning rate scheduler
+        edge_signs: Edge sign tensor
+        max_range: Maximum value range
+        node_class_weights_train: Node-specific class weights for training
+        node_class_weights_test: Node-specific class weights for test
+        save_dir: Directory to save model checkpoints
+        min_range: Minimum value range
+        epochs: Number of training epochs
         warmup_scheduler: Optional warmup scheduler
-        use_hybrid_loss: Whether to use hybrid loss
-        hybrid_loss_alpha: Alpha parameter for hybrid loss
-        use_class_weights: Whether to use class weights
-        use_node_class_weights: Whether to use node-specific class weights
-        class_weights: Class weights array
-        node_class_weights: Node-specific class weights
         early_stopping_enabled: Whether to use early stopping
         early_stopping_patience: Patience for early stopping
         allow_sign_flip: Whether to allow negative weights
+        verbose: Whether to print verbose output
+        grad_clip_max_norm: Maximum norm for gradient clipping
+        warmup_steps: Number of warmup steps
+        val_data: PyG Data object for validation set (used for early stopping)
+        val_pert_dic: Dictionary of validation perturbations
+        val_mask_dic: Dictionary of masks for each validation perturbation
+        node_class_weights_val: Node-specific class weights for validation
+        loss_fn: Optional replacement for ``weighted_node_earth_mover_loss``.
+            Must accept the same call signature
+            ``(pred, target, *, node_weights, node_names, min_range, max_range)``
+            and return a scalar loss tensor.  When ``None`` (default) the
+            standard loss is used.  When a new loss function is
+            provided it is applied to all loss
+            computations alike (so any added penalty is reflected in the
+            early-stopping / checkpoint-selection metrics).
 
     Returns:
         Tuple containing:
         - List of total losses
         - List of gradient sums
-        - List of epoch losses
+        - List of train epoch losses
+        - List of validation epoch losses (empty if no val set)
+        - List of test epoch losses (empty if no test set)
     """
+    _loss = loss_fn if loss_fn is not None else weighted_node_earth_mover_loss
     train_pert_dic_small = enforce_pert_dic_order(train_pert_dic)
     if test_pert_dic is not None:
         test_pert_dic_small = enforce_pert_dic_order(test_pert_dic)
     else:
         test_pert_dic_small = None  # type: ignore
+    if val_pert_dic is not None:
+        val_pert_dic_small = enforce_pert_dic_order(val_pert_dic)
+    else:
+        val_pert_dic_small = None  # type: ignore
     total_train_loss = []
     train_loss = []
     test_loss = []
     sum_grad = []
     train_epoch_losses = []
-    test_epoch_losses = []
+    val_epoch_losses: list[float] = []
+    test_epoch_losses: list[float] = []
     # total_steps = epochs * len(train_pert_dic_small)
     train_pert_items = list(
         enumerate(train_pert_dic_small.keys())
@@ -544,13 +330,40 @@ def train_model(
         )  # Keep index-key pairs together
     else:
         test_pert_items = None  # type: ignore
+    if val_pert_dic_small is not None:
+        val_pert_items = list(
+            enumerate(val_pert_dic_small.keys())
+        )  # Keep index-key pairs together
+    else:
+        val_pert_items = None  # type: ignore
 
-    # Check if test set is empty
+    # Check if validation and test sets are empty
+    no_val_set = val_pert_items is None or len(val_pert_items) == 0
     no_test_set = test_pert_items is None or len(test_pert_items) == 0
-    if verbose and no_test_set:
-        print("No test set provided. Monitoring training loss for callbacks.")
 
-    monitor_metric = "train_loss" if no_test_set else "val_loss"
+    # Determine early stopping metric based on available data:
+    # Priority: validation loss > test loss (backward compat) > train loss
+    if not no_val_set:
+        monitor_metric = "val_loss"
+        if verbose:
+            print(
+                "Validation set provided. Monitoring validation loss for early stopping."
+            )
+    elif not no_test_set:
+        monitor_metric = (
+            "val_loss"  # test acts as validation for backward compatibility
+        )
+        if verbose:
+            print(
+                "No validation set. Using test set for early stopping (backward compatible)."
+            )
+    else:
+        monitor_metric = "train_loss"
+        if verbose:
+            print(
+                "No validation or test set provided. Monitoring training loss for callbacks."
+            )
+
     monitor_mode = "min"
 
     with tqdm(
@@ -613,7 +426,7 @@ def train_model(
                 exp_node_names = [
                     node for node, idx in node_dic.items() if idx in idx_exp
                 ]
-                train_loss = weighted_node_earth_mover_loss(
+                train_loss = _loss(
                     pred=pred[idx_exp],
                     target=target,
                     node_weights=node_class_weights_train,
@@ -658,7 +471,65 @@ def train_model(
             # Step the ReduceLROnPlateau scheduler with train loss
             scheduler.step(avg_train_epoch_loss)
 
-            # --- Test Loop or Monitoring Logic ---
+            # --- Validation Loop ---
+            avg_val_epoch_loss = np.nan  # Initialize as NaN
+
+            if (
+                not no_val_set
+                and val_pert_items is not None
+                and val_pert_dic_small is not None
+                and val_mask_dic is not None
+                and val_data is not None
+                and node_class_weights_val is not None
+            ):
+                model.eval()
+                val_epoch_loss = []
+                with torch.no_grad():
+                    for j, k in val_pert_items:
+                        idx_exp = [
+                            node_dic[ele] for ele in val_pert_dic_small[k]["exp"]
+                        ]
+                        edge_idx_val = edge_idx_original.detach().clone()
+
+                        if val_data.x is None:
+                            raise ValueError("val_data.x is None")
+                        input_features = val_data.x[:, j].reshape([-1, 1])
+
+                        if not isinstance(val_data.y, torch.Tensor):
+                            raise ValueError("val_data.y is not a tensor")
+                        target = val_data.y[idx_exp, j].reshape([-1, 1])
+
+                        exp_node_names_val = [
+                            node for node, idx in node_dic.items() if idx in idx_exp
+                        ]
+
+                        pred = model(
+                            x=input_features,
+                            edge_index=edge_idx_val,
+                            edge_mask=val_mask_dic[k],
+                            edge_scale=edge_scale,
+                            pert_mask=pert_mask,
+                        )
+
+                        val_loss = _loss(
+                            pred=pred[idx_exp],
+                            target=target,
+                            node_weights=node_class_weights_val,
+                            node_names=exp_node_names_val,
+                            min_range=min_range,
+                            max_range=max_range,
+                        )
+
+                        val_loss_val = val_loss.detach().cpu().numpy()
+                        val_epoch_loss.append(val_loss_val)
+
+                avg_val_epoch_loss = (
+                    np.mean(val_epoch_loss) if val_epoch_loss else np.nan
+                )
+                val_epoch_losses.append(avg_val_epoch_loss)
+                model.train()
+
+            # --- Test Loop (for monitoring only, not early stopping when val exists) ---
             avg_test_epoch_loss = np.nan  # Initialize as NaN
 
             if (
@@ -704,7 +575,7 @@ def train_model(
                         )
 
                         # Calculate test loss for this experiment
-                        test_loss = weighted_node_earth_mover_loss(
+                        test_loss = _loss(
                             pred=pred[idx_exp],
                             target=target,
                             node_weights=node_class_weights_test,  # Use test weights
@@ -716,8 +587,6 @@ def train_model(
                         test_loss_val = (
                             test_loss.detach().cpu().numpy()
                         )  # Ensure it's on CPU
-                        # Optional: print individual test experiment loss
-                        # print(f"  Epoch {epoch + 1}, Test Exp {k}, Loss: {test_loss_val:.4f}")
                         test_epoch_loss.append(test_loss_val)
 
                 avg_test_epoch_loss = (
@@ -726,14 +595,18 @@ def train_model(
                 test_epoch_losses.append(avg_test_epoch_loss)
                 # Set model back to train mode after evaluation
                 model.train()
-            elif no_test_set and node_class_weights_train is None:
+            elif no_test_set and no_val_set and node_class_weights_train is None:
                 raise ValueError("node_class_weights_train is None")
 
             # --- Callbacks and Progress Bar Update ---
             # Determine the metric to use for callbacks and reporting
-            current_metric_val = (
-                avg_train_epoch_loss if no_test_set else avg_test_epoch_loss
-            )
+            # Priority: validation loss > test loss (backward compat) > train loss
+            if not no_val_set:
+                current_metric_val = avg_val_epoch_loss
+            elif not no_test_set:
+                current_metric_val = avg_test_epoch_loss  # backward compatibility
+            else:
+                current_metric_val = avg_train_epoch_loss
 
             # Checkpoint model (only if current_metric_val is not NaN)
             if epoch > warmup_steps and not np.isnan(current_metric_val):
@@ -750,11 +623,13 @@ def train_model(
 
             # Update progress bar for the epoch
             postfix_dict = {
-                "avg train loss": f"{avg_train_epoch_loss:.6f}",
-                "early stop": f"{early_stopping.counter + 1}/{early_stopping.patience}",
+                "train": f"{avg_train_epoch_loss:.4f}",
+                "es": f"{early_stopping.counter + 1}/{early_stopping.patience}",
             }
+            if not no_val_set:
+                postfix_dict["val"] = f"{avg_val_epoch_loss:.4f}"
             if not no_test_set:
-                postfix_dict["avg test loss"] = f"{avg_test_epoch_loss:.6f}"
+                postfix_dict["test"] = f"{avg_test_epoch_loss:.4f}"
 
             pbar.set_postfix(**postfix_dict)  # type: ignore
             pbar.update(1)
@@ -765,5 +640,11 @@ def train_model(
 
     model_checkpoint.load_best_model()
 
-    # Return losses. test_epoch_losses will be empty if no_test_set is True
-    return total_train_loss, sum_grad, train_epoch_losses, test_epoch_losses
+    # Return losses. val/test_epoch_losses will be empty if no val/test set
+    return (
+        total_train_loss,
+        sum_grad,
+        train_epoch_losses,
+        val_epoch_losses,
+        test_epoch_losses,
+    )

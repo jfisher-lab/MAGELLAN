@@ -1,0 +1,1294 @@
+{
+  "CHEMBL1078178": {
+    "targets": [
+      "JAK1",
+      "JAK2"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1086580": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1090479": {
+    "targets": [
+      "AURKB",
+      "AURKC"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1090771": {
+    "targets": [
+      "APH1A",
+      "APH1B",
+      "NCSTN",
+      "PSEN1",
+      "PSEN2",
+      "PSENEN"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1170047": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL118": {
+    "targets": [
+      "PTGS2"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1200485": {
+    "targets": [
+      "BRAF",
+      "FLT1",
+      "FLT3",
+      "FLT4",
+      "KDR",
+      "KIT",
+      "PDGFRB",
+      "RAF1",
+      "RET"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1200675": {
+    "targets": [
+      "ESR1",
+      "ESR2"
+    ],
+    "uniqueActionTypes": [
+      "MODULATOR"
+    ]
+  },
+  "CHEMBL1201129": {
+    "targets": [
+      "DNMT1",
+      "DNMT3A"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1201148": {
+    "targets": [
+      "NR3C1"
+    ],
+    "uniqueActionTypes": [
+      "AGONIST"
+    ]
+  },
+  "CHEMBL1201182": {
+    "targets": [
+      "FKBP1A"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1201183": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1218": {
+    "targets": [
+      "MTNR1A",
+      "MTNR1B"
+    ],
+    "uniqueActionTypes": [
+      "AGONIST"
+    ]
+  },
+  "CHEMBL1231124": {
+    "targets": [
+      "JAK2"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL125236": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1255937": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1287853": {
+    "targets": [
+      "FLT3",
+      "JAK2"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1287854": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1358": {
+    "targets": [
+      "ESR1",
+      "ESR2"
+    ],
+    "uniqueActionTypes": [
+      "ANTAGONIST"
+    ]
+  },
+  "CHEMBL1394350": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL140": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL140000": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1421": {
+    "targets": [
+      "ABL1",
+      "BCR",
+      "BLK",
+      "EPHA2",
+      "FGR",
+      "FRK",
+      "FYN",
+      "HCK",
+      "KIT",
+      "LCK",
+      "LYN",
+      "PDGFRB",
+      "SRC",
+      "SRMS",
+      "YES1"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1425": {
+    "targets": [
+      "PPAT"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1455": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL14762": {
+    "targets": [
+      "CDK1",
+      "CDK2",
+      "CDK5",
+      "CDK7",
+      "CDK9"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1489": {
+    "targets": [
+      "DNMT1",
+      "DNMT3A"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1504": {
+    "targets": [
+      "NR3C1"
+    ],
+    "uniqueActionTypes": [
+      "AGONIST"
+    ]
+  },
+  "CHEMBL1526649": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1551724": {
+    "targets": [
+      "PRKAA1",
+      "PRKAA2",
+      "PRKAB1",
+      "PRKAB2",
+      "PRKAG1",
+      "PRKAG2",
+      "PRKAG3"
+    ],
+    "uniqueActionTypes": [
+      "ACTIVATOR"
+    ]
+  },
+  "CHEMBL1591531": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1603": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1645462": {
+    "targets": [
+      "EGFR",
+      "ERBB2",
+      "ERBB4"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL165": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1651524": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1746": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1773": {
+    "targets": [
+      "TYMS"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1774055": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL178455": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1789941": {
+    "targets": [
+      "JAK1",
+      "JAK2"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1829305": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL185": {
+    "targets": [
+      "TYMS"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1851943": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL189584": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1908397": {
+    "targets": [
+      "ABL1",
+      "AURKA",
+      "AURKB",
+      "FLT3"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL191003": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL191482": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1923234": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1946170": {
+    "targets": [
+      "ABL1",
+      "BRAF",
+      "DDR2",
+      "EPHA2",
+      "FGFR1",
+      "FGFR2",
+      "FLT1",
+      "FLT4",
+      "FRK",
+      "KDR",
+      "KIT",
+      "MAPK11",
+      "NTRK1",
+      "PDGFRA",
+      "PDGFRB",
+      "RAF1",
+      "RET",
+      "TEK"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1952329": {
+    "targets": [
+      "PIM1",
+      "PIM2",
+      "PIM3"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL1957266": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1972466": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL1995703": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2013119": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL202721": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2062804": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2103743": {
+    "targets": [
+      "JAK1",
+      "JAK2",
+      "JAK3",
+      "TYK2"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL2103863": {
+    "targets": [
+      "HDAC1",
+      "HDAC10",
+      "HDAC11",
+      "HDAC2",
+      "HDAC3",
+      "HDAC4",
+      "HDAC5",
+      "HDAC6",
+      "HDAC7",
+      "HDAC8",
+      "HDAC9"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL2103875": {
+    "targets": [
+      "MAP2K1",
+      "MAP2K2"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL2105613": {
+    "targets": [
+      "ALDH5A1"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL2105630": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2105698": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2105733": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2105734": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2105759": {
+    "targets": [
+      "JAK1",
+      "JAK2"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL2107357": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2107823": {
+    "targets": [
+      "JAK2"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL2136735": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2137530": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2140408": {
+    "targets": [
+      "AURKA",
+      "AURKB",
+      "AURKC"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL215152": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2170177": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2172012": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2179387": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL223360": {
+    "targets": [
+      "CSF1R",
+      "FLT1",
+      "FLT3",
+      "FLT4",
+      "KDR",
+      "PDGFRA",
+      "PDGFRB"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL225071": {
+    "targets": [
+      "TYMS"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL2325503": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2338329": {
+    "targets": [
+      "EGLN1",
+      "EGLN2",
+      "EGLN3",
+      "P4HTM"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL235191": {
+    "targets": [
+      "HDAC1",
+      "HDAC10",
+      "HDAC11",
+      "HDAC2",
+      "HDAC3",
+      "HDAC4",
+      "HDAC5",
+      "HDAC6",
+      "HDAC7",
+      "HDAC8",
+      "HDAC9"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL2354444": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL2367465": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL237352": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL243712": {
+    "targets": [
+      "DRD2",
+      "DRD3",
+      "HTR1A",
+      "HTR1B",
+      "HTR1D",
+      "HTR1E",
+      "HTR1F",
+      "HTR2A",
+      "HTR2B",
+      "HTR2C",
+      "HTR3A",
+      "HTR3B",
+      "HTR3C",
+      "HTR3D",
+      "HTR3E",
+      "HTR4",
+      "HTR5A",
+      "HTR6",
+      "HTR7"
+    ],
+    "uniqueActionTypes": [
+      "ANTAGONIST"
+    ]
+  },
+  "CHEMBL244948": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL24828": {
+    "targets": [
+      "EGFR",
+      "EPHA1",
+      "EPHA10",
+      "EPHA2",
+      "EPHA3",
+      "EPHA4",
+      "EPHA5",
+      "EPHA6",
+      "EPHA7",
+      "EPHA8",
+      "EPHB1",
+      "EPHB2",
+      "EPHB3",
+      "EPHB4",
+      "EPHB6",
+      "ERBB2",
+      "ERBB3",
+      "ERBB4",
+      "FLT1",
+      "FLT4",
+      "KDR",
+      "PTK6",
+      "RET",
+      "SRC",
+      "TEK"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL254760": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL255863": {
+    "targets": [
+      "ABL1",
+      "BCR"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL256907": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL259084": {
+    "targets": [
+      "AURKA"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL272980": {
+    "targets": [
+      "HDAC1",
+      "HDAC11",
+      "HDAC2",
+      "HDAC3",
+      "HDAC8"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL27759": {
+    "targets": [
+      "HDAC1",
+      "HDAC10",
+      "HDAC11",
+      "HDAC2",
+      "HDAC3",
+      "HDAC4",
+      "HDAC5",
+      "HDAC6",
+      "HDAC7",
+      "HDAC8",
+      "HDAC9"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL288441": {
+    "targets": [
+      "ABL1",
+      "BCR",
+      "HCK",
+      "LYN",
+      "SRC"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL299613": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL30": {
+    "targets": [
+      "HRH2"
+    ],
+    "uniqueActionTypes": [
+      "ANTAGONIST"
+    ]
+  },
+  "CHEMBL300138": {
+    "targets": [
+      "PRKCB"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL310840": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL3109630": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL3183697": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL3186774": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL3188597": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL329993": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL3301607": {
+    "targets": [
+      "JAK1",
+      "JAK2",
+      "JAK3",
+      "TYK2"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL3318285": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL33778": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL3392635": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL3414621": {
+    "targets": [
+      "EZH2"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL3544932": {
+    "targets": [
+      "AURKB"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL3545215": {
+    "targets": [
+      "JAK2"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL35482": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL356066": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL3600873": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL361501": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL3621988": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL3622533": {
+    "targets": [
+      "HDAC1",
+      "HDAC10",
+      "HDAC11",
+      "HDAC2",
+      "HDAC3",
+      "HDAC4",
+      "HDAC5",
+      "HDAC6",
+      "HDAC7",
+      "HDAC8",
+      "HDAC9",
+      "PIK3CA",
+      "PIK3CB",
+      "PIK3CD"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL363160": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL372303": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL376408": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL3770936": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL380797": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL383475": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL3900791": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL3970748": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL3989958": {
+    "targets": [
+      "IDH1"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL3991929": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL4": {
+    "targets": [],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL401930": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL402548": {
+    "targets": [
+      "AURKA",
+      "AURKB",
+      "AURKC"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL4065484": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL408513": {
+    "targets": [
+      "HDAC1",
+      "HDAC10",
+      "HDAC11",
+      "HDAC2",
+      "HDAC3",
+      "HDAC4",
+      "HDAC5",
+      "HDAC6",
+      "HDAC7",
+      "HDAC8",
+      "HDAC9"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL420311": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL4296717": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL4297436": {
+    "targets": [
+      "SIRT1"
+    ],
+    "uniqueActionTypes": [
+      "ACTIVATOR"
+    ]
+  },
+  "CHEMBL433": {
+    "targets": [
+      "ALDH5A1"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL440084": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL443684": {
+    "targets": [
+      "BCL2",
+      "BCL2L1",
+      "BCL2L2",
+      "BCL2L2-PABPN1"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL458875": {
+    "targets": [],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL460499": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL4634656": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL4639328": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL468": {
+    "targets": [
+      "CRBN",
+      "CUL4A",
+      "DDB1",
+      "RBX1"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL473773": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL4751615": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL477936": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL482967": {
+    "targets": [
+      "AURKA",
+      "AURKB",
+      "AURKC",
+      "KDR"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL482968": {
+    "targets": [
+      "AURKA",
+      "AURKB",
+      "CSF1R",
+      "FGFR3",
+      "FLT3",
+      "KDR",
+      "KIT"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL483158": {
+    "targets": [
+      "AURKA"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL483254": {
+    "targets": [
+      "HDAC1",
+      "HDAC10",
+      "HDAC11",
+      "HDAC2",
+      "HDAC3",
+      "HDAC4",
+      "HDAC5",
+      "HDAC6",
+      "HDAC7",
+      "HDAC8",
+      "HDAC9"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL488": {
+    "targets": [
+      "CYP11A1",
+      "CYP19A1"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL491473": {
+    "targets": [
+      "FLT1",
+      "FLT4",
+      "KDR",
+      "KIT",
+      "PDGFRA",
+      "PDGFRB"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL495727": {
+    "targets": [
+      "ABL1",
+      "AURKA",
+      "AURKB",
+      "FLT3",
+      "JAK2",
+      "JAK3"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL50": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL502124": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL506871": {
+    "targets": [
+      "PARP1",
+      "PARP2",
+      "PARP3"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL514": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL514409": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL514554": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL518051": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL541388": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL56543": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL572878": {
+    "targets": [
+      "AURKA",
+      "AURKB",
+      "AURKC"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL575448": {
+    "targets": [
+      "IGF1R",
+      "INSR"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL598797": {
+    "targets": [
+      "EGFR",
+      "ERBB2",
+      "HDAC1",
+      "HDAC10",
+      "HDAC11",
+      "HDAC2",
+      "HDAC3",
+      "HDAC4",
+      "HDAC5",
+      "HDAC6",
+      "HDAC7",
+      "HDAC8",
+      "HDAC9"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL601719": {
+    "targets": [
+      "ALK",
+      "EML4",
+      "MET",
+      "NPM1"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL607707": {
+    "targets": [
+      "EGFR"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL6246": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL635": {
+    "targets": [
+      "NR3C1"
+    ],
+    "uniqueActionTypes": [
+      "AGONIST"
+    ]
+  },
+  "CHEMBL65892": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL671": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL67391": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL81977": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL820": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL848": {
+    "targets": [
+      "CRBN",
+      "CUL4A",
+      "DDB1",
+      "RBX1"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL86416": {
+    "targets": [],
+    "uniqueActionTypes": []
+  },
+  "CHEMBL93": {
+    "targets": [
+      "ALOX5"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL94657": {
+    "targets": [
+      "TUBA1A",
+      "TUBA1B",
+      "TUBA1C",
+      "TUBA3C",
+      "TUBA3E",
+      "TUBA4A",
+      "TUBB",
+      "TUBB1",
+      "TUBB2A",
+      "TUBB2B",
+      "TUBB3",
+      "TUBB4A",
+      "TUBB4B",
+      "TUBB6",
+      "TUBB8"
+    ],
+    "uniqueActionTypes": [
+      "STABILISER"
+    ]
+  },
+  "CHEMBL953": {
+    "targets": [
+      "COMT"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL964": {
+    "targets": [
+      "ALDH2"
+    ],
+    "uniqueActionTypes": [
+      "INHIBITOR"
+    ]
+  },
+  "CHEMBL975": {
+    "targets": [],
+    "uniqueActionTypes": []
+  }
+}

@@ -1,0 +1,228 @@
+{
+    "Model": {
+        "Name": "ring_8",
+        "Variables": [
+            {
+                "Name": "ring8_0",
+                "Id": 1,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(8)*263/1000"
+            },
+            {
+                "Name": "ring8_1",
+                "Id": 2,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(1)*437/1000"
+            },
+            {
+                "Name": "ring8_2",
+                "Id": 3,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(2)*758/1000"
+            },
+            {
+                "Name": "ring8_3",
+                "Id": 4,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(3)*240/1000"
+            },
+            {
+                "Name": "ring8_4",
+                "Id": 5,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(4)*152/1000"
+            },
+            {
+                "Name": "ring8_5",
+                "Id": 6,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(5)*641/1000"
+            },
+            {
+                "Name": "ring8_6",
+                "Id": 7,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(6)*118/1000"
+            },
+            {
+                "Name": "ring8_7",
+                "Id": 8,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(7)*849/1000"
+            }
+        ],
+        "Relationships": [
+            {
+                "Id": 8,
+                "FromVariable": 8,
+                "ToVariable": 1,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 7,
+                "FromVariable": 7,
+                "ToVariable": 8,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 2,
+                "FromVariable": 2,
+                "ToVariable": 3,
+                "Type": "Activator"
+            },
+            {
+                "Id": 5,
+                "FromVariable": 5,
+                "ToVariable": 6,
+                "Type": "Activator"
+            },
+            {
+                "Id": 1,
+                "FromVariable": 1,
+                "ToVariable": 2,
+                "Type": "Activator"
+            },
+            {
+                "Id": 4,
+                "FromVariable": 4,
+                "ToVariable": 5,
+                "Type": "Activator"
+            },
+            {
+                "Id": 3,
+                "FromVariable": 3,
+                "ToVariable": 4,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 6,
+                "FromVariable": 6,
+                "ToVariable": 7,
+                "Type": "Activator"
+            }
+        ]
+    },
+    "Layout": {
+        "Variables": [
+            {
+                "Id": 1,
+                "Name": "ring8_0",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 429.84,
+                "PositionY": 88.872,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 2,
+                "Name": "ring8_1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 501.82,
+                "PositionY": 234.08,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 3,
+                "Name": "ring8_2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 449.64,
+                "PositionY": 387.52,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 4,
+                "Name": "ring8_3",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 304.3,
+                "PositionY": 459.26,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 5,
+                "Name": "ring8_4",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 151.116,
+                "PositionY": 406.26,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 6,
+                "Name": "ring8_5",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 79.16,
+                "PositionY": 261.04,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 7,
+                "Name": "ring8_6",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 131.192,
+                "PositionY": 107.548,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 8,
+                "Name": "ring8_7",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 276.62,
+                "PositionY": 36.0,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            }
+        ],
+        "Containers": [
+            {
+                "Id": 1,
+                "Name": "C0",
+                "Size": 4,
+                "PositionX": -2,
+                "PositionY": -2
+            }
+        ],
+        "AnnotatedGridCells": [],
+        "Description": ""
+    },
+    "ltl": {
+        "states": [],
+        "operations": []
+    }
+}

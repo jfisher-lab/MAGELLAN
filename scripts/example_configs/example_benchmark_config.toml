@@ -2,9 +2,9 @@
 [graph_generation]
 generate_base_graph = false
 grow_base_graph = false
-base_graph_import = "benchmarks/bio_benchmarks/data/example/example_1/example_network_bio_untrained.json"
+base_graph_import = "benchmarks/bio_benchmarks/data/example/example_1/json/example_network_bio_untrained.json"
 generate_specifications = false
-spec_file = "benchmarks/bio_benchmarks/data/example/example_1/example_bio_spec.csv"
+spec_file = "benchmarks/bio_benchmarks/data/example/example_1/spec/example_bio_spec.csv"
 filter_spec = true
 n_nodes = 100
 forward_edge_probability = 0.05
@@ -35,6 +35,10 @@ learning_rate = 0.005
 max_range = 2
 device = "cpu"
 edge_weight_init = 0.5
+use_random_weight_init = false
+random_weight_init_distribution = "uniform"
+random_weight_init_lower = 0.0
+random_weight_init_upper = 2.0
 n_iter = 50
 max_update = true
 round_val = false

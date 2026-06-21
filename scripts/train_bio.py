@@ -1,5 +1,6 @@
 # %%
 import argparse
+import math
 import os
 from collections import OrderedDict
 from pathlib import Path
@@ -22,6 +23,7 @@ from magellan.json_io import (
     get_pos_from_json,
     json_to_graph,
 )
+from magellan.onpath import _make_onpath_floor_wrapper, compute_onpath_edge_mask
 from magellan.plot import (
     analyze_prediction_errors,
     analyze_predictions,
@@ -31,6 +33,7 @@ from magellan.plot import (
     plot_comparison_heatmaps,
     plot_difference_heatmaps,
     plot_loss_vs_validation_loss,
+    plot_metrics_lollipop,
     plot_node_errors,
     plot_node_weights,
     plot_prediction_bias,
@@ -70,6 +73,7 @@ from magellan.prune_opt import (
     WarmupScheduler,
     calculate_node_class_weights,
     node_weight_dict_to_df,
+    weighted_node_earth_mover_loss,
 )
 from magellan.pydot_io import graph_to_pydot
 from magellan.sci_opt import pred_bound_perts
@@ -81,7 +85,8 @@ parser = argparse.ArgumentParser(description="Run pruning with config file")
 parser.add_argument(
     "--config",
     type=Path,
-    default=Path(__file__).parent / Path("example_configs/example_train_bio_config.toml"),
+    default=Path(__file__).parent
+    / Path("example_configs/example_train_bio_config.toml"),
     help="Path to config file (default: example_train_bio_config.toml in script directory)",
 )
 args = parser.parse_args()
@@ -106,6 +111,19 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         / Path(config["paths"]["spec_version"])
         / Path(config["paths"]["spec_path"])
     )
+
+    # Check for second spec file
+    spec_path_2 = None
+    if "spec_path_2" in config["paths"]:
+        spec_version_2 = config["paths"].get(
+            "spec_version_2", config["paths"]["spec_version"]
+        )
+        spec_path_2 = (
+            data_path / Path(spec_version_2) / Path(config["paths"]["spec_path_2"])
+        )
+
+    output_prefix = config["paths"].get("output_prefix", "")
+
     model_type = data_path.stem
     out_root_dir = root_path / "results" / Path(model_type)
     out_root_dir.mkdir(parents=True, exist_ok=True)
@@ -116,11 +134,23 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
     spec_file = spec_path
     print("Loading spec from:", spec_file)
 
+    spec_file_2 = None
+    if spec_path_2 is not None:
+        spec_file_2 = spec_path_2
+        print("Loading second spec from:", spec_file_2)
+
     # Output directory
-    out_dir = (
-        out_root_dir
-        / f"model_{model_path.stem}_{config['paths']['model_version']}_spec_{spec_file.stem}_{config['paths']['spec_version']}"
-    )
+    prefix_str = f"{output_prefix}_" if output_prefix else ""
+    if spec_file_2 is not None:
+        out_dir = (
+            out_root_dir
+            / f"{prefix_str}model_{model_path.stem}_{config['paths']['model_version']}_spec_{spec_file.stem}_{config['paths']['spec_version']}_and_{spec_file_2.stem}"
+        )
+    else:
+        out_dir = (
+            out_root_dir
+            / f"{prefix_str}model_{model_path.stem}_{config['paths']['model_version']}_spec_{spec_file.stem}_{config['paths']['spec_version']}"
+        )
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # Load parameters
@@ -131,6 +161,16 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
     learning_rate = config["model_params"]["learning_rate"]
     n_iter = config["model_params"]["n_iter"]
     edge_weight_init = config["model_params"]["edge_weight_init"]
+    use_random_weight_init = config["model_params"].get("use_random_weight_init", False)
+    random_weight_init_distribution = config["model_params"].get(
+        "random_weight_init_distribution", "uniform"
+    )
+    random_weight_init_lower = config["model_params"].get(
+        "random_weight_init_lower", 0.0
+    )
+    random_weight_init_upper = config["model_params"].get(
+        "random_weight_init_upper", 2.0
+    )
     max_update = config["model_params"]["max_update"]
     round_val = config["model_params"]["round_val"]
     check_paths = config["model_params"]["check_paths"]
@@ -145,6 +185,11 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         "node_class_weights_extreme_boost", 1.0
     )
     grad_clip_max_norm = config["training"].get("grad_clip_max_norm", None)
+    weight_decay = config["training"].get("weight_decay", 0.01)
+    # On-path weight floor (optional one-sided loss penalty). Disabled when
+    # onpath_floor_lambda <= 0.
+    onpath_floor_lambda = config["training"].get("onpath_floor_lambda", 0.0)
+    onpath_floor_target = config["training"].get("onpath_floor_target", 1.0)
     # Debug options
     mask_debug = config["debug"]["mask_debug"]
     use_warmup = config["training"]["use_warmup"]
@@ -152,6 +197,15 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
     warmup_initial_lr_factor = config["training"]["warmup_initial_lr_factor"]
     seed = config["training"]["seed"]
     test_size = config["training"].get("test_size", 0.0)
+    val_size = config["training"].get("val_size", 0.0)
+    _y_missing_fill_value_raw = config["training"].get("y_missing_fill_value", 0.0)
+    if _y_missing_fill_value_raw is None or (
+        isinstance(_y_missing_fill_value_raw, float)
+        and math.isnan(_y_missing_fill_value_raw)
+    ):
+        y_missing_fill_value: float | None = None
+    else:
+        y_missing_fill_value = float(_y_missing_fill_value_raw)
     np.random.seed(seed)
     torch.manual_seed(seed)
     print(out_dir)
@@ -168,7 +222,7 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
     # Save initial network visualization
     graph_to_pydot(G, out_dir / Path("network_before_training"), format="png")
 
-
+    # Load first spec file
     pert_dic_small: OrderedDict = get_pert_dic(
         file_path=out_dir / Path(spec_file),
         const_dic=const_dic,
@@ -180,30 +234,227 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         pert_dic_small, G, aggressive=False, verbose=True
     )
 
+    # Load second spec file if provided
+    pert_dic_small_2: OrderedDict | None = None
+    if spec_file_2 is not None:
+        pert_dic_small_2 = get_pert_dic(
+            file_path=out_dir / Path(spec_file_2),
+            const_dic=const_dic,
+            spec_size="non full",
+        )
+        check_pert_dic_values(pert_dic_small_2, min_range, max_range)
+        pert_dic_small_2 = filter_spec_invalid_experiments(
+            pert_dic_small_2, G, aggressive=False, verbose=True
+        )
+
     # check whether paths exist between perturbed nodes and experimental readings
     if check_paths:
         check_paths_in_graph(G, pert_dic_small)
+        if pert_dic_small_2 is not None:
+            check_paths_in_graph(G, pert_dic_small_2)
 
     graph_nodes = set(G.nodes())  # Use set for faster lookups
     if filter_spec:
         pert_dic_small = filter_specification(pert_dic_small, graph_nodes, verbose=True)
-    spec_keys = list(pert_dic_small.keys())
-    if test_size > 0.0:
-        train_keys, test_keys = train_test_split(
-            spec_keys, test_size=test_size, random_state=seed, shuffle=True
-        )
-        train_pert_dic: OrderedDict = OrderedDict(
-            {k: pert_dic_small[k] for k in train_keys}
-        )
-        test_pert_dic: OrderedDict = OrderedDict(
-            {k: pert_dic_small[k] for k in test_keys}
-        )
+        if pert_dic_small_2 is not None:
+            pert_dic_small_2 = filter_specification(
+                pert_dic_small_2, graph_nodes, verbose=True
+            )
+
+    # Get dual spec mode from config
+    dual_spec_mode = config["training"].get("dual_spec_mode", None)
+
+    # Handle train/test split based on mode
+    if dual_spec_mode is not None and pert_dic_small_2 is not None:
+        # Dual spec file mode
+        if dual_spec_mode == "separate":
+            # spec_path = train, spec_path_2 = test (no splitting)
+            train_pert_dic: OrderedDict = pert_dic_small
+            val_pert_dic: OrderedDict | None = None
+            test_pert_dic: OrderedDict | None = pert_dic_small_2
+            print(
+                f"Dual spec mode 'separate': {len(train_pert_dic)} train samples from spec 1, {len(test_pert_dic)} test samples from spec 2"
+            )
+
+        elif dual_spec_mode == "split_second":
+            # spec_path = all train, split spec_path_2
+            spec_keys_2 = list(pert_dic_small_2.keys())
+            val_pert_dic = (
+                None  # Not supported in this mode, use combined_split instead
+            )
+            if test_size == 1.0:
+                # If test_size is 1.0, use all of spec 2 for testing (zero-shot)
+                train_pert_dic = OrderedDict(pert_dic_small)
+                test_pert_dic = OrderedDict(pert_dic_small_2)
+                print(
+                    f"Dual spec mode 'split_second' with test_size=1.0 (zero-shot): {len(train_pert_dic)} train samples from spec 1, {len(test_pert_dic)} test samples from spec 2"
+                )
+            elif test_size > 0.0:
+                train_keys_2, test_keys_2 = train_test_split(
+                    spec_keys_2, test_size=test_size, random_state=seed, shuffle=True
+                )
+                # Combine spec 1 (all) with train portion of spec 2
+                train_pert_dic = OrderedDict(
+                    {**pert_dic_small, **{k: pert_dic_small_2[k] for k in train_keys_2}}
+                )
+                test_pert_dic = OrderedDict(
+                    {k: pert_dic_small_2[k] for k in test_keys_2}
+                )
+                print(
+                    f"Dual spec mode 'split_second': {len(pert_dic_small)} from spec 1 + {len(train_keys_2)} from spec 2 = {len(train_pert_dic)} train samples, {len(test_pert_dic)} test samples"
+                )
+            else:
+                # If test_size is 0, use all of spec 2 for training
+                train_pert_dic = OrderedDict({**pert_dic_small, **pert_dic_small_2})
+                test_pert_dic = None  # type: ignore
+                print(
+                    f"Dual spec mode 'split_second' with test_size=0: {len(train_pert_dic)} train samples, no test set"
+                )
+
+        elif dual_spec_mode == "split_first":
+            # split spec_path, spec_path_2 = all test
+            spec_keys_1 = list(pert_dic_small.keys())
+            val_pert_dic = (
+                None  # Not supported in this mode, use combined_split instead
+            )
+            if test_size > 0.0:
+                train_keys_1, test_keys_1 = train_test_split(
+                    spec_keys_1, test_size=test_size, random_state=seed, shuffle=True
+                )
+                train_pert_dic = OrderedDict(
+                    {k: pert_dic_small[k] for k in train_keys_1}
+                )
+                # Combine test portion of spec 1 with all of spec 2
+                test_pert_dic = OrderedDict(
+                    {**{k: pert_dic_small[k] for k in test_keys_1}, **pert_dic_small_2}
+                )
+                print(
+                    f"Dual spec mode 'split_first': {len(train_pert_dic)} train samples, {len(test_keys_1)} from spec 1 + {len(pert_dic_small_2)} from spec 2 = {len(test_pert_dic)} test samples"
+                )
+            else:
+                # If test_size is 0, use all of spec 1 for training and spec 2 for testing
+                train_pert_dic = pert_dic_small
+                test_pert_dic = pert_dic_small_2
+                print(
+                    f"Dual spec mode 'split_first' with test_size=0: {len(train_pert_dic)} train samples, {len(test_pert_dic)} test samples"
+                )
+
+        elif dual_spec_mode == "combined_split":
+            # Combine both specs, then split into train/val/test
+            combined_spec = OrderedDict({**pert_dic_small, **pert_dic_small_2})
+            combined_keys = list(combined_spec.keys())
+            holdout_size = val_size + test_size
+
+            if holdout_size > 0.0:
+                # First split: train vs (val + test)
+                train_keys, holdout_keys = train_test_split(
+                    combined_keys,
+                    test_size=holdout_size,
+                    random_state=seed,
+                    shuffle=True,
+                )
+                train_pert_dic = OrderedDict({k: combined_spec[k] for k in train_keys})
+
+                # Second split: val vs test
+                if val_size > 0.0 and test_size > 0.0:
+                    test_proportion = test_size / holdout_size
+                    val_keys, test_keys = train_test_split(
+                        holdout_keys,
+                        test_size=test_proportion,
+                        random_state=seed,
+                        shuffle=True,
+                    )
+                    val_pert_dic = OrderedDict({k: combined_spec[k] for k in val_keys})
+                    test_pert_dic = OrderedDict(
+                        {k: combined_spec[k] for k in test_keys}
+                    )
+                elif val_size > 0.0:
+                    val_pert_dic = OrderedDict(
+                        {k: combined_spec[k] for k in holdout_keys}
+                    )
+                    test_pert_dic = None  # type: ignore
+                else:
+                    val_pert_dic = None  # type: ignore
+                    test_pert_dic = OrderedDict(
+                        {k: combined_spec[k] for k in holdout_keys}
+                    )
+
+                print(
+                    f"Dual spec mode 'combined_split': {len(train_pert_dic)} train, "
+                    f"{len(val_pert_dic) if val_pert_dic else 0} val, "
+                    f"{len(test_pert_dic) if test_pert_dic else 0} test samples"
+                )
+            else:
+                train_pert_dic = combined_spec
+                val_pert_dic = None  # type: ignore
+                test_pert_dic = None  # type: ignore
+                print(
+                    f"Dual spec mode 'combined_split' with val_size=0 and test_size=0: {len(train_pert_dic)} train samples, no val/test set"
+                )
+
+        else:
+            raise ValueError(
+                f"Unknown dual_spec_mode: {dual_spec_mode}. Must be 'separate', 'split_second', 'split_first', or 'combined_split'"
+            )
+
     else:
-        train_pert_dic = pert_dic_small
-        test_pert_dic = None  # type: ignore
+        # Single spec file mode (original behavior)
+        spec_keys = list(pert_dic_small.keys())
+        holdout_size = val_size + test_size
+        if holdout_size > 0.0:
+            # First split: train vs (val + test)
+            train_keys, holdout_keys = train_test_split(
+                spec_keys, test_size=holdout_size, random_state=seed, shuffle=True
+            )
+
+            # Second split: val vs test
+            if val_size > 0.0 and test_size > 0.0:
+                test_proportion = test_size / holdout_size
+                val_keys, test_keys = train_test_split(
+                    holdout_keys,
+                    test_size=test_proportion,
+                    random_state=seed,
+                    shuffle=True,
+                )
+            elif val_size > 0.0:
+                val_keys = holdout_keys
+                test_keys = []
+            else:
+                val_keys = []
+                test_keys = holdout_keys
+            train_pert_dic = OrderedDict({k: pert_dic_small[k] for k in train_keys})
+            val_pert_dic = (
+                OrderedDict({k: pert_dic_small[k] for k in val_keys})
+                if val_keys
+                else None
+            )
+            test_pert_dic = (
+                OrderedDict({k: pert_dic_small[k] for k in test_keys})
+                if test_keys
+                else None
+            )
+            print(
+                f"Single spec mode: {len(train_pert_dic)} train, "
+                f"{len(val_pert_dic) if val_pert_dic else 0} val, "
+                f"{len(test_pert_dic) if test_pert_dic else 0} test samples"
+            )
+        else:
+            train_pert_dic = pert_dic_small
+            val_pert_dic = None  # type: ignore
+            test_pert_dic = None  # type: ignore
+            print(
+                f"Single spec mode: {len(train_pert_dic)} train samples, no val/test set"
+            )
+
+    # Combine all spec dicts for unique node checking and dummy setup
+    combined_pert_dic = dict(train_pert_dic)
+    if val_pert_dic:
+        combined_pert_dic.update(val_pert_dic)
+    if test_pert_dic:
+        combined_pert_dic.update(test_pert_dic)
 
     unique_nodes = set()
-    for perturbation in pert_dic_small.values():
+    for perturbation in combined_pert_dic.values():
         pert_nodes = perturbation[
             "pert"
         ].keys()  # Get the keys from the 'pert' dictionary
@@ -219,27 +470,22 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
     else:
         print("All nodes from the specification are present in the graph G.")
 
-
-
     G, inh, Adjacency_per_experiment_train, Adjacency_per_experiment_test = dummy_setup(
-        G, pert_dic_small, train_pert_dic, test_pert_dic, max_range, tf_method
+        G, combined_pert_dic, train_pert_dic, test_pert_dic, max_range, tf_method
     )
-
-
 
     # get adjacency matrix
 
     A_mult = get_adjacency_matrix_mult(G, method=tf_method)
 
-    # Note that this function will zero out missing values and include perturbations as expected values
+    # Note that this function will fill missing values with `y_missing_fill_value` and include perturbations as expected values
     X_train, y_train = get_data_and_update_y(
-        train_pert_dic, G, replace_missing_with_zero=True
+        train_pert_dic, G, y_missing_fill_value=y_missing_fill_value
     )
-    # Get data without zeroing out missing values and without including perturbations as expected values
+    # Get data without filling missing values (NaN) and without including perturbations as expected values — required by class-weight computation
     _, y_no_zero_no_pert_as_expectation_train = get_data(
-        train_pert_dic, G, y_replace_missing_with_zero=False
+        train_pert_dic, G, y_missing_fill_value=None
     )
-
 
     # After loading X and y
     node_class_weights_train = calculate_node_class_weights(
@@ -249,12 +495,31 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         max_range=max_range,
         extreme_boost=node_class_weights_extreme_boost,
     )
+    if val_pert_dic:
+        X_val, y_val = get_data_and_update_y(
+            val_pert_dic, G, y_missing_fill_value=y_missing_fill_value
+        )
+        _, y_no_zero_no_pert_as_expectation_val = get_data(
+            val_pert_dic, G, y_missing_fill_value=None
+        )
+        node_class_weights_val = calculate_node_class_weights(
+            y_no_zero_no_pert_as_expectation_val,
+            method=class_weight_method,
+            min_range=min_range,
+            max_range=max_range,
+            extreme_boost=node_class_weights_extreme_boost,
+        )
+    else:
+        X_val, y_val = None, None
+        y_no_zero_no_pert_as_expectation_val = None
+        node_class_weights_val = None
+
     if test_pert_dic:
         X_test, y_test = get_data_and_update_y(
-            test_pert_dic, G, replace_missing_with_zero=True
+            test_pert_dic, G, y_missing_fill_value=y_missing_fill_value
         )
         _, y_no_zero_no_pert_as_expectation_test = get_data(
-            test_pert_dic, G, y_replace_missing_with_zero=False
+            test_pert_dic, G, y_missing_fill_value=None
         )
         node_class_weights_test = calculate_node_class_weights(
             y_no_zero_no_pert_as_expectation_test,
@@ -280,6 +545,10 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
 
     # create PyG data object using X and y and A_mult
     train_data = create_pyg_data_object(X_train, y_train, edge_idx)
+    if X_val is not None and y_val is not None:
+        val_data = create_pyg_data_object(X_val, y_val, edge_idx)
+    else:
+        val_data = None
     if X_test is not None and y_test is not None:
         test_data = create_pyg_data_object(X_test, y_test, edge_idx)
     else:
@@ -289,6 +558,10 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
     edge_scale = create_edge_scale(A_mult, pert_idx)
 
     train_mask_dic = construct_mask_dic(train_pert_dic, node_dic, edge_idx, mask_debug)
+    if val_pert_dic:
+        val_mask_dic = construct_mask_dic(val_pert_dic, node_dic, edge_idx, mask_debug)
+    else:
+        val_mask_dic = None
     if test_pert_dic:
         test_mask_dic = construct_mask_dic(
             test_pert_dic, node_dic, edge_idx, mask_debug
@@ -298,14 +571,24 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
 
     pert_mask = create_pert_mask(edge_idx, node_dic)
 
-
     edge_idx_original = (
         edge_idx.detach().clone()
     )  # this won't change edge_idx_original if edge_idx is changed
-    edge_weight = (
-        torch.ones(edge_idx.shape[1]) * edge_weight_init
-    )  
 
+    # Initialize edge weights
+    if use_random_weight_init:
+        if random_weight_init_distribution == "uniform":
+            edge_weight = (
+                torch.rand(edge_idx.shape[1])
+                * (random_weight_init_upper - random_weight_init_lower)
+                + random_weight_init_lower
+            )
+        else:
+            raise ValueError(
+                f"Unsupported random weight initialization distribution: {random_weight_init_distribution}"
+            )
+    else:
+        edge_weight = torch.ones(edge_idx.shape[1]) * edge_weight_init
 
     model = Net(
         edge_weight=edge_weight,
@@ -315,8 +598,10 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         max_update=max_update,
         round_val=round_val,
     )
-    
-    opt = torch.optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=0.01)
+
+    opt = torch.optim.AdamW(
+        model.parameters(), lr=learning_rate, weight_decay=weight_decay
+    )
     scheduler = ReduceLROnPlateau(opt, mode="min", factor=0.5, patience=5)
 
     warmup_scheduler = None
@@ -332,42 +617,67 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
     total_loss = []
     sum_grad = []
 
-
     edge_signs = extract_edge_signs(G, edge_idx)
 
-    total_loss, sum_grad, train_epoch_losses, test_epoch_losses = train_model(
-        model=model,
-        train_data=train_data,
-        test_data=test_data,
-        train_pert_dic=train_pert_dic,
-        test_pert_dic=test_pert_dic,
-        train_mask_dic=train_mask_dic,
-        test_mask_dic=test_mask_dic,
-        node_class_weights_train=node_class_weights_train,
-        node_class_weights_test=node_class_weights_test,
-        save_dir=out_dir,
-        node_dic=node_dic,
-        edge_idx_original=edge_idx_original,
-        edge_scale=edge_scale,
-        pert_mask=pert_mask,
-        opt=opt,
-        scheduler=scheduler,
-        edge_signs=edge_signs,
-        warmup_scheduler=warmup_scheduler,
-        early_stopping_enabled=early_stopping_enabled,
-        early_stopping_patience=early_stopping_patience,
-        allow_sign_flip=allow_sign_flip,
-        min_range=min_range,
-        max_range=max_range,
-        grad_clip_max_norm=grad_clip_max_norm,
+    # Build the on-path weight floor loss wrapper when enabled. Pulls edges on
+    # shortest paths from perturbations to observations up toward a per-edge
+    # target onpath_floor_target / sqrt(in_degree(dst)).
+    loss_fn = None
+    if onpath_floor_lambda > 0.0:
+        onpath_mask = compute_onpath_edge_mask(G, node_dic, edge_idx, train_pert_dic)
+        loss_fn = _make_onpath_floor_wrapper(
+            weighted_node_earth_mover_loss,
+            model,
+            onpath_mask,
+            edge_idx,
+            onpath_floor_lambda,
+            onpath_floor_target,
+        )
+        print(
+            f"On-path weight floor enabled: lambda={onpath_floor_lambda}, "
+            f"target={onpath_floor_target} ({int(onpath_mask.sum())} on-path edges)"
+        )
+
+    total_loss, sum_grad, train_epoch_losses, val_epoch_losses, test_epoch_losses = (
+        train_model(
+            model=model,
+            loss_fn=loss_fn,
+            train_data=train_data,
+            test_data=test_data,
+            train_pert_dic=train_pert_dic,
+            test_pert_dic=test_pert_dic,
+            train_mask_dic=train_mask_dic,
+            test_mask_dic=test_mask_dic,
+            node_class_weights_train=node_class_weights_train,
+            node_class_weights_test=node_class_weights_test,
+            save_dir=out_dir,
+            node_dic=node_dic,
+            edge_idx_original=edge_idx_original,
+            edge_scale=edge_scale,
+            pert_mask=pert_mask,
+            opt=opt,
+            scheduler=scheduler,
+            edge_signs=edge_signs,
+            warmup_scheduler=warmup_scheduler,
+            early_stopping_enabled=early_stopping_enabled,
+            early_stopping_patience=early_stopping_patience,
+            allow_sign_flip=allow_sign_flip,
+            min_range=min_range,
+            max_range=max_range,
+            grad_clip_max_norm=grad_clip_max_norm,
+            val_data=val_data,
+            val_pert_dic=val_pert_dic,
+            val_mask_dic=val_mask_dic,
+            node_class_weights_val=node_class_weights_val,
+        )
     )
 
+    # Use validation losses for plotting if available, otherwise use test losses
     plot_loss_vs_validation_loss(
         epoch_losses=train_epoch_losses,
-        test_losses=test_epoch_losses,
+        test_losses=val_epoch_losses if val_epoch_losses else test_epoch_losses,
         out_dir=out_dir,
     )
-
 
     plot_training_metrics(
         total_loss=total_loss,
@@ -375,7 +685,6 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         n_experiments=len(pert_dic_small),
         output_path=out_dir / Path("loss_grad.png"),
     )
-
 
     W: pd.DataFrame = get_edge_weight_matrix(
         model=model,
@@ -397,7 +706,6 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         extract_exp=True,
     )
 
-
     pred_nn_train = predict_nn(
         model=model,
         y=y_train,
@@ -412,7 +720,6 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
 
     # round nn predictions to the nearest integers
     pred_nn_round_train = round_df(pred_nn_train)
-
 
     annotation_symbols = {"pert": "•", "exp": "-", "tst": ""}
     annot_train = create_annotation_matrix(
@@ -527,7 +834,7 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         threshold=0.1,
         binary_mode=True,
     )
-    
+
     plot_prediction_bias(
         error_fractions_continuous_train,
         output_path=out_dir
@@ -537,7 +844,6 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         error_fractions_binary_train,
         output_path=out_dir / Path("node_prediction_bias_fractions_binary_train.png"),
     )
-
 
     binary_metrics_train = analyze_predictions(
         y_true=y_no_zero_no_pert_as_expectation_train.loc[filtered_idx_real_train],
@@ -573,6 +879,20 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
         binary_metrics_train,
         nonbinary_metrics_train,
         out_dir / Path("metrics_summary.txt"),
+    )
+
+    plot_metrics_lollipop(
+        binary_metrics_train,
+        out_dir / Path("binary_metrics_lollipop.png"),
+        title="Binary Classification Metrics (Train)",
+        metrics_to_plot=["accuracy", "f1", "mcc"],
+    )
+
+    plot_metrics_lollipop(
+        nonbinary_metrics_train,
+        out_dir / Path("nonbinary_metrics_lollipop.png"),
+        title="Non-Binary Classification Metrics (Train)",
+        metrics_to_plot=["accuracy", "f1", "mcc", "qwk"],
     )
 
     plot_classification_curves(
@@ -757,6 +1077,18 @@ def main(config_path: Path) -> tuple[dict, dict | None]:
             binary_metrics_test,
             nonbinary_metrics_test,
             out_dir_test / Path("metrics_summary_test.txt"),
+        )
+        plot_metrics_lollipop(
+            binary_metrics_test,
+            out_dir_test / Path("binary_metrics_lollipop.png"),
+            title="Binary Classification Metrics (Test)",
+            metrics_to_plot=["accuracy", "f1", "mcc"],
+        )
+        plot_metrics_lollipop(
+            nonbinary_metrics_test,
+            out_dir_test / Path("nonbinary_metrics_lollipop.png"),
+            title="Non-Binary Classification Metrics (Test)",
+            metrics_to_plot=["accuracy", "f1", "mcc", "qwk"],
         )
         plot_classification_curves(
             y_true=y_no_zero_no_pert_as_expectation_test.loc[filtered_idx_real_test],

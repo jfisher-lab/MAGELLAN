@@ -261,7 +261,9 @@ class ShortestPath:
         int_op: pd.DataFrame | None = None,
         thre: int = 2,
         file_path: str | bool = False,
-    ):
+        show_progress: bool = True,
+        save_to_excel: bool = False,
+    ) -> pd.DataFrame:
         """
         Extract the shortest paths between gene sets
 
@@ -276,7 +278,12 @@ class ShortestPath:
             If list, e.g. [['mut', 'deg'], ['deg', 'pheno']], return every possible combination of
             mutation-DEG pairs and DEG-phenotype pairs.
             If str, e.g. ‘mut’, return every possible combination of mutation-mutation pairs.
-        :param file_path: Boolean False or excel file path. If False, file will not be saved
+        :param file_path: False or output path. If False, nothing is written.
+            For Excel, use a ``.xlsx`` path (or a base path; ``save_excel`` appends ``.xlsx``).
+        :param show_progress: bool, whether to show progress bars while searching shortest paths
+        :param save_to_excel: If True (default), write one workbook with three sheets when
+            ``file_path`` is set. If False, write three CSV files using the same base path with
+            sheet names as filename suffixes (spaces replaced by underscores).
 
         """
 
@@ -289,7 +296,13 @@ class ShortestPath:
 
         # find shortest paths between genes sets in G
         df = find_path(
-            G, gene_sets, to_combine, self.weighted_edge, self.filter_gene, thre
+            G,
+            gene_sets,
+            to_combine,
+            self.weighted_edge,
+            self.filter_gene,
+            thre,
+            show_progress=show_progress,
         )
 
         # expand shortest paths
@@ -313,20 +326,26 @@ class ShortestPath:
         # add style to df
         df = get_style(df)
 
-        file_path_csv = f"{file_path}.csv" if isinstance(file_path, str) else False
-
-        # write out df as csv to file file_path but do not append
-        with open(file_path_csv, "w") as f:
-            df_remove_dup.to_csv(
-                f, header=True, index=False, quoting=csv.QUOTE_NONNUMERIC
-            )
-
-        # save to excel
         if file_path:
-            for to_save, sheet_name in zip(
-                (df, df_expand, df_remove_dup),
-                ("shortest path", "expand", "remove dup"),
-            ):
-                save_excel(file_path, to_save, sheet_name=sheet_name)
-
+            sheet_specs = (
+                (df, "shortest path"),
+                (df_expand, "expand"),
+                (df_remove_dup, "remove dup"),
+            )
+            if save_to_excel:
+                for to_save, sheet_name in sheet_specs:
+                    save_excel(file_path, to_save, sheet_name=sheet_name)
+            else:
+                fp = str(file_path)
+                base_path = fp[:-5] if fp.lower().endswith(".xlsx") else fp
+                for to_save, sheet_name in sheet_specs:
+                    suffix = sheet_name.replace(" ", "_")
+                    csv_path = f"{base_path}_{suffix}.csv"
+                    with open(csv_path, "w") as f:
+                        to_save.to_csv(
+                            f,
+                            header=True,
+                            index=False,
+                            quoting=csv.QUOTE_NONNUMERIC,
+                        )
         return df_remove_dup

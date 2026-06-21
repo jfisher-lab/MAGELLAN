@@ -1,0 +1,210 @@
+From,To,Type,Pathway,Cell Line/Tissue,Paper,Notes
+AIF,Apoptosis,Activator,Survival,"Review, apoptosis",Hussein et al. J Pathology (2003),AIF is effector of caspase-independent apoptosis
+Caspase-3,Apoptosis,Activator,Survival,"Review, apoptosis",Hussein et al. J Pathology (2003),Caspase-3 is a key effector of apoptosis
+4EBP1,CycD,Inhibitor,Cell Cycle,"MCF7, HEK293T","Averous et al., Oncogene, (2008)",Translation inhibition
+Akt,p27,Inhibitor,Cell Cycle,"184 human mammary epithelial cells (HMECs), MCF7,WM35, WM239 melanoma cell lines","Liang et al., Nature Med, (2002)",Thr157-p; cytoplasmic translocation from nucleus
+Akt,p27,Inhibitor,Cell Cycle,"Review, Akt/PKB signalling","Manning and Cantley, Cell, (2007)",NA
+Akt,p21,Inhibitor,Cell Cycle,NIH3T3,"Zhou BP et al., Nat Cell Biol, (2001)",Thr 145 phosphorylation
+Akt,p21,Inhibitor,Cell Cycle,"Review, Akt/PKB signalling","Manning and Cantley, Cell, (2007)",NA
+ARF,Mdm,Inhibitor,Cell Cycle,"Yeast two hybrid system, HeLa cell line","Zhang et al., Cell, (1998)",Proteolytic degradation
+ARF,Mdm,Inhibitor,Cell Cycle,HEK293T cells,"Pomerantz et al., Cell, (1998)",NA
+ARF,E2F,Inhibitor,Cell Cycle,Primary melanocytes,"Ha, L., et al., PNAS (2007)",ARF causes proteosome-dependent degradation of E2F
+CDK4,CycD_CDK4,Activator,Cell Cycle,"Review, CDK regulation","Morgan, Nature, (1995)",Complex formation
+CDK4,CycD_CDK4,Activator,Cell Cycle,"Review, Cell cycle, survival and cell death interconnections","Maddika et al., Drug Resistance, (2007)",NA
+CDKN2AB,p16,Activator,Cell Cycle,"Review, p14","Sherr, C. J. Nat Rev Cancer (2006)",CDKN2A encodes p16 and p14/ARF
+CDKN2AB,ARF,Activator,Cell Cycle,"Review, p14","Sherr, C. J. Nat Rev Cancer (2006)",CDKN2A encodes p16 and p14/ARF
+CDKN2AB,p15,Activator,Cell Cycle,"Review, melanoma senescence","Bennett, D. C. PC&MR (2016)",the CDKN2B locus is located close to CDKN2A and they are frequently lost together
+cJUN,CycD,Activator,Cell Cycle,1205Lu,"Lopez-Bergami, P., et al. (2007)",AP-1 promotes CycD expression
+cMyc,p27,Inhibitor,Cell Cycle,"Review, Cell cycle, survival and cell death interconnections","Maddika et al., Drug Resistance, (2007)",Ubiquitine-mediated degradation
+cMyc,p27,Inhibitor,Cell Cycle,Hs578T breast cancer cell lines,"Yang et al., Oncogene (2001)",NA
+cMyc,p27,Inhibitor,Cell Cycle,Rat-1 cell line,"Obaya et al., JBC, (2002)",NA
+cMyc,ARF,Activator,Cell Cycle,"Review, ARF-p53 interaction","Sherr C, Genes & Dev (1998)",Transcriptional activator
+cMyc,ARF,Activator,Cell Cycle,MEFs,"Zindy et al., Genes & Dev, (1998)",NA
+cMyc,CycD,Activator,Cell Cycle,TGR-1; HO15.19,"Mateyak et al., Mol Cel Bio, (1999)",Myc controls expression of cyclin D
+cMyc,CycD,Activator,Cell Cycle,"Review, cMyc","Gartel, A. L. & Shchors, K. Exp Cell Res (2003)",Myc controls expression of cyclin D
+cMyc,p15,Inhibitor,Cell Cycle,"Mv1Lu, mink lung epithelial cells","Warner, B.J. et al. Mol and Cell Bio (1999)",Downregulation of Myc by TGF-B necessary for p15 induction
+CREB,cJUN,Activator,Cell Cycle,"Review, cAMP-PKA-CREB pathway","Zhang, H., et al. Exp Hematology Oncol (2020)",CREB regulates expression of cJUN
+CycD,CycD_CDK4,Activator,Cell Cycle,"Review, CDKs in mammalian cell cycle","Satyanarayana and Kaldis, Oncogene, (2009)",Complex formation
+CycD,CycD_CDK4,Activator,Cell Cycle,"Review, Cell cycle, survival and cell death interconnections","Maddika et al., Drug Resistance, (2007)",NA
+CycD_CDK4,pRB,Inhibitor,Cell Cycle,"Review, Cell cycle, survival and cell death interconnections","Maddika et al., Drug Resistance, (2007)",Phosphorylation of pRb
+Erk,p16,Activator,Cell Cycle,"Review, OIS","Bennett, D. C. PC&MR (2008)","p16 regulation not well understood but induced by BRAF and NRAS, possibly via p38"
+Erk,ARF,Activator,Cell Cycle,"Review, p53","Levine, A. J. Nat Revs Cancer (2020)","Speculative edge, based on induction ARF in response to RAS activity."
+Erk,FRA1,Activator,Cell Cycle,SKMEL28 melanoma cells,"Hong, A. et al. Cancer Discov (2017)",High levels of ERK induce p21 arrest via Fra1 and JUNB
+Erk,JUNB,Activator,Cell Cycle,SKMEL28 melanoma cells,"Hong, A. et al. Cancer Discov (2017)",High levels of ERK induce p21 arrest via Fra1 and JUNB
+FRA1,p21,Activator,Cell Cycle,SKMEL28 melanoma cells,"Hong, A. et al. Cancer Discov (2017)",High levels of ERK induce p21 arrest via Fra1 and JUNB
+GSK3b,CycD,Inhibitor,Cell Cycle,"Review, RSK family kinases","Rana and John, Nat Rev Mol Cell Biol, (2008)",Thr-286 phosphorylation
+GSK3b,CycD,Inhibitor,Cell Cycle,MCF7 cells,"Romero-Pozuelo et al., Cell Reports (2020)",Thr-286 phosphorylation promotes its nuclear export and cytoplasmic localization
+GSK3b,CycD,Inhibitor,Cell Cycle,NIH3T3 cells,"Guo et al., Oncogene (2005)",NA
+GSK3b,CycD,Inhibitor,Cell Cycle,"Review,PI3K in cell cycle progression","Liang and Slingerland, Cell cycle, (2003)",Transcriptional activator
+GSK3b,cJUN,Inhibitor,Cell Cycle,HeLa/293T,"Wei, W., et al. Cancer Cell (2005)",Phosphorylation of cJUN by GSK3b targets it for destruction via E3 ligase Fbw7
+Id2,p15,Inhibitor,Cell Cycle,"M010817, M000921, M990115, M010119","Schlegel, N. C. et al. PC&MR (2009)",Id2 opposes TGF-B induced p15 upregulation.
+JNK,cJUN,Activator,Cell Cycle,"Review, AP-1 in melanoma","Kappelmann, M., et al EJCB (2014)","JNK phosphorylates c-JUN at S63 and S73, activating it."
+JUNB,p21,Activator,Cell Cycle,SKMEL28 melanoma cells,"Hong, A. et al. Cancer Discov (2017)",High levels of ERK induce p21 arrest via Fra1 and JUNB
+Mdm,p53,Inhibitor,Cell Cycle,"Yeast two hybrid system, HeLa cell line","Zhang et al., Cell, (1998)",Ubiquitine-mediated degradation
+Mdm,p53,Inhibitor,Cell Cycle,"Subject Review, Mdm2-p53 interaction","Moll and Petrenko, Molecular Cancer Research, (2003)",central domain of FOXM1c functions as an RB- recruiting negative-regulatory domain
+MITF,TBX2,Activator,Cell Cycle,"Review, melanoma","Bennett, D. C. PC&MR (2008)",MITF induces expression of TBX2
+MITF,cJUN,Inhibitor,Cell Cycle,"MZ7, Ma-Mel-15","Riesenberg, S., et al. Nat Comms (2015)",MITF binds to c-Jun enhancer
+MITF,p21,Activator,Cell Cycle,"Review, MITF","Levy, C., Khaled, et al. Trends in Molecular Medicine (2006)",High levels of MITF cause differentitation and cell cycle arrest through p16 and p21
+MITF,p27,Inhibitor,Cell Cycle,501mel,Carreira et al. Genes & Development (2006),MITF destabilises p27 via Dia1
+MITF,Id2,Inhibitor,Cell Cycle,"M010817, M000921, M990115, M010119","Schlegel, N. C. et al. PC&MR (2009)",Invasive phenotype melanoma cells are resistant to repression of Id2 by TGF-B
+p15,CDK4,Inhibitor,Cell Cycle,"Review, cellular senescence",Sharpless & Sherr Nat Revs Cancer (2015),p15 inhibits formation of CDK4/6 cycD complex
+p16,CDK4,Inhibitor,Cell Cycle,"Review, INK/ARF in cancer and ageing","Kim and Sharpless, Cell, (2006)",Binding
+p16,CDK4,Inhibitor,Cell Cycle,"Review, p16 regulation","Kotake et al., Anticancer Research, (2015)",NA
+p21,CycD_CDK4,Inhibitor,Cell Cycle,human diploid fibroblasts,"Harper et al., Cell, (1993)",CDK binding functional evidence
+p27,CycD_CDK4,Inhibitor,Cell Cycle,"Review, p27 as therapeutic target","Wander et al., Clin Cancer Res, (2010)",complex formation
+p53,p21,Activator,Cell Cycle,"Glioblastoma, GM, REF-1, MCO","El Deiry et al., Cell, (1993)",Transcriptional activator
+p90RSK,CycD,Activator,Cell Cycle,"Review, RSK in tumorigenesis, breast cancer","Eisinger-Mathason et al., Steroids, (2010)",Facilitates Transcriptional activation vi cFos and cJun
+p90RSK,p27,Inhibitor,Cell Cycle,"Review, RSK family kinases","Rana and John, Nat Rev Mol Cell Biol, (2008)","phosphorylation ,Threonine 198, preventing  nuclear localisation"
+PKC,JNK,Activator,Cell Cycle,MeWo,"López-Bergami, P., et al. Molecular Cell (2005)",Rack1 acts as an adaptor for PKC phosphorylation
+pRB,E2F,Inhibitor,Cell Cycle,"Review, pRB in cell cycle","Weinberg, et al., Cell, (1995)",Transcriptional repression
+ReplicationStress,p53,Activator,Cell Cycle,"Review, apoptosis pathways in melanoma",Mohana-Kumaran et al. PC&MR (2014),"DNA damage resulting from tumour growth leads to p53 activation via ATM, ATR etc, may also be a result of ROS"
+Smad2_3,p27,Activator,Cell Cycle,"Review, TGF-B in melanoma",Lasfar et al. Carcinogenesis (2010),p27 downstream target of TGF-B causing inhibition of melanoma cells.
+Smad2_3,p15,Activator,Cell Cycle,"Mv1Lu, mink lung epithelial cells","Warner, B.J. et al. Mol and Cell Bio (1999)",TGF-B induces cell cycle arrest through p15 induction
+Smad2_3,p15,Activator,Cell Cycle,"Review, TGF-B in melanoma",Lasfar et al. (2010),p15 target of TGF-B signalling
+Smad2_3,Id2,Inhibitor,Cell Cycle,"M010817, M000921, M990115, M010119","Schlegel, N. C. et al. PC&MR (2009)",Proliferative phenotype melanoma cells are susceptible to repression of Id2 by TGF-B
+TBX2,p21,Inhibitor,Cell Cycle,B16 melanoma cells,"Vance, K. W., et al . Cancer Research (2005)","TBX2 interacts with HDAC1, targeting it to p21 promoter"
+TBX2,p21,Inhibitor,Cell Cycle,"Review, melanoma","Bennett, D. C. PC&MR (2008)",TBX2 is anti-senenscence factor that regulates expression of ARF and p21
+TBX2,ARF,Inhibitor,Cell Cycle,"Review, melanoma","Bennett, D. C. PC&MR (2008)",TBX2 is anti-senenscence factor that regulates expression of ARF and p21
+TCF,p16,Inhibitor,Cell Cycle,FO-1,"Delmas, V., et al. Genes & Development (2007)",TCF/LEF binds p16INK4a promoter
+TNFR,JNK,Activator,Cell Cycle,"Review, TNF","Aggarwal, B. B., et al. Blood (2012)","TNFR leads to activation of JNK (and p38,Erk) via TRAF2 ,MEKK1 and MKK7"
+Akt,TSC,Inhibitor,Growth Signalling,"Review, mTOR regulation","Memmott, R. M., & Dennis, P. A. Cellular Signalling (2009)",Akt regulates mTOR through phosphorylation of TSC
+Akt,GSK3b,Inhibitor,Growth Signalling,"Leading edge review, Akt signalling","Manning and Toker, Cell, (2017)",Ser9 phosphorylation
+Akt,GSK3b,Inhibitor,Growth Signalling,"COS-1, in vitro assay",Cross et al. Nature (1995),NA
+BRAF,MEK,Activator,Growth Signalling,"Review, MAPK pathway","Burotto, M. et al. Cancer (2014)","BRAF is MAPKKK, phosphorylates MEK"
+BRAFamplification,BRAF,Activator,Growth Signalling,"Review, BRAFi resistance","Luebker, S. A. & Koepsell, S. A. Frontiers Oncol (2019)",Amplification of BRAF gene can occur in response to targeted BRAF inhibition
+BRAFi,BRAF,Inhibitor,Growth Signalling,"Review, MAPKi resistance","Luebker, S. A. & Koepsell, S. A. Frontiers Oncol (2019)",Mutant BRAF inhibitors specifically inhibit BRAFV600E eg vemurafenib or dabrafenib
+BRAFV600E,BRAF,Activator,Growth Signalling,COS cells,"Davies, H. et al. Nature (2002)",BRAFV600E mutation greatly increases activity of BRAF
+CellCellContact,Integrins,Activator,Growth Signalling,"Review, anoikis","Paoli, P., et al. BBA - Mol Cell Res (2013)",Cell-Cell contact is signalled through various integrins leading to FAK and Src activation
+cJUN,PTEN,Inhibitor,Growth Signalling,mcf-7,"Hettinger et al., Cell death & Differentiation (2007)",cJun transcriptionally inhibit PTEN at 5 upstream region of its promoter
+cJUN,RTK,Activator,Growth Signalling,melanoma cell lines,"Sensi, M. et al. JID (2011)",Low MITF melanomas express Axl RTK
+cJUN,RTK,Activator,Growth Signalling,TCGA melanoma samples,"Riesenberg, S., et al. Nat Comms (2015)","Low MITF state associated with high cJUN, PDGFR, EGFR and ERBB3"
+CRAF,MEK,Activator,Growth Signalling,NIH3T3,"Kyriakis et al., Nature (1992)","Ser218, Ser222 phosphorylation"
+CRAF,MEK,Activator,Growth Signalling,"Review, MAPK pathway","Burotto, M. et al. Cancer (2014)",NA
+Erk,p90RSK,Activator,Growth Signalling,"Review, The MEK/Erk cascade","Shaul and Seger, BBA, (2007)","Thr359, Ser363 phosphorylation"
+Erk,p90RSK,Activator,Growth Signalling,CHO cells,"Zhao et al., JBC (1996)",NA
+Erk,p90RSK,Activator,Growth Signalling,"Review, p90 RSK family members","Lara et al., Cancer Research, (2013)",NA
+Erk,cMyc,Activator,Growth Signalling,REF52 fibroblasts,"Sears et al., Genes Dev, (2000)",Ser 62 phosphorylation by Erk increases half life of Myc
+Erk,cMyc,Activator,Growth Signalling,"Review, The MEK/Erk cascade","Shaul and Seger, BBA, (2007)",NA
+Erk,TSC,Inhibitor,Growth Signalling,"HEK293T cells, breast carcinoma","Ma et al., Cell, (2005)",Ser664 phosphorylation
+Erk,GSK3b,Inhibitor,Growth Signalling,"HepG2, MCF-7, MDA-MB-231","Ding et al., Mol Cell, (2005)",Thr43 phosphorylation primes for RSK Ser9 phosphorylation
+PKA,GSK3b,Inhibitor,Growth Signalling,"HEK293, NIH 3T3, Rat1","Fang, X. et al. Proc National Acad Sci (2000)",Serine 9
+ERKi,Erk,Inhibitor,Growth Signalling,"Review, BRAFi resistance","Arozarena, I. & Wellbrock, C. Ann Transl Medicine (2017)",ERK inhibitors like VTX11E or SCH772984
+FAK,HRAS,Activator,Growth Signalling,"Review, FAK","Schaller, M. D. BBA - Mol Cell Res (2001)",FAK contributes to RAS activation via Grb2/SOS proteins
+FAK,NRAS,Activator,Growth Signalling,"Review, FAK","Schaller, M. D. BBA - Mol Cell Res (2001)",FAK contributes to RAS activation via Grb2/SOS proteins
+FAK,PI3K,Activator,Growth Signalling,"Review, anoikis","Paoli, P., et al. BBA - Mol Cell Res (2013)",FAK activates PI3K
+GF,GF-RTK,Activator,Growth Signalling,"Review, RTK","Easty, D. J., et al. PC&MR (2011)",Generic Growth Factor/Receptor Tyrosine Kinase interaction
+GF-RTK,HRAS,Activator,Growth Signalling,"Review, MET RTK","Gentile, A., et al. Cancer and Metastasis Reviews (2008)",RAS is effector of RTK activation (can also activate PI3K directly).
+GF-RTK,NRAS,Activator,Growth Signalling,"Review, MET RTK","Gentile, A., et al. Cancer and Metastasis Reviews (2008)",RAS is effector of RTK activation (can also activate PI3K directly).
+GF-RTK,PI3K,Activator,Growth Signalling,"Review, RTK","Easty, D. J., et al. PC&MR(2011)",RTKs can activate PI3K directly through p85 subunit
+GSK3b,cMyc,Inhibitor,Growth Signalling,"Review, RSK family kinases","Rana and John, Nat Rev Mol Cell Biol, (2008)",Transcriptional activator
+GSK3b,cMyc,Inhibitor,Growth Signalling,REF52 fibroblasts,"Sears et al, Genes Dev, (2000)",Thr58  phosphorylation by GSK3B when Erk mediated Ser 62 phosphorylation exists
+HRAS,CRAF,Activator,Growth Signalling,"Review, EGFR signalling","Wee and Wang Cancers, (2017)",Ser338 and Y341 phosphorylation facilitated by RAS
+HRAS,BRAF,Activator,Growth Signalling,"Review, MAPK pathway","Burotto, M. et al. Cancer (2014)",Ras activates Raf proteins
+HRAS,PI3K,Activator,Growth Signalling,"COS-1, in vitro assay","Rodriguez-Viciana, P. et al., Nature, (1994)",Direct interaction with catalytic subunit of PI3K
+Integrins,FAK,Activator,Growth Signalling,"Review, anoikis","Paoli, P., et al.  BBA - Mol Cell Res (2013)",Cell-Cell contact is signalled through various integrins leading to FAK and Src activation
+MEK,Erk,Activator,Growth Signalling,"Review, The MEK/Erk cascade","Shaul and Seger, BBA, (2007)","Thr183, Y185 phosphorylation"
+MEKGoF,MEK,Activator,Growth Signalling,"Review, BRAFi resistance","Luebker, S. A. & Koepsell, S. A. Frontiers Oncol (2019)",Activating MEK mutations such as MEK1F129L or MEK2Q60P
+MEKi,MEK,Inhibitor,Growth Signalling,"Review, MAPKi resistance","Luebker, S. A. & Koepsell, S. A. Frontiers Oncol (2019)",Targeted MEK inhibitor eg trametinib
+mTORC1,S6K,Activator,Growth Signalling,"Review, mTORC mediated regulation","Ma and Blenis, Nature Rev MCB, (2009)",Thr389 phosphorylation
+mTORC1,S6K,Activator,Growth Signalling,"Review, EGF Receptor cell proliferation  signalling","Wee and Wang, Cancers, (2017)",NA
+mTORC1,S6K,Activator,Growth Signalling,HEK293 cells,"Isotani et al., JBC, (1999)",Thr-412 phosphorylation
+mTORC1,4EBP1,Inhibitor,Growth Signalling,"Review, mTORC mediated regulation","Ma and Blenis, Nature Rev MCB, (2009)","Thr37, Thr46 phosphorylation inhibits the 4EBP1-negative regulator of transaltion factor"
+mTORC1,4EBP1,Inhibitor,Growth Signalling,HEK293,"Brunn, Science (1997)",NA
+mTORC1,4EBP1,Inhibitor,Growth Signalling,"Review, EGF Receptor cell proliferation  signalling","Wee and Wang, Cancers, (2017)",NA
+mTORC2,Akt,Activator,Growth Signalling,"HEK293T, HeLa","Sarbassove et al., Science, (2005)",Ser473 phosphorylation
+NF1,HRAS,Inhibitor,Growth Signalling,"Review, Ras regulation","Vigil, D., et al Nat Rev Cancer (2010)",NF1 is a GAP for Ras
+NF1,HRAS,Inhibitor,Growth Signalling,WM1976 melanom cells,"Maertens, et al. Cancer Discovery (2013)",effects of NF1 not mediated by NRAS in melanoma
+NRAS,BRAF,Activator,Growth Signalling,"Review, MAPK pathway","Burotto, M. et al. Cancer (2014)",Ras activates Raf proteins
+NRAS,PI3K,Activator,Growth Signalling,"COS-1, in vitro assay","Rodriguez-Viciana, P. et al., Nature, (1994)",Direct interaction with catalytic subunit of PI3K
+NRAS,CRAF,Activator,Growth Signalling,"Review, EGFR signalling","Wee and Wang Cancers, (2017)",Ser338 and Y341 phosphorylation facilitated by RAS
+p53,PTEN,Activator,Growth Signalling,SAOS-2 osteosarcoma,"Stambolic et al., Mol Cell, (2001)",Transcriptional activator
+p53,cMyc,Inhibitor,Growth Signalling,"BJ fibroblasts, Baf-3, AML-3, K562","Ho et al., Mol Cell Bio, (2005)","Transcriptional repressor, changes in promoter aceylation status"
+p90RSK,GSK3b,Inhibitor,Growth Signalling,"MDA-MB-231,HepG2","Ding et al., Mol Cell, (2005)",Ser9 phosphorylation
+p90RSK,GSK3b,Inhibitor,Growth Signalling,"Review, RSK in signalling regulation","Anjum and Blenis, Nat Rev Mol Cell Biol, (2008)",NA
+PI3K,Akt,Activator,Growth Signalling,"invitro assay, sheep brain cells, COS-7 cells","Stephens et al., Science, (1998)",Thr308 phosphorylation
+PI3K,Akt,Activator,Growth Signalling,HEK293,"Alessi et al., Curr Biol. (1997)",NA
+PI3K,Akt,Activator,Growth Signalling,"Review, AKT/PKB signalling","Manning and Toker, Cell, (2017)",NA
+PI3K,mTORC2,Activator,Growth Signalling,HEK293T,"Gan et al., JBC, (2011)",Indirect assessment through AKT activation
+PKC,CRAF,Activator,Growth Signalling,COS1,"Ueda, Y., et al., JBC  (1996)","TPA activation of MEK/Erk pathway depends on CRAF but not RAS, (may affect BRAF in other cell types?)"
+PKC,BRAF,Activator,Growth Signalling,COS1,"Ueda, Y., et al., JBC  (1996)","TPA activation of MEK/Erk pathway depends on CRAF but not RAS, (may affect BRAF in other cell types?)"
+PTEN,PI3K,Inhibitor,Growth Signalling,"Review, PTEN","Worby, C. A. & Dixon, J. E. Annu Rev Biochem (2014)","PIP3 phosphatase, acts in opposition to PI3K activity."
+RTK,GF-RTK,Activator,Growth Signalling,"Review, RTK","Easty, D. J., et al., PC &MR (2011)",Generic Growth Factor/Receptor Tyrosine Kinase interaction
+S6K,GSK3b,Inhibitor,Growth Signalling,MEFs,"Zhang et al., Mol Cell Biol., (2005)",Ser9 phosphorylation
+Smad2_3,cMyc,Inhibitor,Growth Signalling,"Mv1Lu, mink lung epithelial cells","Warner, B.J. et al. Mol and Cell Bio (1999)",Downregulation of Myc by TGF-B necessary for p15 induction
+TCF,cMyc,Activator,Growth Signalling,"HT29, HEK293","He, T.-C., et al., Science (1998)",TCF promotes expression of MYC gene
+TSC,mTORC1,Inhibitor,Growth Signalling,"HEK293T, U2OS osteosarcoma","Tee et al., PNAS, (2002)",Ser2448 phosphorylation in Mtor
+TSC,mTORC1,Inhibitor,Growth Signalling,HEK293T,"Inoki et al., Nat Cell Biol, (2002)",NA
+E2F,Proliferation,Activator,Growth Signalling,REF52 Rat,"Johnson, Nature, (1993)",E2F required for G1/S transition
+a-MSH,MC1R,Activator,Intercellular Signalling,"Review, MITF","Levy, C. et al. Trends in Mol Med (2006)",a-MSH binds MC1R receptor
+Akt,IKK,Activator,Intercellular Signalling,CEFs,"Bai, D., et al., IJC (2009)","Akt phosphorylates IKKa at T23, required for IKK phosphorylation of p65 at S534"
+APC,B-catenin,Inhibitor,Intercellular Signalling,"Review, WNT in cancer","Galluzzi, L., et al. Trends in Cell Biology (2018)","APC, AXIN and GSK3 (and other) form B-catenin destruction complex"
+AXIN,B-catenin,Inhibitor,Intercellular Signalling,"Review, WNT in cancer","Galluzzi, L., et al. Trends in Cell Biology (2018)","APC, AXIN and GSK3 (and other) form B-catenin destruction complex"
+B-catenin,TCF,Activator,Intercellular Signalling,"Review, MITF","Goding, C. R., & Arnheiter, H. Genes & Development (2019)",TCF transcription factor downstream effector of B-catenin
+cAMP,PKA,Activator,Intercellular Signalling,"Review, MITF","Kaur, A., et al. BJC (2016)",PKA is effector of MC1R signalling
+cJUN,NFkB,Activator,Intercellular Signalling,Set of melanoma cell lines esp MZ7,"Riesenberg, S., Nature Comms (2015)",NF-kB works synergistically with AP-1.
+cJUN,NFkB,Activator,Intercellular Signalling,"Review, TNF and MAPK","Sabio, G., & Davis, R. J. Sem Imm (2014)",AP-1 and NF-kB act synergistically in reglation of genes like TNFa
+cJUN,NFkB,Activator,Intercellular Signalling,melanoma cell lines,"Riesenberg, S., et al. Nat Comms (2015)",AP-1 and NF-kB expression profiles linked in panel of melanoma cell lines
+DKK,Frizzled,Inhibitor,Intercellular Signalling,"Review, DKK","Nakamura, T., et al. J Cell Mol Med (2008)",DKK binds Lrp5/6 preventing formation of Wnt/Frizzled/Lrp5/6 complex
+Erk,IKK,Activator,Intercellular Signalling,melan-a and 1205Lu,"Liu, J., et al. Oncogene (2007)",MAPK pathway promotes IKK activity
+Erk,CREB,Activator,Intercellular Signalling,"Review, CREB regulation","Johannessen, M. & Moens, U. Front Biosci (2007)","ERK activates MAPKAPKs such as MSK1,2 and MK2 which phosphorylate CREB S133"
+Erk,TGF-B,Activator,Intercellular Signalling,human melanocytes,"McNeal, A. S., et al. Cancer Discovery (2015)",MAPK activation leads to TGF-B expression (could be mediated by EGR1)
+Frizzled,AXIN,Inhibitor,Intercellular Signalling,"Review, WNT in cancer","Galluzzi, L., et al. Trends in Cell Biology (2018)",Binding of WNT to Frizzled receptor results in recruitment of AXIN to plasma membrane and B-catenin stabilisation
+GF-RTK,PKC,Activator,Intercellular Signalling,"Review, RTK","Easty, D. J., et al. PC&MR (2011)",RTKs activate PKC via PLCgamma
+GSK3b,B-catenin,Inhibitor,Intercellular Signalling,"Review, WNT in cancer","Galluzzi, L., et al. Trends in Cell Biology (2018)","APC, AXIN and GSK3 (and other) form B-catenin destruction complex"
+IKK,NFkB,Activator,Intercellular Signalling,"Review, TNF","Aggarwal, B. B., et al. Blood (2012)","IKK activates NF-kB by inhbiting IkB, the repressor of NF-kB"
+MC1R,cAMP,Activator,Intercellular Signalling,"Review, MITF","Goding, C. R., & Arnheiter, H. Genes & Development (2019)",MC1R receptor stimulates CAMP signalling
+MITF,TBR,Inhibitor,Intercellular Signalling,melanoma cell lines,Hoek et al. PCR (2006),"Speculative edge, low MITF state associated with enhanced TGFB signalling"
+MITF,TBR,Inhibitor,Intercellular Signalling,1205Lu,"Javelaud, D., et al. PC&MR (2011)",Overexpression of MITF inhibits TGF-B driven induction of GLI2
+MITF,TBR,Inhibitor,Intercellular Signalling,A375,Sun et al. Nature (2014),Sox10 KD (nducing MITF low state) leads to TGFBR2 expression
+MITF,Wnt5a,Inhibitor,Intercellular Signalling,"Review, Wnt in melanoma","O’Connell, M. P. & Weeraratna, A. T.  PC&MR(2009)","Speculative edge, Wnt5a singalling associated with MITF low state"
+MITF,Wnt5a,Inhibitor,Intercellular Signalling,Panel of melanoma cells,"Hoek, K. S. et al. Pigm Cell Res (2006)","Speculative edge, Wnt5a singalling associated with MITF low state"
+MITF,Wnt5a,Inhibitor,Intercellular Signalling,WM989 and WM983B,"Shaffer, S. M. et al. Nature (2017)","Speculative edge, Wnt5a singalling associated with MITF low state"
+PKA,B-catenin,Activator,Intercellular Signalling,"Review, WNT in melanoma","Kaur, A., et al. BJC (2016)",PKA phosphorylates B-catenin on S675 (can also inhibit GSK3b)
+PKA,CREB,Activator,Intercellular Signalling,"Review, CREB regulation","Johannessen, M. & Moens, U. Front Biosci (2007)",PKA phosphorylates CREB at S133 in response to cAMP signalling
+ROR2,B-catenin,Inhibitor,Intercellular Signalling,"UACC903, M93-047","O’Connell, M. P.,  et al. Cancer Discovery (2013)","Wnt5a signalling leads to expression of Siah2 E3 ligase, which targets CTNNB1"
+ROR2,B-catenin,Inhibitor,Intercellular Signalling,HEK293,"Topol, L.,et al.  JCB (2003)",Wnt5a signalling inhibits canonical Wnt signalling via Siah2 (not specifically ROR2 here)
+ROR2,PKC,Activator,Intercellular Signalling,UACC1273EV,"Dissanayake, S. K., et al. JBC (2007).",Wnt5a activates PKC
+Smad2_3,PKA,Inhibitor,Intercellular Signalling,888mel,"Pierrat, M.-J., et al. JBC (2012)",TGF-B leads to repression of PKA in melanoma cells
+S6K,CREB,Activator,Intercellular Signalling,"Review, CREB regulation","Johannessen, M. & Moens, U. Front Biosci (2007)","p70 phosphorylates CREB in vitro, in vivo evidence less clear, could also act via SGK or Akt"
+TBR,Smad2_3,Activator,Intercellular Signalling,"Review, TGFB signalling","Javelaud, D., et al. PC&MR (2008)",SMAD2/3 complex is effector of TGF-B signalling
+TGF-B,Smad2_3,Activator,Intercellular Signalling,"Review, TGFB signalling","Javelaud, D., et al. PC&MR (2008)",SMAD2/3 complex is effector of TGF-B signalling
+TNF-a,TNFR,Activator,Intercellular Signalling,"Review, TNF","Aggarwal, B. B., et al. Blood (2012)",TNFR1&2 are receptors for TNF-a
+TNFR,IKK,Activator,Intercellular Signalling,"Review, TNF","Aggarwal, B. B., et al. Blood (2012)",TNF induces IKK activation through TRAF2
+WNT,Frizzled,Activator,Intercellular Signalling,"Review, WNT in cancer","Galluzzi, L., et al. Trends in Cell Biology (2018)",WNT binds frizzled receptor.
+Wnt5a,ROR2,Activator,Intercellular Signalling,"Review, Wnt5a in cancer","Asem, M. S. et al. Cancers (2016)","Many receptors recognise Wnt5a, including ROR family."
+Wnt5a,ROR2,Activator,Intercellular Signalling,UACC1273,"Dissanayake, S. K.,  et al. Cancer Research (2008)",ROR2 shown to be important RTK in this cell line
+MITF,BCL2A1,Activator,Survival,Panel of melanoma cells,"Haq, R. et al. PNAS (2013)",MITF binds BCL2A1 promoter
+Akt,BAD,Inhibitor,Survival,"3T3, HEK293","Datta et al., Cell, (1997)",Ser136
+Akt,BAD,Inhibitor,Survival,MDA-468 breast cancer cell line,"She et al., Cancer Cell, (2005)",NA
+Akt,BIM,Inhibitor,Survival,MCF7 and other breast cancer cell lines,"Madhunapantula, S. V., et al., Cancer Biol Ther (2011)",Akt phopshorylates BIM
+BAD,Bcl-2,Inhibitor,Survival,All (cell free) and MEFs,"Chen et al., Molecular Cell, (2005)",Bad binds Bcl-2
+BaxBak,MOMP,Activator,Survival,"Review, apoptosis pathways in melanoma",Mohana-Kumaran et al. PC&MR (2014),"Bax and Bak cause membrane permealization of mitochondria, opposed by Bcl-2 and Mcl-1"
+Bcl-2,MOMP,Inhibitor,Survival,"Review, apoptosis pathways in melanoma",Mohana-Kumaran et al. PC&MR (2014),"Bax and Bak cause membrane permealization of mitochondria, opposed by Bcl-2 and Mcl-1"
+BCL2A1,MOMP,Inhibitor,Survival,"Review, BCL2A1","Vogler, M. Cell Death Differ (2012)",BCL2A1 opposes mitochondrial membrane breakdown by BAX and BAK
+BIM,Bcl-2,Inhibitor,Survival,All (cell free) and MEFs,"Chen et al., Molecular Cell, (2005)",Binding BH3 domain
+BIM,Mcl-1,Inhibitor,Survival,All (cell free) and MEFs,"Chen et al., Molecular Cell, (2005)",Binding BH3 domain
+Erk,PUMA,Inhibitor,Survival,"Review, Erk in apoptosis signalling",Cook et al. FEBS J (2017),ERK control expression of PUMA via FOXO3
+Erk,BIM,Inhibitor,Survival,"K562 cell, various cellular models, _RAF/ER cells-derivative of HEK 293 cells","Luciano et al., Oncogene, (2003)",Ser69 phosphorylation
+Erk,PARP-1,Activator,Survival,"M229, M249 melanoma cells","Hong, A. et al. Cancer Discov (2017)",High levels of ERK activity induce parthanatos
+IAP,Caspase-3,Inhibitor,Survival,"Review, apoptosis pathways in melanoma",Mohana-Kumaran et al. PC&MR (2014),"c-IAPs inhibit caspases, via SMAC/DIABLO"
+Mcl-1,MOMP,Inhibitor,Survival,"Review, apoptosis pathways in melanoma",Mohana-Kumaran et al. PC&MR (2014),"Bax and Bak cause membrane permealization of mitochondria, opposed by Bcl-2 and Mcl-1"
+MITF,ML-IAP,Activator,Survival,"Review, MITF","Goding, C. R., & Arnheiter, H. Genes & Development (2019)",MITF induces expression of ML-IAP
+MITF,ML-IAP,Activator,Survival,SK-MEL-5 and primary human melanocytes,Saladi et al. PC&MR (2013),"MITF promotes expression of ML-IAP, may also be other anti-apoptotic factors as lower in melanocytes than transformed melanoma cells"
+MITF,Bcl-2,Activator,Survival,"Review, MITF and survival","Hartman, M. L., & Czyz, M. J Inv Dermatology (2015)",MITF acts as TF for Bcl-2
+ML-IAP,Caspase-3,Inhibitor,Survival,"Review, apoptosis pathways in melanoma",Mohana-Kumaran et al. PC&MR (2014),"ML-IAP inhibits caspases, via SMAC/DIABLO"
+MOMP,Caspase-3,Activator,Survival,"Review, apoptosis pathways in melanoma",Mohana-Kumaran et al. PC&MR (2014),"Membrane breakdown causes release of cytochrome-c, formation of apoptosome and caspase activation"
+MOMP,AIF,Activator,Survival,"Review, apoptosis",Hussein et al. J Pathology (2003),"Membrane breakdown leads to release of AIF, causing caspase-independent apoptosis"
+MOMP,AIF,Activator,Survival,"Mel-RM, SK-MEL-28",Wang et al. Clin Cancer R (2007),MEKi-induced apoptosis relies on caspase-independent pathway
+NFkB,IAP,Activator,Survival,HT1080 fibrosarcoma cell line,"Wang, C.-Y., et al. Science (1998)",NF-kB activates expresion of c-IAP1 and c-IAP2
+NFkB,Mcl-1,Activator,Survival,U-937 human macrophage cell line,"Akgul, C. et al CMLS (2000)",Mcl-1 5' region contain NF-kB binding sequence
+p53,PUMA,Activator,Survival,MEFs,"Villunger et al., Science, (2003)",Transcriptional activator
+p53,BaxBak,Activator,Survival,"Review, apoptosis",Hussein et al. J Pathology (2003),p53 contributes to induction of apoptosis through activation of Bax and indirectly through BH3-domain proteins
+p90RSK,BAD,Inhibitor,Survival,HEK293,"Tan Y et al., JBC, (1999)",Ser112 phosphorylation
+p90RSK,BAD,Inhibitor,Survival,"Review, RSK in tumorigenesis, breast cancer","Eisinger-Mathason et al., Steroids, (2010)",NA
+PAR,AIF,Activator,Survival,"Review, Parthanatos","David, K. K., et al., Front Biosci (2009)",PAR induces AIF release
+PARP-1,PAR,Activator,Survival,"Review, Parthanatos","David, K. K., et al., Front Biosci (2009)",PARP-1 synthesises PAR
+PUMA,Bcl-2,Inhibitor,Survival,All (cell free) and MEFs,"Chen et al., Molecular Cell, (2005)",Inhibiting BAX
+PUMA,Mcl-1,Inhibitor,Survival,All (cell free) and MEFs,"Chen et al., Molecular Cell, (2005)",Binding BH3 domain
+TNFR,p38,Activator,Intercellular Signalling,"Review, TNF and MAPK","Sabio, G. & Davis, R. J. Semin Immunol (2014)",p38 activated by TNF via MKK3 and MKK6
+TNFR,p38,Activator,Intercellular Signalling,L929 fibroblasts,"Brinkman, B. M. N., et al. J Biol Chem (1999)","p38 activates ATF-2 in repsonse to TNF stimulation, ATF-2 is a co-activator of cJUN"
+p38,cJUN,Activator,Cell Cycle,L929 fibroblasts,"Brinkman, B. M. N., et al. J Biol Chem (1999)","p38 activates ATF-2 in repsonse to TNF stimulation, ATF-2 is a co-activator of cJUN"

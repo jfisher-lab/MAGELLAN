@@ -627,28 +627,22 @@ cython_debug/
 ## Manual
 
 *.DS_Store
-BMATool/__pycache__/*
-BMATool/utils/__pycache__/*
 *.pkl
-scripts/activate
-scripts/activate.bat
-scripts/Activate.ps1
-deactivate.bat
-pip3.11.exe
-pip3.exe
-python.exe
-pip.exe
-pythonw.exe
-
-
-/**/*_RAW_SIM.csv
 *.html
 
 benchmarks/**/*.png
-scripts/**/*.png
 benchmarks/**/results/
+benchmarks/**/binary_metrics/*png
+benchmarks/**/nonbinary_metrics/*png
+benchmarks/**/binary_metrics/*json
+benchmarks/**/nonbinary_metrics/*json
+benchmarks/synthetic_benchmarks/**/*.csv
 scripts/**/results/
+scripts/**/*.png
 *.zip
 *.pt
 *.txt
+*.svg
+*.h5ad
+*.joblib
 .vscode/

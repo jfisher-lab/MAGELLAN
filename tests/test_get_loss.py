@@ -12,6 +12,7 @@ def test_mse_no_reg():
     expected = np.sum(np.power(diff, 2))
     assert np.isclose(result, expected)
 
+
 def test_mae_no_reg():
     """Test MAE loss without regularization"""
     diff = np.array([1, -2, 3])
@@ -19,6 +20,7 @@ def test_mae_no_reg():
     result = get_loss(diff, W, lambd=0.1, err="mae", reg=None)
     expected = np.sum(np.abs(diff))
     assert np.isclose(result, expected)
+
 
 def test_mse_with_l1():
     """Test MSE loss with L1 regularization"""
@@ -29,6 +31,7 @@ def test_mse_with_l1():
     expected = np.sum(np.power(diff, 2)) + lambd * np.linalg.norm(W, 1)
     assert np.isclose(result, expected)
 
+
 def test_mse_with_l2():
     """Test MSE loss with L2 regularization"""
     diff = np.array([1, -2, 3])
@@ -38,12 +41,14 @@ def test_mse_with_l2():
     expected = np.sum(np.power(diff, 2)) + lambd * np.linalg.norm(W, 2)
     assert np.isclose(result, expected)
 
+
 def test_invalid_error():
     """Test that invalid error type raises KeyError"""
     diff = np.array([1, -2, 3])
     W = np.array([0.1, 0.2, -0.3])
     with pytest.raises(KeyError, match="err must be mse or mae"):
         get_loss(diff, W, lambd=0.1, err="invalid")
+
 
 def test_zero_diff():
     """Test with zero differences"""
@@ -53,6 +58,7 @@ def test_zero_diff():
     expected = 0.1 * np.linalg.norm(W, 1)
     assert np.isclose(result, expected)
 
+
 def test_zero_weights():
     """Test with zero weights"""
     diff = np.array([1, -2, 3])
@@ -61,12 +67,14 @@ def test_zero_weights():
     expected = np.sum(np.power(diff, 2))
     assert np.isclose(result, expected)
 
+
 def test_empty_arrays():
     """Test with empty arrays"""
     diff = np.array([])
     W = np.array([])
     result = get_loss(diff, W, lambd=0.1, err="mse")
     assert result == 0
+
 
 def test_different_shapes():
     """Test arrays of different shapes"""

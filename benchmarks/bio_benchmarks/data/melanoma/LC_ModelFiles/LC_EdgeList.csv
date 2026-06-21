@@ -1,0 +1,55 @@
+From,To,Type,Pathway,Cell Line/Tissue,Paper,Notes
+AdhesionMolecules,Residency_LC,Activator,LC,Review,"Deckers et al., Front in Imm (2018)",Adhesion molecules prevent migration
+Akt_LC,mTOR_LC,Activator,LC,Review,Liu et al. Nat Rev Mol Cell Bio (2020),PI3K activates mTORC1 via Akt and Tsc
+AXIN_LC,B-catenin_LC,Inhibitor,LC,Review,"Zhang, Y. & Wang, X. J Hematol Oncol (2020)","Axin in complex with GSK3b, APC and CK1a inhibits B-catenin activity "
+Axl,PI3K_LC,Activator,LC,Review,Lemke et al. Nat Rev Immunology (2008),Pi3K acts downstream of RTKs
+Axl,Tyro3,Inhibitor,LC,BMLCs,"Bauer et al., JEM (2012)",Loss of Axl leads to uprgulation of Tyro3 and Mer
+B-catenin_LC,TCF_LC,Activator,LC,Review,"Zhang, Y. & Wang, X. J Hematol Oncol (2020)",B-catenin acts trhough TCF transcription factor 
+TCF_LC,Proliferation_LC,Activator,LC,BMLCs,"Becker et al., JID (2011) ",Inhibitor of B-catenin (Dkk1) reduce proliferation 
+CBF-B,Id2_LC,Activator,LC,Review,"Chopin et al., Sem Cell Dev Bio (2015)",Runx3 dimerises with CBF-B proteins
+CSF1R,PI3K_LC,Activator,LC,Review,"Stanley et al., CSH Pers Bio (2014)",Pi3K acts downstream of RTKs
+DKK,Frizzled_LC,Inhibitor,LC,Review,"Nakamura, T., et al. J Cell Mol Med (2008)",DKK binds Lrp5/6 preventing formation of Wnt/Frizzled/Lrp5/6 complex
+E-cadherin,B-catenin_LC,Inhibitor,LC,Review,"Van den Bossche et al., Blood (2012)",E-cadherin binds B-catenin inhibiting it and helping to sequester it at the plasma membrane
+E-cadherin,Residency_LC,Activator,LC,Mice TBR KO CD11c Cre,"Kel et al., J Imm (2010)",TBR KO leads to E-cadherin downregulation = increased migratory pheno of LCs
+ERK_LC,Survival_LC,Activator,LC,Review,"Collin et al., Curr Opin Hematology (2016)",Erk activity promotes cell survival and proliferation
+ERK_LC,Survival_LC,Activator,LC,Review,"Stanley et al., CSH Pers Bio (2014)",Erk activity promotes cell survival and proliferation
+ERK_LC,Proliferation_LC,Activator,LC,Review,"Collin et al., Curr Opin Hematology (2016)",Erk activity promotes cell survival and proliferation
+ERK_LC,Proliferation_LC,Activator,LC,Review,"Stanley et al., CSH Pers Bio (2014)",Erk activity promotes cell survival and proliferation
+Frizzled_LC,AXIN_LC,Inhibitor,LC,Review,Galluzzi et al. Trends Cell Bio (2018),Binding of Wnt ligand to Fzd receptor leads to B-catenin activation via AXIN
+Gas6,Axl,Activator,LC,Review,"Collin et al., Curr Opin Hematology (2016)",Gas6 is a ligand for Axl and Tyro3
+Gas6,Axl,Activator,LC,Review,"Hieronymous et al., Sem Cell Dev Bio (2015)",Gas6 is a ligand for Axl and Tyro3
+Gas6,Tyro3,Activator,LC,Review,"Hieronymous et al., Sem Cell Dev Bio (2015)",Gas6 is a ligand for Axl and Tyro3
+Id2_LC,Residency_LC,Activator,LC,Mice Id2-/- and Id2+/+,"Sere et al., Immunity (2012) ",Long term LCs are Id2 dependent 
+IL-18,IL-1B,Activator,LC,Review,Griffiths et al. Cytokine (2005),IL-18 acts upstream of IL-1B
+IL-1B,IL-1R,Activator,LC,Review,Griffiths et al. Cytokine (2005),IL-1B signals mainly through IL-1R1 receptor in LCs
+IL-1R,Irf1,Activator,LC,Human fibroblasts ,"Orzalli et al., Molecular cell (2018)",IL-1B antiviral response if Irf1 dependent
+IL-1R,Irf1,Activator,LC,mouse skin,"Didovic, S., et al. Eur J Immunol (2016)","IL-1R signalling occurs in KCs not LCs, may be mediated by CCL2 or GM-CSF"
+IL-1R,TNF-a,Activator,LC,Review,Griffiths et al. Cytokine (2005),IL-1B stimulates TNF production by keratinocytes
+IL-34,CSF1R,Activator,LC,Mice - IL-34 KO in KCs,Wang et al. Nat Imm (2012),IL-34 is a ligand of CSF1R
+Irf1,E-cadherin,Inhibitor,LC,FSDDCs,"Jakob, T., & Udey, M. C. J immunology (1998).",TNFalpha and IL-1B signalling downregulate E-cadherin at mRNA level
+Irf4,Residency_LC,Inhibitor,LC,Human Langerhans cells,Sirvent et al. Nat Comms (2020),Bulk RNA-seq
+LAMTOR-p14,mTOR_LC,Activator,LC,Review,"Collin et al., Curr Opin Hematology (2016)",LAMTOR-p14 is an adaptor complex that contributes to mTOR and ERK activation
+LAMTOR-p14,ERK_LC,Activator,LC,Review,"Collin et al., Curr Opin Hematology (2016)",LAMTOR-p14 is an adaptor complex that contributes to mTOR and ERK activation
+LAMTOR-p14,ERK_LC,Activator,LC,Rat pheochromocytoma (PC12),"Nada, S. et al. Embo J (2009)",LAMTOR complex facilitates MEK-ERK interaction
+MEK_LC,ERK_LC,Activator,LC,"Review, The MEK/Erk cascade","Shaul and Seger, BBA, (2007)","Thr183, Y185 phosphorylation"
+mTOR_LC,Survival_LC,Activator,LC,Review,"Collin et al., Curr Opin Hematology (2016)",kinase (growth/metabolism)
+mTOR_LC,Proliferation_LC,Activator,LC,Review,"Collin et al., Curr Opin Hematology (2016)",kinase (growth/metabolism)
+PI3K_LC,Akt_LC,Activator,LC,Review,Liu et al. Nat Rev Mol Cell Bio (2020),PI3K activates mTORC1 via Akt and Tsc
+Pros1,Tyro3,Activator,LC,Review,Lemke et al. Nat Rev Immunology (2008),Pros1 is a ligand for Tyro3
+Pu.1,Runx3,Activator,LC,Mice - GFP tagged and CD11cCre KOs,"Chopin et al., Sem Cell Dev Bio (2013)",myeloid TF
+Pu.1,Runx3,Activator,LC,Review,"Chopin et al., Sem Cell Dev Bio (2015)",myeloid TF
+Pu.1,Runx3,Activator,LC,Review,Deckers et al. Front Imm (2018),myeloid TF
+Runx3,Id2_LC,Activator,LC,Review,"Collin et al., Curr Opin Hematology (2016)","TF, dimerises with CBF-B"
+Smad2_3_LC,Pu.1,Activator,LC,Review,"Collin et al., Curr Opin Hematology (2016)",Downstream signal pathway of TGFb
+TBR_LC,E-cadherin,Activator,LC,Review,"Hieronymous et al., Sem Cell Dev Bio (2015)",cytokine receptor
+TBR_LC,AdhesionMolecules,Activator,LC,BMLCs,"Yasmin et al., JID (2013)",TGFb enhances the expression of epithelial adhesion molecules
+TBR_LC,Smad2_3_LC,Activator,LC,Review,"Collin et al., Curr Opin Hematology (2016)",TGFB1 receptor complex
+TBR_LC,Axl,Activator,LC,BM derived LC,"Bauer et al., 2012 (JEM)",Western blot after using TGFbR1 receptor blockers
+TBR_LC,LAMTOR-p14,Activator,LC,Review,"Collin et al., Curr Opin Hematology (2016)",TGFB1 receptor complex
+TGF-B,TBR_LC,Activator,LC,Review,"Hieronymous et al., Sem Cell Dev Bio (2015)",cytokine
+TNF-a,TNFR_LC,Activator,LC,Review,Griffiths et al. Cytokine (2005),TNF-a signals mainly through TNF-R2 receptor in LCs
+TNFR_LC,Irf1,Activator,LC,Human Langerhans cells,Davies et al. Front Imm (2021),Single cell RNA-seq
+Tyro3,PI3K_LC,Activator,LC,Review,Lemke et al. Nat Rev Immunology (2008),Pi3K acts downstream of RTKs
+WNT,Frizzled_LC,Activator,LC,Review,Galluzzi et al. Trends Cell Bio (2018),Binding of Wnt ligand to Fzd receptor leads to B-catenin activation
+CSF1,CSF1R,Activator,LC,Panel of melanoma cells,"Wang, T. et al. Pigm Cell Melanoma R (2012)",Melanoma cells produce CSF1 (M-CSF)
+CSF1,CSF1R,Activator,LC,"Review, CSF1","Hamilton, J. A. Nat Rev Immunol (2008)",CSF1 is ligand for CSF1R

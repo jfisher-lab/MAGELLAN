@@ -1,0 +1,178 @@
+{
+    "Model": {
+        "Name": "ring_6",
+        "Variables": [
+            {
+                "Name": "ring6_0",
+                "Id": 1,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(6)*118/1000"
+            },
+            {
+                "Name": "ring6_1",
+                "Id": 2,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(1)*437/1000"
+            },
+            {
+                "Name": "ring6_2",
+                "Id": 3,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(2)*758/1000"
+            },
+            {
+                "Name": "ring6_3",
+                "Id": 4,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "2-var(3)*240/1000"
+            },
+            {
+                "Name": "ring6_4",
+                "Id": 5,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(4)*152/1000"
+            },
+            {
+                "Name": "ring6_5",
+                "Id": 6,
+                "RangeFrom": 0,
+                "RangeTo": 2,
+                "Formula": "var(5)*641/1000"
+            }
+        ],
+        "Relationships": [
+            {
+                "Id": 5,
+                "FromVariable": 5,
+                "ToVariable": 6,
+                "Type": "Activator"
+            },
+            {
+                "Id": 1,
+                "FromVariable": 1,
+                "ToVariable": 2,
+                "Type": "Activator"
+            },
+            {
+                "Id": 6,
+                "FromVariable": 6,
+                "ToVariable": 1,
+                "Type": "Activator"
+            },
+            {
+                "Id": 4,
+                "FromVariable": 4,
+                "ToVariable": 5,
+                "Type": "Activator"
+            },
+            {
+                "Id": 3,
+                "FromVariable": 3,
+                "ToVariable": 4,
+                "Type": "Inhibitor"
+            },
+            {
+                "Id": 2,
+                "FromVariable": 2,
+                "ToVariable": 3,
+                "Type": "Activator"
+            }
+        ]
+    },
+    "Layout": {
+        "Variables": [
+            {
+                "Id": 1,
+                "Name": "ring6_0",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 79.16,
+                "PositionY": 124.832,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 2,
+                "Name": "ring6_1",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 212.94,
+                "PositionY": 36.0,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 3,
+                "Name": "ring6_2",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 356.54,
+                "PositionY": 107.836,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 4,
+                "Name": "ring6_3",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 365.76,
+                "PositionY": 268.16,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 5,
+                "Name": "ring6_4",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 232.08,
+                "PositionY": 357.16,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            },
+            {
+                "Id": 6,
+                "Name": "ring6_5",
+                "Type": "Default",
+                "ContainerId": 1,
+                "PositionX": 88.554,
+                "PositionY": 285.16,
+                "CellX": null,
+                "CellY": null,
+                "Angle": 0,
+                "Description": ""
+            }
+        ],
+        "Containers": [
+            {
+                "Id": 1,
+                "Name": "C0",
+                "Size": 4,
+                "PositionX": -2,
+                "PositionY": -2
+            }
+        ],
+        "AnnotatedGridCells": [],
+        "Description": ""
+    },
+    "ltl": {
+        "states": [],
+        "operations": []
+    }
+}
